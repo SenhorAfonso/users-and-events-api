@@ -1,6 +1,6 @@
 import express from 'express';
 
-class App {
+class Server {
   public server: express.Express;
 
   constructor() {
@@ -13,4 +13,4 @@ class App {
   }
 }
 
-export default new App().server
+export default new Server().server

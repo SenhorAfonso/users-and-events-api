@@ -1,10 +1,11 @@
 import mongoose from "mongoose"
+import IORM from "../../../interfaces/IORM";
 
 class DataBase {
-  private ORM: any;
+  private ORM: IORM;
   private URL: string;
 
-  constructor(ORM: any, URL: string) {
+  constructor(ORM: IORM, URL: string) {
     this.ORM = ORM;
     this.URL = URL;
   }

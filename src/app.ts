@@ -1,16 +1,19 @@
 import server from "./server";
 require("./infra/database/mongo/connectDB");
 
-const port: number = 3000;
+class App {
+  private port: number = 3000;
 
-const start = () => {
-  try {
-    server.listen(port, () => {
-      console.log(`Server is listening at ${port} port.`)
-    })
-  } catch (error) {
-    console.log(`Error: ${error} during server initialization.`)
+  constructor() {
+    this.start()
   }
+
+  private start() {
+    server.listen(this.port, () => {
+      console.log(`Server is listening at ${this.port} port.`)
+    })
+  }
+
 }
 
-start()
+new App()

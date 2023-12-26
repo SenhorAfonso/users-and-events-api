@@ -1,16 +1,14 @@
-import express from 'express';
+import server from "./server";
+const port: number = 3000;
 
-class App {
-  public server: express.Express;
-
-  constructor() {
-    this.server = express();
-    this.middlewares();
-  }
-
-  middlewares() {
-    this.server.use(express.json());
+const start = (): void => {
+  try {
+    server.listen(port, () => {
+      console.log(`Server is listening at ${port} port.`)
+    })
+  } catch (error) {
+    console.log(`Error: ${error} during server initialization.`)
   }
 }
 
-export default new App().server
+start()

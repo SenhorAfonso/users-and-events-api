@@ -1,15 +1,20 @@
 
-export class UserService {
+import UserRepository from "../repositories/UserRepository";
 
-  constructor() {}
+export class UserService {
+  private repository: UserRepository;
+
+  constructor() {
+    this.repository = new UserRepository()
+  }
 
   async userSignUp(payload: any) {
-    const result = 'Signing user up';
+    const result = await this.repository.create();
     return result;
   }
 
   async userSignIn(payload: any) {
-    const result = 'Signing user in';
+    const result = await this.repository.login();
     return result;
   }
 

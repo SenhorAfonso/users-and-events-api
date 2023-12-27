@@ -48,5 +48,6 @@ class EventController {
     res.send({ result })
   }
 
-
 }
+
+export default new EventController();

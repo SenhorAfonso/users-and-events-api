@@ -1,26 +1,17 @@
 import Router from 'express';
+import EventController from '../app/controllers/EventController';
 
 const eventRouter = Router();
 
-eventRouter.post('/events', (req, res) => {
-  res.send('Create an event');
-})
+eventRouter.post('/events', EventController.createEvent)
 
-eventRouter.get('/events', (req, res) => {
-  res.send('Get all events');
-})
+eventRouter.get('/events', EventController.getEvents)
 
-eventRouter.get('/event/:id', (req, res) => {
-  res.send('Get an event from a especific id');
-})
+eventRouter.get('/event/:id', EventController.getSingleEvents)
 
-eventRouter.delete('/events', (req, res) => {
-  res.send('Deletes events from especific day of week');
-})
+eventRouter.delete('/events', EventController.deleteMany)
 
-eventRouter.delete('/events/:id', (req, res) => {
-  res.send('Deletes an event from a especific id');
-})
+eventRouter.delete('/events/:id', EventController.getSingleEvents)
 
 
 export default eventRouter;

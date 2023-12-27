@@ -1,5 +1,6 @@
 import userSchema from "../schemas/userSchema";
 import ICreateUserPayload from "../../interfaces/ICreateUserPayload";
+import ILoginUserPayload from "../../interfaces/ILoginUserPayload";
 
 class UserRepository {
 
@@ -8,7 +9,7 @@ class UserRepository {
     return result;
   }
 
-  async login(payload: any) {
+  async login(payload: ILoginUserPayload) {
     const { email, password } = payload;
     const result = await userSchema.findOne({ email: email, password: password });
 

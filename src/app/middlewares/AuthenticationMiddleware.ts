@@ -25,7 +25,7 @@ class AuthenticationMiddleware {
     
   }
 
-  authHeaderIsNotValid(authHeader: any) {
+  authHeaderIsNotValid(authHeader: string | undefined) {
     return !authHeader || !authHeader.startsWith('Bearer ');
   }
 

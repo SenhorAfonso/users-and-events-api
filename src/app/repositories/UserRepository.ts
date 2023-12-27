@@ -1,13 +1,14 @@
+import userSchema from "../schemas/userSchema";
 
 class UserRepository {
 
-  async create() {
-    const result = 'Signing user up';
+  async create(payload: any) {
+    const result = await userSchema.create(payload);
     return result;
   }
 
   async login() {
-    const result = 'Signing user in';
+    const result = await userSchema.find();
     return result;
   }
 

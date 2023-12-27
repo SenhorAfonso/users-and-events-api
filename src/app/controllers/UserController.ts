@@ -1,13 +1,16 @@
 import { Request, Response } from "express";
+import userService, { UserService } from "../services/userService";
 
 class UserController {
 
   async userSignUp(req: Request, res: Response) {
-    res.send('Signing user up');
+    const result = userService.userSignUp('');
+    res.send({ result });
   }
 
   async userSignIn(req: Request, res: Response) {
-    res.send('Signing user in');
+    const result = await userService.userSignIn('');
+    res.send({ result })
   }
 
 }

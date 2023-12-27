@@ -24,7 +24,7 @@ class ValidateUser {
 
       birthDate:
         Joi.date()
-        .format('YYYY/MM/DD')
+        .format('YYYY-MM-DD')
         .required(),
 
       city:
@@ -45,6 +45,11 @@ class ValidateUser {
         .required(),
 
       password:
+        Joi.string()
+        .regex(/^[a-zA-Z0-9]{6,30}$/)
+        .required(),
+
+      confirmPassword:
         Joi.string()
         .regex(/^[a-zA-Z0-9]{6,30}$/)
         .required()

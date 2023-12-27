@@ -60,7 +60,7 @@ class ValidateUser {
   }
 
   static loginUser() {
-    const loginUserInValodator = Joi.object({
+    const loginUserInValidator = Joi.object({
       email:
         Joi.string()
         .email({
@@ -74,7 +74,7 @@ class ValidateUser {
         .required()
     })
 
-    return loginUserInValodator;
+    return loginUserInValidator;
   }
 }
 

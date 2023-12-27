@@ -8,7 +8,7 @@ class UserService {
   }
 
   async userSignUp(payload: any) {
-    const result = await this.repository.create();
+    const result = await this.repository.create(payload);
     return result;
   }
 

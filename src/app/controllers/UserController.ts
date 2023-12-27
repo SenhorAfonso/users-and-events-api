@@ -4,7 +4,7 @@ import userService from "../services/UserService";
 class UserController {
 
   async userSignUp(req: Request, res: Response) {
-    const result = userService.userSignUp('');
+    const result = await userService.userSignUp(req.body);
     res.send({ result });
   }
 

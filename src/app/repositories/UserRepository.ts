@@ -2,8 +2,8 @@ import userSchema from "../schemas/userSchema";
 
 class UserRepository {
 
-  async create() {
-    const result = await userSchema.create();
+  async create(payload: any) {
+    const result = await userSchema.create(payload);
     return result;
   }
 

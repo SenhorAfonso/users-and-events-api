@@ -21,6 +21,7 @@
     "@joi/date": "^2.1.0",
     "@types/eslint": "^8.56.0",
     "@types/express": "^4.17.21",
+    "@types/joi": "^17.2.3",
     "@types/node": "^20.10.5",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.3.1",

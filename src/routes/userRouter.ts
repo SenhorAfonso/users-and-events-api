@@ -1,11 +1,13 @@
 import Router from 'express';
 
-const router = Router();
+const userRouter = Router();
 
-router.post('users/sign-up', (req, res) => {
+userRouter.post('/users/sign-up', (req, res) => {
   res.send('Signing user up');
 })
 
-router.post('users/sign-in', (req, res) => {
+userRouter.post('/users/sign-in', (req, res) => {
   res.send('Signing user in');
 })
+
+export default userRouter;

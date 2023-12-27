@@ -1,5 +1,6 @@
 import UserRepository from "../repositories/UserRepository";
 import ICreateUserPayload from "../../interfaces/ICreateUserPayload";
+import ILoginUserPayload from "../../interfaces/ILoginUserPayload";
 import jwt from 'jsonwebtoken'
 
 class UserService {
@@ -18,8 +19,10 @@ class UserService {
     return { result, token };
   }
 
-  async userSignIn(payload: any) {
-    const result = await this.repository.login();
+  async userSignIn(payload: ILoginUserPayload) {
+    const { email, password } = payload;
+
+    const result = await this.repository.login({ email, password });
     return result;
   }
 

@@ -9,7 +9,7 @@ class UserController {
   }
 
   async userSignIn(req: Request, res: Response) {
-    const result = await userService.userSignIn('');
+    const result = await userService.userSignIn(req.body);
     res.send({ result })
   }
 

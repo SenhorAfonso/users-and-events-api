@@ -8,9 +8,16 @@ class UserRepository {
     return result;
   }
 
-  async login() {
-    const result = await userSchema.find();
-    return result;
+  async login(payload: any) {
+    const { email, password } = payload;
+    const result = await userSchema.findOne({ email: email, password: password });
+
+    if (result) {
+      return result;
+    } else {
+      throw new Error('User not found!')
+    }
+
   }
 
 }

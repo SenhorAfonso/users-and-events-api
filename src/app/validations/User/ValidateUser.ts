@@ -7,7 +7,7 @@ const MIN_NAME_LENGHT: number = 5;
 
 class ValidateUser {
 
-  static async createUser(payload: any) {
+  static createUser() {
     const createUserValidator = Joi.object({
 
       firstName: 
@@ -51,14 +51,8 @@ class ValidateUser {
 
     })
 
-    const { error } = await createUserValidator.validate(payload, {
-      abortEarly: false
-    })
-
-    if (error) {
-      throw error
-    }
-
+    return createUserValidator;
   }
-
 }
+
+export default ValidateUser;

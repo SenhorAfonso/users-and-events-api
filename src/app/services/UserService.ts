@@ -1,7 +1,6 @@
-
 import UserRepository from "../repositories/UserRepository";
 
-export class UserService {
+class UserService {
   private repository: UserRepository;
 
   constructor() {
@@ -21,4 +20,3 @@ export class UserService {
 }
 
 export default new UserService();
-exports = { UserService }

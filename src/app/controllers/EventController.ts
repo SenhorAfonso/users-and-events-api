@@ -1,18 +1,13 @@
 import { Request, Response } from "express";
-import EventService from "../services/EventService";
+import eventService from "../services/EventService";
 
 class EventController {
-  private service: EventService; 
-
-  constructor() {
-    this.service = new EventService();
-  }
 
   async createEvent(
     req: Request,
     res: Response
   ) {
-    const result = await this.service.createEvent(req.body);
+    const result = await eventService.createEvent(req.body);
     res.send({ result })
   }
 
@@ -20,7 +15,7 @@ class EventController {
     req: Request,
     res: Response
   ) {
-    const result = await this.service.getEvents();
+    const result = await eventService.getEvents();
     res.send({ result })
   }
 
@@ -28,7 +23,7 @@ class EventController {
     req: Request,
     res: Response
   ) {
-    const result = await this.service.getSingleEvents(req.body);
+    const result = await eventService.getSingleEvents(req.body);
     res.send({ result })
   }
 
@@ -36,7 +31,7 @@ class EventController {
     req: Request,
     res: Response
   ) {
-    const result = await this.service.deleteManyEvents(req.body);
+    const result = await eventService.deleteManyEvents(req.body);
     res.send({ result })
   }
 
@@ -44,7 +39,7 @@ class EventController {
     req: Request,
     res: Response
   ) {
-    const result = await this.service.deleteSingleEvent(req.body);
+    const result = await eventService.deleteSingleEvent(req.body);
     res.send({ result })
   }
 

@@ -1,23 +1,30 @@
 import { NextFunction, Request, Response } from "express";
 import ValidateUser from "../validations/User/ValidateUser";
+import Joi from "joi";
 
 class ValidationMiddleware {
 
-  static async validateUserPayload(
-    req: Request,
-    res: Response,
-    next: NextFunction
+  static validateUserPayload(
+    joiValidationObject: Joi.ObjectSchema
   ) {
-    const validator = await ValidateUser.createUser();
-    const { error } = validator.validate(req.body, {
-      abortEarly: false
-    })
 
-    if (error) {
-      throw error
+    return (
+      req: Request,
+      res: Response,
+      next: NextFunction
+    ) => {
+      
+      const { error } = joiValidationObject.validate(req.body, {
+        abortEarly: false
+      })
+  
+      if (error) {
+        throw error
+      }
+  
+      return next()
     }
-
-    return next()
+   
   }
 
 }

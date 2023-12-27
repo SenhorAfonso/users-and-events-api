@@ -58,6 +58,24 @@ class ValidateUser {
 
     return createUserValidator;
   }
+
+  static loginUser() {
+    const loginUserInValidator = Joi.object({
+      email:
+        Joi.string()
+        .email({
+          minDomainSegments: 2, tlds: { allow: ['com', 'net'] }
+        })
+        .required(),
+
+      password:
+        Joi.string()
+        .regex(/^[a-zA-Z0-9]{6,30}$/)
+        .required()
+    })
+
+    return loginUserInValidator;
+  }
 }
 
 export default ValidateUser;

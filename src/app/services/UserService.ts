@@ -1,4 +1,5 @@
 import UserRepository from "../repositories/UserRepository";
+import ICreateUserPayload from "../../interfaces/ICreateUserPayload";
 
 class UserService {
   private repository: UserRepository;
@@ -7,7 +8,7 @@ class UserService {
     this.repository = new UserRepository()
   }
 
-  async userSignUp(payload: any) {
+  async userSignUp(payload: ICreateUserPayload) {
     const result = await this.repository.create(payload);
     return result;
   }

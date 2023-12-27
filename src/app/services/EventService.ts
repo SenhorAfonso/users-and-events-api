@@ -1,29 +1,37 @@
+import EventRepository from "../repositories/EventRepository";
 
 class EventService {
+  private repository: EventRepository;
 
-  createEvent(payload: any) {
-    const result = 'Create an event';
+  constructor() {
+    this.repository = new EventRepository();
+  }
+
+  async createEvent(payload: any) {
+    const result = await this.repository.create(payload);
     return result;
   }
 
-  getEvents() {
-    const result = 'get an event';
+  async getEvents() {
+    const result = await this.repository.getAll();
     return result;
   }
 
-  getSingleEvents(payload: any) {
-    const result = 'get single event';
+  async getSingleEvents(payload: any) {
+    const result = await this.repository.getSingle(payload);
     return result;
   }
 
-  deleteEvent(payload: any) {
-    const result = 'delete an event';
+  async deleteEvent(payload: any) {
+    const result = await this.repository.deleteBy(payload);
     return result;
   }
 
-  deleteSingleEvent(payload: any) {
-    const result = 'delete single event';
+  async deleteSingleEvent(payload: any) {
+    const result = await this.repository.deleteSingle(payload)
     return result;
   }
 
 }
+
+export default EventService;

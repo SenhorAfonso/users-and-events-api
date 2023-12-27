@@ -1,29 +1,32 @@
+import eventSchema from "../schemas/eventSchema";
 
 class EventRepository {
 
-  create(payload: any) {
-    const result = 'Create an event';
+  async create(payload: any) {
+    const result = await eventSchema.create(payload);
     return result;
   }
 
-  getAll() {
-    const result = 'get an event';
+  async getAll() {
+    const result = await eventSchema.find({});
     return result;
   }
 
-  getSingle(payload: any) {
-    const result = 'get single event';
+  async getSingle(payload: any) {
+    const result = await eventSchema.findOne({ payload });
     return result;
   }
 
-  deleteBy(payload: any) {
-    const result = 'delete an event';
+  async deleteBy(payload: any) {
+    const result = await eventSchema.deleteMany({ payload });
     return result;
   }
 
-  deleteSingle(payload: any) {
-    const result = 'delete single event';
+  async deleteSingle(payload: any) {
+    const result = await eventSchema.findByIdAndDelete({ payload });
     return result;
   }
 
 }
+
+export default EventRepository;

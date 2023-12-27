@@ -1,5 +1,6 @@
 import UserRepository from "../repositories/UserRepository";
 import ICreateUserPayload from "../../interfaces/ICreateUserPayload";
+import jwt from 'jsonwebtoken'
 
 class UserService {
   private repository: UserRepository;
@@ -10,7 +11,11 @@ class UserService {
 
   async userSignUp(payload: ICreateUserPayload) {
     const result = await this.repository.create(payload);
-    return result;
+    const userId = result.id;
+
+    const token = jwt.sign({ userId }, 'SECRETKEY')
+
+    return { result, token };
   }
 
   async userSignIn(payload: any) {

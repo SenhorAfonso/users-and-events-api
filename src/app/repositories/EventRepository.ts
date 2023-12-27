@@ -17,7 +17,7 @@ class EventRepository {
     return result;
   }
 
-  async deleteBy(payload: any) {
+  async deleteMany(payload: any) {
     const result = await eventSchema.deleteMany({ payload });
     return result;
   }

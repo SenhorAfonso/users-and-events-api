@@ -36,7 +36,7 @@ class EventController {
     req: Request,
     res: Response
   ) {
-    const result = await this.service.deleteEvent(req.body);
+    const result = await this.service.deleteManyEvents(req.body);
     res.send({ result })
   }
 

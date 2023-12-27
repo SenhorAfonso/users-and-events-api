@@ -22,8 +22,8 @@ class EventService {
     return result;
   }
 
-  async deleteEvent(payload: any) {
-    const result = await this.repository.deleteBy(payload);
+  async deleteManyEvents(payload: any) {
+    const result = await this.repository.deleteMany(payload);
     return result;
   }
 

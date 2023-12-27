@@ -7,6 +7,6 @@ const userRouter = Router();
 
 userRouter.post('/users/sign-up', ValidationMiddleware.validateUserPayload, UserController.userSignUp);
 
-userRouter.post('/users/sign-in', AuthenticationMiddleware.AuthenticateSignIn, UserController.userSignIn);
+userRouter.post('/users/sign-in', UserController.userSignIn);
 
 export default userRouter;

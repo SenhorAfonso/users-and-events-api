@@ -1,40 +1,51 @@
 import { Request, Response } from "express";
+import EventService from "../services/EventService";
 
 class EventController {
+  private service: EventService; 
 
-  createEvent(
-    req: Request,
-    res: Response
-  ) {
-    res.send('Create an event');
+  constructor() {
+    this.service = new EventService();
   }
 
-  getEvents(
+  async createEvent(
     req: Request,
     res: Response
   ) {
-    res.send('get an event');
+    const result = await this.service.createEvent(req.body);
+    res.send({ result })
   }
 
-  getSingleEvents(
+  async getEvents(
     req: Request,
     res: Response
   ) {
-    res.send('get single event');
+    const result = await this.service.getEvents();
+    res.send({ result })
   }
 
-  deleteEvent(
+  async getSingleEvents(
     req: Request,
     res: Response
   ) {
-    res.send('delete an event');
+    const result = await this.service.getSingleEvents(req.body);
+    res.send({ result })
   }
 
-  deleteSingleEvent(
+  async deleteMany(
     req: Request,
     res: Response
   ) {
-    res.send('delete single event');
+    const result = await this.service.deleteEvent(req.body);
+    res.send({ result })
+  }
+
+  async deleteSingleEvent(
+    req: Request,
+    res: Response
+  ) {
+    const result = await this.service.deleteSingleEvent(req.body);
+    res.send({ result })
   }
 
 

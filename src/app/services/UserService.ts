@@ -12,18 +12,18 @@ class UserService {
 
   async userSignUp(payload: ICreateUserPayload) {
     const result = await this.repository.create(payload);
-    const userId = result.id;
-
-    const token = jwt.sign({ userId }, 'SECRETKEY')
-
-    return { result, token };
+    return { result };
   }
 
   async userSignIn(payload: ILoginUserPayload) {
     const { email, password } = payload;
 
     const result = await this.repository.login({ email, password });
-    return result;
+    const userId = result.id;
+
+    const token = jwt.sign({ userId }, 'SECRETKEY')
+
+    return { result, token };
   }
 
 }

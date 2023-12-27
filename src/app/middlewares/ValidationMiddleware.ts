@@ -8,13 +8,13 @@ class ValidationMiddleware {
     joiValidationObject: Joi.ObjectSchema
   ) {
 
-    return async (
+    return (
       req: Request,
       res: Response,
       next: NextFunction
     ) => {
       
-      const { error } = await joiValidationObject.validate(req.body, {
+      const { error } = joiValidationObject.validate(req.body, {
         abortEarly: false
       })
   

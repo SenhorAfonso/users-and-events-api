@@ -1,9 +1,11 @@
 import Router from 'express';
 import EventController from '../app/controllers/EventController';
+import ValidationMiddleware from '../app/middlewares/ValidationMiddleware';
+import ValidateEvent from '../app/validations/Event/ValidateEvent';
 
 const eventRouter = Router();
 
-eventRouter.post('/events', EventController.createEvent)
+eventRouter.post('/events', ValidationMiddleware.validatePayload(ValidateEvent.createEvent()), EventController.createEvent)
 
 eventRouter.get('/events', EventController.getEvents)
 

@@ -47,7 +47,7 @@ class EventRepository {
       .limit(limit);
 
     if (result.length === 0) {
-      throw new NotFoundError('Not Found');
+      throw new NotFoundError();
     }
 
     status = StatusCodes.OK;

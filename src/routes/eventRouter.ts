@@ -8,7 +8,10 @@ const eventRouter = Router();
 
 eventRouter.post('/events', AuthMiddleware.AuthenticateToken, ValidationMiddleware.validatePayload(ValidateEvent.createEvent(), 'body'), EventController.createEvent)
 
-eventRouter.get('/events', AuthMiddleware.AuthenticateToken, EventController.getEvents)
+eventRouter.get('/events', [
+  AuthMiddleware.AuthenticateToken,
+  ValidationMiddleware.validatePayload(ValidateEvent.getAll(), 'query')
+], EventController.getEvents)
 
 eventRouter.get('/event/:id', AuthMiddleware.AuthenticateToken, EventController.getSingleEvents)
 

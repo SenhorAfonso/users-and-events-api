@@ -20,18 +20,38 @@ class EventService {
   }
 
   async getSingleEvents(payload: IEventQueryParams) {
-    const result = await this.repository.getSingle(payload);
+    const queryObject = this.createQueryObject(payload);
+    
+    const result = await this.repository.getSingle(queryObject);
     return result;
   }
 
   async deleteManyEvents(payload: IEventQueryParams) {
-    const result = await this.repository.deleteMany(payload);
+    const queryObject = this.createQueryObject(payload);
+
+    const result = await this.repository.deleteMany(queryObject);
     return result;
   }
 
   async deleteSingleEvent(payload: IEventQueryParams) {
-    const result = await this.repository.deleteSingle(payload)
+    const queryObject = this.createQueryObject(payload);
+
+    const result = await this.repository.deleteSingle(queryObject)
     return result;
+  }
+
+  private createQueryObject(payload: IEventQueryParams) {
+    const queryObject: IEventQueryParams = {};
+
+    if (payload.dayOfWeek) {
+      queryObject.dayOfWeek = payload.dayOfWeek;
+    }
+
+    if (payload.description) {
+      queryObject.description = payload.description;
+    }
+
+    return queryObject;
   }
 
 }

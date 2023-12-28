@@ -11,11 +11,9 @@ class ErrorHandlingMiddleware {
     next: NextFunction
   ) {
     if (error instanceof Joi.ValidationError) {
-      const joiErrors = ErrorHandlingMiddleware.formatJoiValidationErrors(error);
+      const { type, errors } = ErrorHandlingMiddleware.formatJoiValidationErrors(error);
 
-      let type = error.name;
-
-      res.status(StatusCodes.BAD_REQUEST).json({ type, errors: joiErrors })
+      res.status(StatusCodes.BAD_REQUEST).json({ type, errors })
     } else {
       res.send(error.message);
     }

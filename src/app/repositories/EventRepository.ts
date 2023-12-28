@@ -20,7 +20,7 @@ class EventRepository {
       return { success, status, msg, result };
     } catch (error) {
       status = StatusCodes.INTERNAL_SERVER_ERROR;
-      msg = 'Server error';
+      msg = 'Something went wrong';
       success = false
 
       return { success, status, msg, result };

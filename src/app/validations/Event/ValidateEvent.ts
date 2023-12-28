@@ -10,7 +10,7 @@ class ValidateEvent {
         .min(MIN_DESCRIPTION_LENGHT),
 
       dayOfWeek: Joi.string()
-        .valid(['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'])
+        .valid('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday')
         .required()
     })
 

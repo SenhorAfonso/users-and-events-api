@@ -3,6 +3,7 @@ import ICreateEventPayload from "../../interfaces/Events/ICreateEventPayload";
 import eventSchema from "../schemas/eventSchema";
 import StatusCodes from "http-status-codes";
 import IEventQueryParams from "../../interfaces/Events/IEventQueryParams";
+import NotFoundError from "../errors/NotFoundError";
 
 class EventRepository {
 
@@ -39,6 +40,10 @@ class EventRepository {
       .sort({ description: sort })
       .skip(skip)
       .limit(limit);
+
+    if (result.length === 0) {
+      throw new NotFoundError('Not found');
+    }
 
     return result;
   }

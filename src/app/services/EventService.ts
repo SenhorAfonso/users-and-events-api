@@ -2,6 +2,7 @@ import ICreateEventPayload from "../../interfaces/Events/ICreateEventPayload";
 import EventRepository from "../repositories/EventRepository";
 import IEventQueryParams from "../../interfaces/Events/IEventQueryParams";
 import NotFoundError from "../errors/NotFoundError";
+import { StatusCodes } from "http-status-codes";
 
 class EventService {
   private repository: EventRepository;
@@ -16,16 +17,10 @@ class EventService {
   }
 
   async getEvents(payload: IEventQueryParams) {
-    try {
-      const queryObject = this.createQueryObject(payload);
-      const result = await this.repository.getAll(queryObject);
-      
-      return result;
-    } catch (error) {
-      if (error instanceof NotFoundError) {
-        return 'Not found';
-      }
-    }
+    const queryObject = this.createQueryObject(payload);
+    const result = await this.repository.getAll(queryObject);
+    
+    return result;
   }
 
   async getSingleEvents(payload: IEventQueryParams) {

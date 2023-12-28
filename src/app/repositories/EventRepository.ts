@@ -1,8 +1,9 @@
+import ICreateEventPayload from "../../interfaces/Events/ICreateEventPayload";
 import eventSchema from "../schemas/eventSchema";
 
 class EventRepository {
 
-  async create(payload: any) {
+  async create(payload: ICreateEventPayload) {
     const result = await eventSchema.create(payload);
     return result;
   }

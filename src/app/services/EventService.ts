@@ -1,3 +1,4 @@
+import ICreateEventPayload from "../../interfaces/Events/ICreateEventPayload";
 import EventRepository from "../repositories/EventRepository";
 
 class EventService {
@@ -7,7 +8,7 @@ class EventService {
     this.repository = new EventRepository();
   }
 
-  async createEvent(payload: any) {
+  async createEvent(payload: ICreateEventPayload) {
     const result = await this.repository.create(payload);
     return result;
   }

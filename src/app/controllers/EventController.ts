@@ -1,13 +1,17 @@
 import { Request, Response } from "express";
 import eventService from "../services/EventService";
+import AuthenticatedRequest from "../../interfaces/AuthMiddleware/AuthenticatedRequest";
 
 class EventController {
 
   async createEvent(
-    req: Request,
+    req: AuthenticatedRequest,
     res: Response
   ) {
-    const { success, status, msg, result } = await eventService.createEvent(req.body);
+    const userId = req.user!.userId ?? '';
+    const { description, dayOfWeek } = req.body
+    const { success, status, msg, result } = await eventService.createEvent({ userId, description, dayOfWeek });
+    
     res.status(status).json({ success, msg, data: result });
   }
 

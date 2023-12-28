@@ -1,11 +1,30 @@
+import mongoose from "mongoose";
 import ICreateEventPayload from "../../interfaces/Events/ICreateEventPayload";
 import eventSchema from "../schemas/eventSchema";
+import StatusCodes from "http-status-codes";
 
 class EventRepository {
 
   async create(payload: ICreateEventPayload) {
-    const result = await eventSchema.create(payload);
-    return result;
+    let status: number = 0;
+    let msg: string = '';
+    let success: boolean = true;
+    let result: mongoose.Document | undefined;
+
+    try {
+      result = await eventSchema.create(payload);
+
+      status = StatusCodes.OK;
+      msg = 'Successful operation';
+
+      return { success, status, msg, result };
+    } catch (error) {
+      status = StatusCodes.INTERNAL_SERVER_ERROR;
+      msg = 'Server error';
+      success = false
+
+      return { success, status, msg, result };
+    }
   }
 
   async getAll() {

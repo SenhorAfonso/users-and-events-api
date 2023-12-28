@@ -14,8 +14,10 @@ class EventService {
     return result;
   }
 
-  async getEvents() {
-    const result = await this.repository.getAll();
+  async getEvents(payload: IEventQueryParams) {
+    const queryObject = this.createQueryObject(payload);
+
+    const result = await this.repository.getAll(queryObject);
     return result;
   }
 

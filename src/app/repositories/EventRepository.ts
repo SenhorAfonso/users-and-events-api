@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import ICreateEventPayload from "../../interfaces/Events/ICreateEventPayload";
 import eventSchema from "../schemas/eventSchema";
 import StatusCodes from "http-status-codes";
+import IEventQueryParams from "../../interfaces/Events/IEventQueryParams";
 
 class EventRepository {
 
@@ -27,8 +28,8 @@ class EventRepository {
     }
   }
 
-  async getAll() {
-    const result = await eventSchema.find({});
+  async getAll(queryObject: IEventQueryParams) {
+    const result = await eventSchema.find(queryObject);
     return result;
   }
 

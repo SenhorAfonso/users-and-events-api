@@ -19,7 +19,7 @@ class EventController {
     req: Request,
     res: Response
   ) {
-    const result = await eventService.getEvents();
+    const result = await eventService.getEvents(req.query);
     res.send({ result })
   }
 

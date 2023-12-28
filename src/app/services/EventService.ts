@@ -1,5 +1,6 @@
 import ICreateEventPayload from "../../interfaces/Events/ICreateEventPayload";
 import EventRepository from "../repositories/EventRepository";
+import IEventQueryParams from "../../interfaces/Events/IEventQueryParams";
 
 class EventService {
   private repository: EventRepository;
@@ -18,17 +19,17 @@ class EventService {
     return result;
   }
 
-  async getSingleEvents(payload: any) {
+  async getSingleEvents(payload: IEventQueryParams) {
     const result = await this.repository.getSingle(payload);
     return result;
   }
 
-  async deleteManyEvents(payload: any) {
+  async deleteManyEvents(payload: IEventQueryParams) {
     const result = await this.repository.deleteMany(payload);
     return result;
   }
 
-  async deleteSingleEvent(payload: any) {
+  async deleteSingleEvent(payload: IEventQueryParams) {
     const result = await this.repository.deleteSingle(payload)
     return result;
   }

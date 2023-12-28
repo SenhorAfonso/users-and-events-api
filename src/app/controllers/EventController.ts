@@ -7,8 +7,8 @@ class EventController {
     req: Request,
     res: Response
   ) {
-    const result = await eventService.createEvent(req.body);
-    res.send({ result })
+    const { success, status, msg, result } = await eventService.createEvent(req.body);
+    res.status(status).json({ success, msg, data: result });
   }
 
   async getEvents(
@@ -39,7 +39,7 @@ class EventController {
     req: Request,
     res: Response
   ) {
-    const result = await eventService.deleteSingleEvent(req.query);
+    const result = await eventService.deleteSingleEvent(req.body);
     res.send({ result })
   }
 

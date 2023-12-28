@@ -1,31 +1,35 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import AuthenticationError from "../errors/AuthenticationError";
+import IJwtPayload from "../../interfaces/AuthMiddleware/IJwtPayload";
+import AuthenticatedRequest from "../../interfaces/AuthMiddleware/AuthenticatedRequest";
 
 class AuthenticationMiddleware {
 
-  async AuthenticateSignIn(
-    req: Request,
+  static async AuthenticateToken(
+    req: AuthenticatedRequest,
     res: Response,
     next: NextFunction
   ) {
     const authHeader = req.headers.authorization;
 
-    if (this.authHeaderIsNotValid(authHeader)) {
-      return res.status(401).json({ msg: 'Unauthorized' });
+    if (AuthenticationMiddleware.authHeaderIsNotValid(authHeader)) {
+      throw new AuthenticationError('Not Authenticated');
     }
     
     const token = authHeader!.split(' ')[1];
     
     try {
-      jwt.verify(token, 'SECRETKEY');
+      const { userId } = jwt.verify(token, 'SECRETKEY') as IJwtPayload;
+      req.user = { userId };
       next();
     } catch (error) {
-      return res.status(401).json({ msg: 'Unauthorized' });
+      throw new AuthenticationError('Not Authenticated');
     }
     
   }
 
-  authHeaderIsNotValid(authHeader: string | undefined) {
+  static authHeaderIsNotValid(authHeader: string | undefined) {
     return !authHeader || !authHeader.startsWith('Bearer ');
   }
 

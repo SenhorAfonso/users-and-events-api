@@ -23,7 +23,14 @@ class ValidateEvent {
         .min(MIN_DESCRIPTION_LENGHT),
 
       dayOfWeek: Joi.string()
-        .valid('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday')
+        .valid('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'),
+
+      page: Joi.string(),
+
+      limit: Joi.string(),
+      
+      sort: Joi.string()
+        .valid('asc', 'desc')
     })
 
     return getAllQueryObjectValidator;

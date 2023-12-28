@@ -5,7 +5,8 @@ import Joi from "joi";
 class ValidationMiddleware {
 
   static validatePayload(
-    joiValidationObject: Joi.ObjectSchema
+    joiValidationObject: Joi.ObjectSchema,
+    target: 'body' | 'query' | 'params'
   ) {
 
     return (
@@ -13,8 +14,8 @@ class ValidationMiddleware {
       res: Response,
       next: NextFunction
     ) => {
-      
-      const { error } = joiValidationObject.validate(req.body, {
+    
+      const { error } = joiValidationObject.validate(req[target], {
         abortEarly: false
       })
   

@@ -1,3 +1,4 @@
+import 'express-async-errors'
 import express from 'express';
 import userRouter from './routes/userRouter';
 import eventRouter from './routes/eventRouter';

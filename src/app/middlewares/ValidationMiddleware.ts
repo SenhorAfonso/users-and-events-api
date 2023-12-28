@@ -4,7 +4,7 @@ import Joi from "joi";
 
 class ValidationMiddleware {
 
-  static validateUserPayload(
+  static validatePayload(
     joiValidationObject: Joi.ObjectSchema
   ) {
 

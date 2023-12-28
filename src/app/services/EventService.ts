@@ -65,6 +65,10 @@ class EventService {
       queryObject.sort = payload.sort;
     }
 
+    if (payload.skip) {
+      queryObject.skip = payload.skip;
+    }
+    
     return queryObject;
   }
 

@@ -5,4 +5,5 @@ export default interface IEventQueryParams {
   limit?: number;
   sort?: 'asc' | 'desc';
   page?: number;
+  skip?: number;
 }

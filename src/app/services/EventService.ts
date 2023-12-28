@@ -53,6 +53,18 @@ class EventService {
       queryObject.description = payload.description;
     }
 
+    if (payload.limit) {
+      queryObject.limit = payload.limit;
+    }
+
+    if (payload.page) {
+      queryObject.page = payload.page;
+    }
+
+    if (payload.sort) {
+      queryObject.sort = payload.sort;
+    }
+
     return queryObject;
   }
 

@@ -23,7 +23,7 @@ class EventController {
     req: Request,
     res: Response
   ) {
-    const result = await eventService.getSingleEvents(req.body);
+    const result = await eventService.getSingleEvents(req.query);
     res.send({ result })
   }
 
@@ -31,7 +31,7 @@ class EventController {
     req: Request,
     res: Response
   ) {
-    const result = await eventService.deleteManyEvents(req.body);
+    const result = await eventService.deleteManyEvents(req.query);
     res.send({ result })
   }
 
@@ -39,7 +39,7 @@ class EventController {
     req: Request,
     res: Response
   ) {
-    const result = await eventService.deleteSingleEvent(req.body);
+    const result = await eventService.deleteSingleEvent(req.query);
     res.send({ result })
   }
 

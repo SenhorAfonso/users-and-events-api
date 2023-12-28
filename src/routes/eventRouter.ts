@@ -5,7 +5,7 @@ import ValidateEvent from '../app/validations/Event/ValidateEvent';
 
 const eventRouter = Router();
 
-eventRouter.post('/events', ValidationMiddleware.validatePayload(ValidateEvent.createEvent()), EventController.createEvent)
+eventRouter.post('/events', ValidationMiddleware.validatePayload(ValidateEvent.createEvent(), 'body'), EventController.createEvent)
 
 eventRouter.get('/events', EventController.getEvents)
 

@@ -29,7 +29,17 @@ class EventRepository {
   }
 
   async getAll(queryObject: IEventQueryParams) {
-    const result = await eventSchema.find(queryObject);
+    let { limit, page, sort, skip, ...query } = queryObject;
+    limit = limit ?? 3;
+    page = page ?? 1;
+    sort = sort ?? 'asc';
+    skip = (page - 1) * limit || skip || 0;
+
+    const result = await eventSchema.find(query)
+      .sort({ description: sort })
+      .skip(skip)
+      .limit(limit);
+
     return result;
   }
 

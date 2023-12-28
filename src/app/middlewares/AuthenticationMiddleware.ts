@@ -12,7 +12,7 @@ class AuthenticationMiddleware {
     const authHeader = req.headers.authorization;
 
     if (AuthenticationMiddleware.authHeaderIsNotValid(authHeader)) {
-      throw new AuthenticationError('Not Authenticated')
+      throw new AuthenticationError('Not Authenticated');
     }
     
     const token = authHeader!.split(' ')[1];
@@ -21,7 +21,7 @@ class AuthenticationMiddleware {
       jwt.verify(token, 'SECRETKEY');
       next();
     } catch (error) {
-      throw new AuthenticationError('Not Authenticated')
+      throw new AuthenticationError('Not Authenticated');
     }
     
   }

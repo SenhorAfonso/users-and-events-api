@@ -1,12 +1,13 @@
 import StatusCodes from "http-status-codes";
+import ErrorMessage from "./enum/ErrorMessageEnum";
 
 class NotFoundError extends Error {
-  private status: number;
+  public status: number;
 
-  constructor(message: string) {
+  constructor(message: string = ErrorMessage.NotFoundError) {
     super(message);
     this.status = StatusCodes.NOT_FOUND;
-    this.name = 'Not found';
+    this.name = 'Not Found';
   }
 }
 

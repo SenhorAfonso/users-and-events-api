@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import AuthenticationError from "../errors/AuthenticationError";
 
 class AuthenticationMiddleware {
 
@@ -11,7 +12,7 @@ class AuthenticationMiddleware {
     const authHeader = req.headers.authorization;
 
     if (AuthenticationMiddleware.authHeaderIsNotValid(authHeader)) {
-      return res.status(401).json({ msg: 'Unauthorized' });
+      throw new AuthenticationError('Not Authenticated')
     }
     
     const token = authHeader!.split(' ')[1];
@@ -20,7 +21,7 @@ class AuthenticationMiddleware {
       jwt.verify(token, 'SECRETKEY');
       next();
     } catch (error) {
-      return res.status(401).json({ msg: 'Unauthorized' });
+      throw new AuthenticationError('Not Authenticated')
     }
     
   }

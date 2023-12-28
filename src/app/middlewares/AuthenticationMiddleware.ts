@@ -1,11 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import AuthenticationError from "../errors/AuthenticationError";
+import IJwtPayload from "../../interfaces/AuthMiddleware/IJwtPayload";
+import AuthenticatedRequest from "../../interfaces/AuthMiddleware/AuthenticatedRequest";
 
 class AuthenticationMiddleware {
 
   static async AuthenticateToken(
-    req: Request,
+    req: AuthenticatedRequest,
     res: Response,
     next: NextFunction
   ) {
@@ -18,7 +20,8 @@ class AuthenticationMiddleware {
     const token = authHeader!.split(' ')[1];
     
     try {
-      jwt.verify(token, 'SECRETKEY');
+      const { userId } = jwt.verify(token, 'SECRETKEY') as IJwtPayload;
+      req.user = { userId };
       next();
     } catch (error) {
       throw new AuthenticationError('Not Authenticated');

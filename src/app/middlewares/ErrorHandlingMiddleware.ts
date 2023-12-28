@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
+import AuthenticationError from "../errors/AuthenticationError";
 import StatusCodes from "http-status-codes";
 
 class ErrorHandlingMiddleware {
@@ -12,8 +13,13 @@ class ErrorHandlingMiddleware {
   ) {
     if (error instanceof Joi.ValidationError) {
       const { type, errors } = ErrorHandlingMiddleware.formatJoiValidationErrors(error);
-
       res.status(StatusCodes.BAD_REQUEST).json({ type, errors })
+    } else if (error instanceof AuthenticationError) {
+      res.status(StatusCodes.UNAUTHORIZED).json({
+        statusCode: StatusCodes.UNAUTHORIZED,
+        error: error.name,
+        message: error.message
+      })
     } else {
       res.send(error.message);
     }

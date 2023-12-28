@@ -3,14 +3,14 @@ import jwt from "jsonwebtoken";
 
 class AuthenticationMiddleware {
 
-  async AuthenticateSignIn(
+  static async AuthenticateToken(
     req: Request,
     res: Response,
     next: NextFunction
   ) {
     const authHeader = req.headers.authorization;
 
-    if (this.authHeaderIsNotValid(authHeader)) {
+    if (AuthenticationMiddleware.authHeaderIsNotValid(authHeader)) {
       return res.status(401).json({ msg: 'Unauthorized' });
     }
     
@@ -25,7 +25,7 @@ class AuthenticationMiddleware {
     
   }
 
-  authHeaderIsNotValid(authHeader: string | undefined) {
+  static authHeaderIsNotValid(authHeader: string | undefined) {
     return !authHeader || !authHeader.startsWith('Bearer ');
   }
 

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import eventService from "../services/EventService";
 import AuthenticatedRequest from "../../interfaces/AuthMiddleware/AuthenticatedRequest";
+import NotFoundError from "../errors/NotFoundError";
 
 class EventController {
 
@@ -19,8 +20,20 @@ class EventController {
     req: Request,
     res: Response
   ) {
-    const result = await eventService.getEvents();
-    res.send({ result })
+    try {
+      const { success, status, msg, result } = await eventService.getEvents(req.query);
+      res.status(status).json({ success, msg, data: result });
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        res.status(error.status).json({ 
+          statusCode: error.status,
+          error: error.name,
+          message: error.message
+        })
+      } else {
+        res.status(500).send({ error })
+      }
+    }
   }
 
   async getSingleEvents(

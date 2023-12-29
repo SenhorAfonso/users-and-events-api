@@ -60,25 +60,21 @@ class EventRepository {
   }
 
   async getSingle(queryObject: IQueryById) {
-    const { _id } = queryObject;
+    const status: number = StatusCodes.OK;
+    const message: string = 'Successful operation';
+    const success: boolean = true;
 
-    let status: number = 0;
-    let message: string = '';
-    let success: boolean = true;
     let result: mongoose.Document | null;
 
     try {
-      result = await eventSchema.findOne({ _id });
+      result = await eventSchema.findOne(queryObject);
     } catch (error) {
-      throw new InternalServerError;
+      throw new InternalServerError();
     }
 
     if (!result) {
       throw new NotFoundError();
     }
-
-    status = StatusCodes.OK;
-    message = 'Successful operation';
 
     return { success, status, message, result };
   }

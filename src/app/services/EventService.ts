@@ -17,6 +17,7 @@ class EventService {
 
   async createEvent(payload: ICreateEventPayload) {
     const result = await this.repository.create(payload);
+
     return result;
   }
 
@@ -30,20 +31,21 @@ class EventService {
   async getSingleEvents(payload: IQueryByIdParams) {
     const queryObject = this.createQueryById(payload);
     const result = await this.repository.getSingle(queryObject);
+
     return result;
   }
 
   async deleteManyEvents(payload: IQueryByObjectParams) {
     const queryObject = this.createQueryByObject(payload);
-
     const result = await this.repository.deleteMany(queryObject);
+
     return result;
   }
 
   async deleteSingleEvent(payload: IQueryByIdParams) {
     const queryObject = this.createQueryById(payload);
+    const result = await this.repository.deleteSingle(queryObject);
 
-    const result = await this.repository.deleteSingle(queryObject)
     return result;
   }
 

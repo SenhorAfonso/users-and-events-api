@@ -5,6 +5,8 @@ import StatusCodes from "http-status-codes";
 import InternalServerError from "../errors/InternalServerError";
 import resultIsEmpty from "../utils/resultIsEmpty";
 import NotFoundError from "../errors/NotFoundError";
+import mongoose from "mongoose";
+import DuplicatedValueError from "../errors/DuplicatedValueError";
 
 class UserRepository {
 
@@ -13,8 +15,16 @@ class UserRepository {
     const success: boolean = true;
     const message: string = 'User created';
 
+    let result: mongoose.Document | null;
+
+    result = await userSchema.findOne({ email: payload.email });
+    
+    if (result) {
+      throw new DuplicatedValueError('Email already exists');
+    }
+    
     try {
-      const result = await userSchema.create(payload);
+      result = await userSchema.create(payload);
       return { success, status, message, result };
     } catch (error) {
       throw new InternalServerError();

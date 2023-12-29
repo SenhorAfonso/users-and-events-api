@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import eventService from "../services/EventService";
 import AuthenticatedRequest from "../../interfaces/AuthMiddleware/AuthenticatedRequest";
 import NotFoundError from "../errors/NotFoundError";
+import IEventQueryParams from "../../interfaces/Events/IEventQueryParams";
+import InternalServerError from "../errors/InternalServerError";
 
 class EventController {
 
@@ -40,8 +42,28 @@ class EventController {
     req: Request,
     res: Response
   ) {
-    const result = await eventService.getSingleEvents(req.query);
-    res.send({ result })
+    const userId = req.params.id;
+
+    try {
+      const queryObject: IEventQueryParams = { _id: userId };
+      const { success, status, message, result } = await eventService.getSingleEvents(queryObject);
+      res.status(status).json({ success, message, data: result });
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        res.status(error.status).json({
+          statusCode: error.status,
+          error: error.name,
+          message: error.message
+        })
+      } else if (error instanceof InternalServerError) {
+        res.status(error.status).json({
+          statusCode: error.status,
+          error: error.name,
+          message: error.message
+        })
+      }
+    }
+
   }
 
   async deleteMany(

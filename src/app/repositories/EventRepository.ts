@@ -58,9 +58,22 @@ class EventRepository {
 
   async getSingle(queryObject: IEventQueryParams) {
     const { _id } = queryObject;
-    const result = await eventSchema.findOne({ _id });
-    
-    return result;
+
+    let status: number = 0;
+    let message: string = '';
+    let success: boolean = true;
+    let result: mongoose.Document | null;
+
+    result = await eventSchema.findOne({ _id });
+
+    if (!result) {
+      throw new NotFoundError();
+    }
+
+    status = StatusCodes.OK;
+    message = 'Successful operation';
+
+    return { success, status, message, result };
   }
 
   async deleteMany(payload: any) {

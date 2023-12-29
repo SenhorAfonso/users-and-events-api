@@ -2,9 +2,11 @@ import mongoose from "mongoose";
 import ICreateEventPayload from "../../interfaces/Events/ICreateEventPayload";
 import eventSchema from "../schemas/eventSchema";
 import StatusCodes from "http-status-codes";
-import IEventQueryParams from "../../interfaces/Events/IEventQueryParams";
+import IEventQueryParams from "../../interfaces/Events/IQueryByObjectParams";
 import NotFoundError from "../errors/NotFoundError";
 import InternalServerError from "../errors/InternalServerError";
+import IQueryById from "../../interfaces/Events/IQueryById";
+import IQueryByObject from "../../interfaces/Events/IQueryByObject";
 
 class EventRepository {
 
@@ -30,7 +32,7 @@ class EventRepository {
     }
   }
 
-  async getAll(queryObject: IEventQueryParams) {
+  async getAll(queryObject: IQueryByObject) {
     let status: number = 0;
     let msg: string = '';
     let success: boolean = true;
@@ -57,7 +59,7 @@ class EventRepository {
     return { success, status, msg, result };
   }
 
-  async getSingle(queryObject: IEventQueryParams) {
+  async getSingle(queryObject: IQueryById) {
     const { _id } = queryObject;
 
     let status: number = 0;
@@ -86,9 +88,24 @@ class EventRepository {
     return result;
   }
 
-  async deleteSingle(payload: any) {
-    const result = await eventSchema.findByIdAndDelete({ payload });
-    return result;
+  async deleteSingle(queryObject: IQueryById) {
+    const status: number = StatusCodes.NO_CONTENT;
+    const message: string = 'Event deleted';
+    const success: boolean = true;
+
+    let result: mongoose.ModifyResult<Document> | null;
+
+    try {
+      result = await eventSchema.findByIdAndDelete(queryObject);
+
+      if (!result) {
+        throw new NotFoundError();
+      }
+      
+      return { success, status, message, result };
+    } catch (error) {
+      throw new InternalServerError();
+    }
   }
 
 }

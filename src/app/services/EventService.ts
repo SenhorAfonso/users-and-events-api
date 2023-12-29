@@ -3,6 +3,8 @@ import EventRepository from "../repositories/EventRepository";
 import IEventQueryParams from "../../interfaces/Events/IEventQueryParams";
 import NotFoundError from "../errors/NotFoundError";
 import { StatusCodes } from "http-status-codes";
+import IQueryById from "../../interfaces/Events/IQueryById";
+import IQueryByIdParams from "../../interfaces/Events/IQueryByIdParams";
 
 class EventService {
   private repository: EventRepository;
@@ -36,8 +38,8 @@ class EventService {
     return result;
   }
 
-  async deleteSingleEvent(payload: IEventQueryParams) {
-    const queryObject = this.createQueryObject(payload);
+  async deleteSingleEvent(payload: IQueryByIdParams) {
+    const queryObject = this.createQueryById(payload);
 
     const result = await this.repository.deleteSingle(queryObject)
     return result;
@@ -72,6 +74,16 @@ class EventService {
 
     if (payload._id) {
       queryObject._id = payload._id;
+    }
+
+    return queryObject;
+  }
+
+  private createQueryById(payload: IQueryByIdParams) {
+    const queryObject: IQueryById = {};
+
+    if (payload.id) {
+      queryObject._id = payload.id;
     }
 
     return queryObject;

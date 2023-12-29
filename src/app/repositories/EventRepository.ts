@@ -5,6 +5,7 @@ import StatusCodes from "http-status-codes";
 import IEventQueryParams from "../../interfaces/Events/IEventQueryParams";
 import NotFoundError from "../errors/NotFoundError";
 import InternalServerError from "../errors/InternalServerError";
+import IQueryById from "../../interfaces/Events/IQueryById";
 
 class EventRepository {
 
@@ -86,12 +87,9 @@ class EventRepository {
     return result;
   }
 
-  async deleteSingle(payload: any) {
-    const { _id } = payload;
-
-    const result = await eventSchema.findByIdAndDelete({ _id });
+  async deleteSingle(payload: IQueryById) {
+    const result = await eventSchema.findById(payload);
     return result;
-
   }
 
 }

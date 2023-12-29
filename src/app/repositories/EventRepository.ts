@@ -11,25 +11,20 @@ import IQueryByObject from "../../interfaces/Events/IQueryByObject";
 class EventRepository {
 
   async create(payload: ICreateEventPayload) {
-    let status: number = 0;
-    let msg: string = '';
-    let success: boolean = true;
+    const status: number = StatusCodes.OK;
+    const msg: string = 'Successful operation';
+    const success: boolean = true;
+
     let result: mongoose.Document | undefined;
 
     try {
       result = await eventSchema.create(payload);
 
-      status = StatusCodes.OK;
-      msg = 'Successful operation';
-
       return { success, status, msg, result };
     } catch (error) {
-      status = StatusCodes.INTERNAL_SERVER_ERROR;
-      msg = 'Something went wrong';
-      success = false
-
-      return { success, status, msg, result };
+      throw new InternalServerError();
     }
+
   }
 
   async getAll(queryObject: IQueryByObject) {

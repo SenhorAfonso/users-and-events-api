@@ -23,7 +23,7 @@ class ErrorHandlingMiddleware {
         statusCode,
         error,
         message
-      } = this.createCustomErrorResponse(reqError);
+      } = ErrorHandlingMiddleware.createCustomErrorResponse(reqError);
 
       return res.status(statusCode).json({ statusCode, error, message })
     }

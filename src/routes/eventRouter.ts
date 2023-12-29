@@ -17,7 +17,7 @@ eventRouter.get('/event/:id', AuthMiddleware.AuthenticateToken, EventController.
 
 eventRouter.delete('/events', AuthMiddleware.AuthenticateToken, EventController.deleteMany)
 
-eventRouter.delete('/events/:id', AuthMiddleware.AuthenticateToken, EventController.getSingleEvents)
+eventRouter.delete('/events/:id', AuthMiddleware.AuthenticateToken, EventController.deleteSingleEvent)
 
 
 export default eventRouter;

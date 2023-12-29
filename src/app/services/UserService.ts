@@ -13,7 +13,7 @@ class UserService {
 
   async userSignUp(payload: ICreateUserPayload) {
     const result = await this.repository.create(payload);
-    return { result };
+    return result;
   }
 
   async userSignIn(payload: ILoginUserPayload) {

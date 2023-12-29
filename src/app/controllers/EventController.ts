@@ -42,10 +42,21 @@ class EventController {
     res: Response
   ) {
     const userId = req.params.id;
-    const queryObject: IEventQueryParams = { _id: userId };
-    const result = await eventService.getSingleEvents(queryObject);
 
-    res.send({ result })
+    try {
+      const queryObject: IEventQueryParams = { _id: userId };
+      const { success, status, message, result } = await eventService.getSingleEvents(queryObject);
+      res.status(status).json({ success, message, data: result });
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        res.status(error.status).json({
+          statusCode: error.status,
+          error: error.name,
+          message: error.message
+        })
+      }
+    }
+
   }
 
   async deleteMany(

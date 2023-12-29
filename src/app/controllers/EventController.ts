@@ -22,47 +22,16 @@ class EventController {
     req: Request,
     res: Response
   ) {
-    try {
-      const { success, status, msg, result } = await eventService.getEvents(req.query);
-      res.status(status).json({ success, msg, data: result });
-    } catch (error) {
-      if (error instanceof NotFoundError) {
-        res.status(error.status).json({ 
-          statusCode: error.status,
-          error: error.name,
-          message: error.message
-        })
-      } else {
-        res.status(500).send({ error })
-      }
-    }
+    const { success, status, msg, result } = await eventService.getEvents(req.query);
+    res.status(status).json({ success, msg, data: result });
   }
 
   async getSingleEvents(
     req: Request,
     res: Response
   ) {
-    const userId = req.params.id;
-
-    try {
-      const { success, status, message, result } = await eventService.getSingleEvents(req.params);
-      res.status(status).json({ success, message, data: result });
-    } catch (error) {
-      if (error instanceof NotFoundError) {
-        res.status(error.status).json({
-          statusCode: error.status,
-          error: error.name,
-          message: error.message
-        })
-      } else if (error instanceof InternalServerError) {
-        res.status(error.status).json({
-          statusCode: error.status,
-          error: error.name,
-          message: error.message
-        })
-      }
-    }
-
+    const { success, status, message, result } = await eventService.getSingleEvents(req.params);
+    res.status(status).json({ success, message, data: result });
   }
 
   async deleteMany(

@@ -11,74 +11,67 @@ import IQueryByObject from "../../interfaces/Events/IQueryByObject";
 class EventRepository {
 
   async create(payload: ICreateEventPayload) {
-    let status: number = 0;
-    let msg: string = '';
-    let success: boolean = true;
+    const status: number = StatusCodes.OK;
+    const msg: string = 'Successful operation';
+    const success: boolean = true;
+
     let result: mongoose.Document | undefined;
 
     try {
       result = await eventSchema.create(payload);
 
-      status = StatusCodes.OK;
-      msg = 'Successful operation';
-
       return { success, status, msg, result };
     } catch (error) {
-      status = StatusCodes.INTERNAL_SERVER_ERROR;
-      msg = 'Something went wrong';
-      success = false
-
-      return { success, status, msg, result };
+      throw new InternalServerError();
     }
+
   }
 
   async getAll(queryObject: IQueryByObject) {
-    let status: number = 0;
-    let msg: string = '';
-    let success: boolean = true;
-    let result: mongoose.Document[];
+    const status: number = StatusCodes.OK;
+    const msg: string = 'Successful operation';
+    const success: boolean = true;
+
     let { limit, page, sort, skip, ...query } = queryObject;
+    let result: mongoose.Document[];
 
     limit = limit ?? 3;
     page = page ?? 1;
     sort = sort ?? 'asc';
     skip = (page - 1) * limit || skip || 0;
 
-    result = await eventSchema.find(query)
-      .sort({ description: sort })
-      .skip(skip)
-      .limit(limit);
+    try {
+      result = await eventSchema.find(query)
+        .sort({ description: sort })
+        .skip(skip)
+        .limit(limit);
+    } catch (error) {
+      throw new InternalServerError();
+    }
 
     if (result.length === 0) {
       throw new NotFoundError();
     }
 
-    status = StatusCodes.OK;
-    msg = 'Successful operation';
-
     return { success, status, msg, result };
   }
 
   async getSingle(queryObject: IQueryById) {
-    const { _id } = queryObject;
+    const status: number = StatusCodes.OK;
+    const message: string = 'Successful operation';
+    const success: boolean = true;
 
-    let status: number = 0;
-    let message: string = '';
-    let success: boolean = true;
     let result: mongoose.Document | null;
 
     try {
-      result = await eventSchema.findOne({ _id });
+      result = await eventSchema.findOne(queryObject);
     } catch (error) {
-      throw new InternalServerError;
+      throw new InternalServerError();
     }
 
     if (!result) {
       throw new NotFoundError();
     }
-
-    status = StatusCodes.OK;
-    message = 'Successful operation';
 
     return { success, status, message, result };
   }
@@ -92,13 +85,14 @@ class EventRepository {
 
     try {
       deletedEvents = await eventSchema.find(queryObject);
+
+      if (deletedEvents.length === 0 ) {
+        throw new NotFoundError();
+      }
+
       await eventSchema.deleteMany(queryObject);
     } catch (error) {
       new InternalServerError();
-    }
-
-    if (deletedEvents.length === 0 ) {
-      throw new NotFoundError();
     }
 
     return { success, status, message, result: deletedEvents };

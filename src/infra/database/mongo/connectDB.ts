@@ -1,5 +1,6 @@
 import mongoose from "mongoose"
 import IORM from "../../../interfaces/IORM";
+import serverConfig from "../../../config/config";
 
 class DataBase {
   private ORM: IORM;
@@ -22,5 +23,5 @@ class DataBase {
 
 }
 
-const db = new DataBase(mongoose, 'mongodb://127.0.0.1:27017/events');
+const db = new DataBase(mongoose, serverConfig.MONGO_URI!);
 db.connect();

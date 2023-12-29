@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import AuthenticationError from "../errors/AuthenticationError";
 import IJwtPayload from "../../interfaces/AuthMiddleware/IJwtPayload";
 import AuthenticatedRequest from "../../interfaces/AuthMiddleware/AuthenticatedRequest";
+import serverConfig from "../../config/config";
 
 class AuthenticationMiddleware {
 
@@ -20,7 +21,7 @@ class AuthenticationMiddleware {
     const token = authHeader!.split(' ')[1];
     
     try {
-      const { userId } = jwt.verify(token, 'SECRETKEY') as IJwtPayload;
+      const { userId } = jwt.verify(token, serverConfig.JWT_SECRETE_KEY!) as IJwtPayload;
       req.user = { userId };
       next();
     } catch (error) {

@@ -15,7 +15,10 @@ eventRouter.get('/events', [
 
 eventRouter.get('/event/:id', AuthMiddleware.AuthenticateToken, EventController.getSingleEvents)
 
-eventRouter.delete('/events', AuthMiddleware.AuthenticateToken, EventController.deleteMany)
+eventRouter.delete('/events', [
+  AuthMiddleware.AuthenticateToken,
+  ValidationMiddleware.validatePayload(ValidateEvent.deleteMany(), 'query')
+], EventController.deleteMany)
 
 eventRouter.delete('/events/:id', AuthMiddleware.AuthenticateToken, EventController.deleteSingleEvent)
 

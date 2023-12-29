@@ -84,8 +84,24 @@ class EventRepository {
   }
 
   async deleteMany(queryObject: IQueryByObject) {
-    const result = await eventSchema.deleteMany(queryObject);
-    return result;
+    const status: number = StatusCodes.OK;
+    const message: string = 'List of deleted Events';
+    const success: boolean = true;
+
+    let deletedEvents: mongoose.Document[] = [];
+
+    try {
+      deletedEvents = await eventSchema.find(queryObject);
+      await eventSchema.deleteMany(queryObject);
+    } catch (error) {
+      new InternalServerError();
+    }
+
+    if (deletedEvents.length === 0 ) {
+      throw new NotFoundError();
+    }
+
+    return { success, status, message, result: deletedEvents };
   }
 
   async deleteSingle(queryObject: IQueryById) {

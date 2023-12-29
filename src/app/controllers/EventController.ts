@@ -69,8 +69,8 @@ class EventController {
     req: Request,
     res: Response
   ) {
-    const result = await eventService.deleteManyEvents(req.query);
-    res.send({ result })
+    const { success, status, message, result } = await eventService.deleteManyEvents(req.query);
+    res.status(status).json({ success, message, data: result });
   }
 
   async deleteSingleEvent(

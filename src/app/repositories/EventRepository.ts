@@ -56,8 +56,10 @@ class EventRepository {
     return { success, status, msg, result };
   }
 
-  async getSingle(payload: any) {
-    const result = await eventSchema.findOne({ payload });
+  async getSingle(queryObject: IEventQueryParams) {
+    const { _id } = queryObject;
+    const result = await eventSchema.findOne({ _id });
+    
     return result;
   }
 

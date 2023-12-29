@@ -25,7 +25,6 @@ class EventService {
 
   async getSingleEvents(payload: IEventQueryParams) {
     const queryObject = this.createQueryObject(payload);
-    
     const result = await this.repository.getSingle(queryObject);
     return result;
   }
@@ -69,6 +68,10 @@ class EventService {
 
     if (payload.skip) {
       queryObject.skip = payload.skip;
+    }
+
+    if (payload._id) {
+      queryObject._id = payload._id;
     }
 
     return queryObject;

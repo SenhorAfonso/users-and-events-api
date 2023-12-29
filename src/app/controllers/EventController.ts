@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import eventService from "../services/EventService";
 import AuthenticatedRequest from "../../interfaces/AuthMiddleware/AuthenticatedRequest";
 import NotFoundError from "../errors/NotFoundError";
+import IEventQueryParams from "../../interfaces/Events/IEventQueryParams";
 
 class EventController {
 
@@ -40,7 +41,10 @@ class EventController {
     req: Request,
     res: Response
   ) {
-    const result = await eventService.getSingleEvents(req.query);
+    const userId = req.params.id;
+    const queryObject: IEventQueryParams = { _id: userId };
+    const result = await eventService.getSingleEvents(queryObject);
+
     res.send({ result })
   }
 

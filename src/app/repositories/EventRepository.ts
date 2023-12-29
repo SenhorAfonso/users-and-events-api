@@ -2,10 +2,11 @@ import mongoose from "mongoose";
 import ICreateEventPayload from "../../interfaces/Events/ICreateEventPayload";
 import eventSchema from "../schemas/eventSchema";
 import StatusCodes from "http-status-codes";
-import IEventQueryParams from "../../interfaces/Events/IEventQueryParams";
+import IEventQueryParams from "../../interfaces/Events/IQueryByObjectParams";
 import NotFoundError from "../errors/NotFoundError";
 import InternalServerError from "../errors/InternalServerError";
 import IQueryById from "../../interfaces/Events/IQueryById";
+import IQueryByObject from "../../interfaces/Events/IQueryByObject";
 
 class EventRepository {
 
@@ -31,7 +32,7 @@ class EventRepository {
     }
   }
 
-  async getAll(queryObject: IEventQueryParams) {
+  async getAll(queryObject: IQueryByObject) {
     let status: number = 0;
     let msg: string = '';
     let success: boolean = true;
@@ -58,7 +59,7 @@ class EventRepository {
     return { success, status, msg, result };
   }
 
-  async getSingle(queryObject: IEventQueryParams) {
+  async getSingle(queryObject: IQueryById) {
     const { _id } = queryObject;
 
     let status: number = 0;

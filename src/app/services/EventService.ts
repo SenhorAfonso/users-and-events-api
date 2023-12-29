@@ -1,10 +1,12 @@
 import ICreateEventPayload from "../../interfaces/Events/ICreateEventPayload";
 import EventRepository from "../repositories/EventRepository";
-import IEventQueryParams from "../../interfaces/Events/IEventQueryParams";
+import IEventQueryParams from "../../interfaces/Events/IQueryByObjectParams";
 import NotFoundError from "../errors/NotFoundError";
 import { StatusCodes } from "http-status-codes";
 import IQueryById from "../../interfaces/Events/IQueryById";
 import IQueryByIdParams from "../../interfaces/Events/IQueryByIdParams";
+import IQueryByObjectParams from "../../interfaces/Events/IQueryByObjectParams";
+import IQueryByObject from "../../interfaces/Events/IQueryByObject";
 
 class EventService {
   private repository: EventRepository;
@@ -19,20 +21,20 @@ class EventService {
   }
 
   async getEvents(payload: IEventQueryParams) {
-    const queryObject = this.createQueryObject(payload);
+    const queryObject = this.createQueryByObject(payload);
     const result = await this.repository.getAll(queryObject);
     
     return result;
   }
 
-  async getSingleEvents(payload: IEventQueryParams) {
-    const queryObject = this.createQueryObject(payload);
+  async getSingleEvents(payload: IQueryByIdParams) {
+    const queryObject = this.createQueryById(payload);
     const result = await this.repository.getSingle(queryObject);
     return result;
   }
 
-  async deleteManyEvents(payload: IEventQueryParams) {
-    const queryObject = this.createQueryObject(payload);
+  async deleteManyEvents(payload: IQueryByObjectParams) {
+    const queryObject = this.createQueryByObject(payload);
 
     const result = await this.repository.deleteMany(queryObject);
     return result;
@@ -45,8 +47,8 @@ class EventService {
     return result;
   }
 
-  private createQueryObject(payload: IEventQueryParams) {
-    const queryObject: IEventQueryParams = {};
+  private createQueryByObject(payload: IQueryByObjectParams) {
+    const queryObject: IQueryByObject = {};
 
     if (payload.dayOfWeek) {
       queryObject.dayOfWeek = payload.dayOfWeek;
@@ -70,10 +72,6 @@ class EventService {
 
     if (payload.skip) {
       queryObject.skip = payload.skip;
-    }
-
-    if (payload._id) {
-      queryObject._id = payload._id;
     }
 
     return queryObject;

@@ -1,7 +1,8 @@
 import StatusCodes from "http-status-codes";
 import ErrorMessage from "./enum/ErrorMessageEnum";
+import ApiErrors from "./ApiErrors";
 
-class InternalServerError extends Error {
+class InternalServerError extends ApiErrors {
   public status: number;
 
   constructor(message: string = ErrorMessage.InternalServerError) {

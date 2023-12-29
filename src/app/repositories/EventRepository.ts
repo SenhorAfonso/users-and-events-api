@@ -1,21 +1,84 @@
+import mongoose from "mongoose";
 import ICreateEventPayload from "../../interfaces/Events/ICreateEventPayload";
 import eventSchema from "../schemas/eventSchema";
+import StatusCodes from "http-status-codes";
+import IEventQueryParams from "../../interfaces/Events/IEventQueryParams";
+import NotFoundError from "../errors/NotFoundError";
+import InternalServerError from "../errors/InternalServerError";
 
 class EventRepository {
 
   async create(payload: ICreateEventPayload) {
-    const result = await eventSchema.create(payload);
-    return result;
+    let status: number = 0;
+    let msg: string = '';
+    let success: boolean = true;
+    let result: mongoose.Document | undefined;
+
+    try {
+      result = await eventSchema.create(payload);
+
+      status = StatusCodes.OK;
+      msg = 'Successful operation';
+
+      return { success, status, msg, result };
+    } catch (error) {
+      status = StatusCodes.INTERNAL_SERVER_ERROR;
+      msg = 'Something went wrong';
+      success = false
+
+      return { success, status, msg, result };
+    }
   }
 
-  async getAll() {
-    const result = await eventSchema.find({});
-    return result;
+  async getAll(queryObject: IEventQueryParams) {
+    let status: number = 0;
+    let msg: string = '';
+    let success: boolean = true;
+    let result: mongoose.Document[];
+    let { limit, page, sort, skip, ...query } = queryObject;
+
+    limit = limit ?? 3;
+    page = page ?? 1;
+    sort = sort ?? 'asc';
+    skip = (page - 1) * limit || skip || 0;
+
+    result = await eventSchema.find(query)
+      .sort({ description: sort })
+      .skip(skip)
+      .limit(limit);
+
+    if (result.length === 0) {
+      throw new NotFoundError();
+    }
+
+    status = StatusCodes.OK;
+    msg = 'Successful operation';
+
+    return { success, status, msg, result };
   }
 
-  async getSingle(payload: any) {
-    const result = await eventSchema.findOne({ payload });
-    return result;
+  async getSingle(queryObject: IEventQueryParams) {
+    const { _id } = queryObject;
+
+    let status: number = 0;
+    let message: string = '';
+    let success: boolean = true;
+    let result: mongoose.Document | null;
+
+    try {
+      result = await eventSchema.findOne({ _id });
+    } catch (error) {
+      throw new InternalServerError;
+    }
+
+    if (!result) {
+      throw new NotFoundError();
+    }
+
+    status = StatusCodes.OK;
+    message = 'Successful operation';
+
+    return { success, status, message, result };
   }
 
   async deleteMany(payload: any) {

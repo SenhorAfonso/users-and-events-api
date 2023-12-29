@@ -1,6 +1,8 @@
 import ICreateEventPayload from "../../interfaces/Events/ICreateEventPayload";
 import EventRepository from "../repositories/EventRepository";
 import IEventQueryParams from "../../interfaces/Events/IEventQueryParams";
+import NotFoundError from "../errors/NotFoundError";
+import { StatusCodes } from "http-status-codes";
 
 class EventService {
   private repository: EventRepository;
@@ -14,14 +16,15 @@ class EventService {
     return result;
   }
 
-  async getEvents() {
-    const result = await this.repository.getAll();
+  async getEvents(payload: IEventQueryParams) {
+    const queryObject = this.createQueryObject(payload);
+    const result = await this.repository.getAll(queryObject);
+    
     return result;
   }
 
   async getSingleEvents(payload: IEventQueryParams) {
     const queryObject = this.createQueryObject(payload);
-    
     const result = await this.repository.getSingle(queryObject);
     return result;
   }
@@ -49,6 +52,26 @@ class EventService {
 
     if (payload.description) {
       queryObject.description = payload.description;
+    }
+
+    if (payload.limit) {
+      queryObject.limit = payload.limit;
+    }
+
+    if (payload.page) {
+      queryObject.page = payload.page;
+    }
+
+    if (payload.sort) {
+      queryObject.sort = payload.sort;
+    }
+
+    if (payload.skip) {
+      queryObject.skip = payload.skip;
+    }
+
+    if (payload._id) {
+      queryObject._id = payload._id;
     }
 
     return queryObject;

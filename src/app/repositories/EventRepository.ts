@@ -7,6 +7,7 @@ import NotFoundError from "../errors/NotFoundError";
 import InternalServerError from "../errors/InternalServerError";
 import IQueryById from "../../interfaces/Events/IQueryById";
 import IQueryByObject from "../../interfaces/Events/IQueryByObject";
+import resultIsEmpty from "../utils/resultIsEmpty";
 
 class EventRepository {
 
@@ -49,7 +50,7 @@ class EventRepository {
       throw new InternalServerError();
     }
 
-    if (result.length === 0) {
+    if (resultIsEmpty(result)) {
       throw new NotFoundError();
     }
 
@@ -86,7 +87,7 @@ class EventRepository {
     try {
       deletedEvents = await eventSchema.find(queryObject);
 
-      if (deletedEvents.length === 0 ) {
+      if (resultIsEmpty(deletedEvents)) {
         throw new NotFoundError();
       }
 

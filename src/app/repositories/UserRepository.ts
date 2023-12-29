@@ -37,17 +37,19 @@ class UserRepository {
     const success: boolean = true;
     const message: string = 'User logged in successfully';
 
+    let user: mongoose.Document | null;
+
     try {
-      const user = await userSchema.findOne({ email, password });
-      
-      if (resultIsEmpty(user)) {
-        throw new NotFoundError();
-      }
-      
-      return { success, status, message, result: user }; 
+      user = await userSchema.findOne({ email, password });
     } catch (error) {
       throw new InternalServerError();
     }
+    
+    if (resultIsEmpty(user)) {
+      throw new NotFoundError();
+    }
+    
+    return { success, status, message, result: user }; 
   }
 
 }

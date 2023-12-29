@@ -10,8 +10,8 @@ class UserController {
   }
 
   async userSignIn(req: Request, res: Response) {
-    const { result, token } = await userService.userSignIn(req.body);
-    res.send({ data: result, token })
+    const { success, status, message, result } = await userService.userSignIn(req.body);
+    res.status(status).json({ success, message, data: result })
   }
 
 }

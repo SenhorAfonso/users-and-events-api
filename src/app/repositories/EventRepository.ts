@@ -87,8 +87,11 @@ class EventRepository {
   }
 
   async deleteSingle(payload: any) {
-    const result = await eventSchema.findByIdAndDelete({ payload });
+    const { _id } = payload;
+
+    const result = await eventSchema.findByIdAndDelete({ _id });
     return result;
+
   }
 
 }

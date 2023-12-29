@@ -78,7 +78,10 @@ class EventController {
     req: Request,
     res: Response
   ) {
-    const result = await eventService.deleteSingleEvent(req.body);
+    const userId = req.params.id;
+    const queryObject: IEventQueryParams = { _id: userId }
+
+    const result = await eventService.deleteSingleEvent(queryObject);
     res.send({ result })
   }
 

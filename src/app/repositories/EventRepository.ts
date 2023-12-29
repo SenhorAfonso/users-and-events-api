@@ -83,8 +83,8 @@ class EventRepository {
     return { success, status, message, result };
   }
 
-  async deleteMany(payload: any) {
-    const result = await eventSchema.deleteMany({ payload });
+  async deleteMany(queryObject: IQueryByObject) {
+    const result = await eventSchema.deleteMany(queryObject);
     return result;
   }
 

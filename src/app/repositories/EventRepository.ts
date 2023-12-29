@@ -33,28 +33,30 @@ class EventRepository {
   }
 
   async getAll(queryObject: IQueryByObject) {
-    let status: number = 0;
-    let msg: string = '';
-    let success: boolean = true;
-    let result: mongoose.Document[];
+    const status: number = StatusCodes.OK;
+    const msg: string = 'Successful operation';
+    const success: boolean = true;
+
     let { limit, page, sort, skip, ...query } = queryObject;
+    let result: mongoose.Document[];
 
     limit = limit ?? 3;
     page = page ?? 1;
     sort = sort ?? 'asc';
     skip = (page - 1) * limit || skip || 0;
 
-    result = await eventSchema.find(query)
-      .sort({ description: sort })
-      .skip(skip)
-      .limit(limit);
+    try {
+      result = await eventSchema.find(query)
+        .sort({ description: sort })
+        .skip(skip)
+        .limit(limit);
+    } catch (error) {
+      throw new InternalServerError();
+    }
 
     if (result.length === 0) {
       throw new NotFoundError();
     }
-
-    status = StatusCodes.OK;
-    msg = 'Successful operation';
 
     return { success, status, msg, result };
   }

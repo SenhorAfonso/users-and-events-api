@@ -89,8 +89,23 @@ class EventRepository {
   }
 
   async deleteSingle(payload: IQueryById) {
-    const result = await eventSchema.findById(payload);
-    return result;
+    const status: number = StatusCodes.NO_CONTENT;
+    const message: string = 'Event deleted';
+    const success: boolean = true;
+
+    let result: mongoose.ModifyResult<Document> | null;
+
+    try {
+      result = await eventSchema.findByIdAndDelete(payload);
+
+      if (!result) {
+        throw new NotFoundError();
+      }
+      
+      return { success, status, message, result };
+    } catch (error) {
+      throw new InternalServerError();
+    }
   }
 
 }

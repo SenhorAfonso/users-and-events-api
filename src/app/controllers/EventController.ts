@@ -77,8 +77,8 @@ class EventController {
     req: Request,
     res: Response
   ) {
-    const result = await eventService.deleteSingleEvent(req.params);
-    res.send({ result })
+    const { success, status, message, result } = await eventService.deleteSingleEvent(req.params);
+    res.status(status).json({ success, message, data: result })
   }
 
 }

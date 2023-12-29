@@ -3,6 +3,7 @@ import eventService from "../services/EventService";
 import AuthenticatedRequest from "../../interfaces/AuthMiddleware/AuthenticatedRequest";
 import NotFoundError from "../errors/NotFoundError";
 import IEventQueryParams from "../../interfaces/Events/IEventQueryParams";
+import InternalServerError from "../errors/InternalServerError";
 
 class EventController {
 
@@ -49,6 +50,12 @@ class EventController {
       res.status(status).json({ success, message, data: result });
     } catch (error) {
       if (error instanceof NotFoundError) {
+        res.status(error.status).json({
+          statusCode: error.status,
+          error: error.name,
+          message: error.message
+        })
+      } else if (error instanceof InternalServerError) {
         res.status(error.status).json({
           statusCode: error.status,
           error: error.name,

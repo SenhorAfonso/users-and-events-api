@@ -4,6 +4,7 @@ import eventSchema from "../schemas/eventSchema";
 import StatusCodes from "http-status-codes";
 import IEventQueryParams from "../../interfaces/Events/IEventQueryParams";
 import NotFoundError from "../errors/NotFoundError";
+import InternalServerError from "../errors/InternalServerError";
 
 class EventRepository {
 
@@ -64,7 +65,11 @@ class EventRepository {
     let success: boolean = true;
     let result: mongoose.Document | null;
 
-    result = await eventSchema.findOne({ _id });
+    try {
+      result = await eventSchema.findOne({ _id });
+    } catch (error) {
+      throw new InternalServerError;
+    }
 
     if (!result) {
       throw new NotFoundError();

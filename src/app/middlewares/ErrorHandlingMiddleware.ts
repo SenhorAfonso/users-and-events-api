@@ -2,26 +2,38 @@ import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
 import AuthenticationError from "../errors/AuthenticationError";
 import StatusCodes from "http-status-codes";
+import ApiErrors from "../errors/ApiErrors";
+import NotFoundError from "../errors/NotFoundError";
+import InternalServerError from "../errors/InternalServerError";
 
 class ErrorHandlingMiddleware {
 
   static errorHandler(
-    error: Error,
+    reqError: Error,
     req: Request,
     res: Response,
     next: NextFunction
   ) {
-    if (error instanceof Joi.ValidationError) {
-      const { type, errors } = ErrorHandlingMiddleware.formatJoiValidationErrors(error);
-      res.status(StatusCodes.BAD_REQUEST).json({ type, errors })
-    } else if (error instanceof AuthenticationError) {
-      res.status(StatusCodes.UNAUTHORIZED).json({
-        statusCode: StatusCodes.UNAUTHORIZED,
-        error: error.name,
-        message: error.message
-      })
-    } else {
-      res.send(error.message);
+    if (reqError instanceof Joi.ValidationError) {
+      const { type, errors } = ErrorHandlingMiddleware.formatJoiValidationErrors(reqError);
+
+      return res.status(StatusCodes.BAD_REQUEST).json({ type, errors })
+    } else if (reqError instanceof ApiErrors) {
+      const {
+        statusCode,
+        error,
+        message
+      } = this.createCustomErrorResponse(reqError);
+
+      return res.status(statusCode).json({ statusCode, error, message })
+    }
+  }
+
+  static createCustomErrorResponse(error: ApiErrors) {
+    return {
+      statusCode: error.status,
+      error: error.name,
+      message: error.message
     }
   }
 

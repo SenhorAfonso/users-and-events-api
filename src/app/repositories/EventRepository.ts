@@ -92,13 +92,14 @@ class EventRepository {
 
     try {
       deletedEvents = await eventSchema.find(queryObject);
+
+      if (deletedEvents.length === 0 ) {
+        throw new NotFoundError();
+      }
+
       await eventSchema.deleteMany(queryObject);
     } catch (error) {
       new InternalServerError();
-    }
-
-    if (deletedEvents.length === 0 ) {
-      throw new NotFoundError();
     }
 
     return { success, status, message, result: deletedEvents };

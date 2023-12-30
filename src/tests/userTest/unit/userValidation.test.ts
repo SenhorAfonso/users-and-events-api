@@ -1,6 +1,6 @@
 import Joi from "joi";
-import ValidateUser from "../../app/validations/User/ValidateUser";
-import testValidateObject from "../../app/utils/testUtils/testValidateObject";
+import ValidateUser from "../../../app/validations/User/ValidateUser";
+import testValidateObject from "../../../app/utils/testUtils/testValidateObject";
 
 describe('Validation payload for users sign-up route', () => {
 

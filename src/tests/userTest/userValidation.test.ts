@@ -357,3 +357,32 @@ describe('Validation payload for users sign-up route', () => {
 
 
 })
+
+describe('Validation payload for users sign-in route', () => {
+  describe('Validate email field and value', () => {
+    it('Should return a "email must be a valid email" error', () => {
+      const userPayload = {
+        "email": "pedroafonsogmail.com",
+        "password": "password123"
+      }
+  
+      const error = testValidateObject(ValidateUser.loginUser(), userPayload).error?.details[0]!;
+  
+      expect(error.message).toMatch('\"email\" must be a valid email');
+      expect(error.path).toStrictEqual(["email"]);
+  
+    });
+  
+    it('Should return a "email is required" error', () => {
+      const userPayload = {
+        "emaila": "pedroafonso@gmail.com",
+        "password": "password123"
+      }
+  
+      const error = testValidateObject(ValidateUser.loginUser(), userPayload).error?.details[0]!;
+  
+      expect(error.message).toMatch('\"email\" is required');
+      expect(error.path).toStrictEqual(["email"]);
+    })
+  })
+})

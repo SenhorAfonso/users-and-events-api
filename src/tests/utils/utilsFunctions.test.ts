@@ -147,4 +147,28 @@ describe('Create query by object', () => {
 
   })
 
+  describe('the "skip" property', () => {
+
+    it('Should be in the query object if it was in the input object', () => {
+      const queryObjectParams: IQueryByObjectParams = {
+        skip: 1  
+      }
+
+      const queryObject = createQueryByObject(queryObjectParams);
+
+      expect(queryObject).toHaveProperty('skip', 1);
+
+    })
+
+    it('Should not be in the query object if it was not in the input object', () => {
+      const queryObjectParams: IQueryByObjectParams = {}
+
+      const queryObject = createQueryByObject(queryObjectParams);
+
+      expect(queryObject).toEqual({});
+
+    })
+
+  })
+
 })

@@ -324,4 +324,41 @@ describe("Check for getAll event's route http response", () => {
 
   })
 
+  it('Should return the last page 1 event (page property check)', async () => {
+    const userSignUp = {
+      "firstName": "Pedro",
+      "lastName": "Afonso",
+      "birthDate": "2023-12-27",
+      "city": "Maringá",
+      "country": "Brasil",
+      "email": "pedroafonso@gmail.com",
+      "password": "password123",
+      "confirmPassword": "password123"
+    };
+
+    const { email, password } = await TestUtils.signUpUser(userSignUp);
+    const token = await TestUtils.loginUser({ email, password });
+
+    await TestUtils.createEvent({ dayOfWeek: "sunday", description: 'event 1' }, token);
+    await TestUtils.createEvent({ dayOfWeek: "monday", description: 'event 2' }, token);
+    await TestUtils.createEvent({ dayOfWeek: "monday", description: 'event 3' }, token);
+    await TestUtils.createEvent({ dayOfWeek: "monday", description: 'event 4' }, token);
+
+    const queryObjectParams: IQueryByObjectParams = {
+      page: 2
+    }
+
+    const queryObject = createQueryByObject(queryObjectParams);
+
+    const response = await request(server)
+      .get('/api/v1/users-and-events/events')
+      .query(queryObject)
+      .auth(token, { type: 'bearer' });
+
+    expect(response.body.success).toBeTruthy();
+    expect(response.body.message).toBe('Successful operation');
+    expect(response.body.data).toHaveLength(1);
+
+  })
+
 });

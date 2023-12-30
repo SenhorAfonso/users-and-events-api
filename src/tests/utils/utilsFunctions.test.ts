@@ -99,4 +99,28 @@ describe('Create query by object', () => {
 
   })
 
+  describe('the "sort" property', () => {
+
+    it('Should be in the query object if it was in the input object', () => {
+      const queryObjectParams: IQueryByObjectParams = {
+        sort: 'asc'  
+      }
+
+      const queryObject = createQueryByObject(queryObjectParams);
+
+      expect(queryObject).toHaveProperty('sort', 'asc');
+
+    })
+
+    it('Should not be in the query object if it was not in the input object', () => {
+      const queryObjectParams: IQueryByObjectParams = {}
+
+      const queryObject = createQueryByObject(queryObjectParams);
+
+      expect(queryObject).toEqual({});
+
+    })
+
+  })
+
 })

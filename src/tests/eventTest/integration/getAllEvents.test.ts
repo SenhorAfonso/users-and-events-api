@@ -16,9 +16,12 @@ describe("Check for getAll event's route http response", () => {
     await mongoose.connect(serverConfig.TEST_MONGO_URI!);
   })
 
-  afterAll(async () => {
+  afterEach(async () => {
     await userSchema.collection.drop();
     await eventSchema.collection.drop();
+  })
+
+  afterAll(async () => {
     await mongoose.connection.close();
   })
 

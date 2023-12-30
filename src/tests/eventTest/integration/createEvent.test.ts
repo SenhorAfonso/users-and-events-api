@@ -56,6 +56,21 @@ describe("Check for create event's route http response", () => {
     expect(response.body.message).toBe('Successful operation');
     expect(response.body.success).toBeTruthy();
 
+  })
+
+  it('Should return 401 status code when the payload is valid and user is not logged', async () => {
+    const eventPayload = {
+      description: 'event teste',
+      dayOfWeek: 'monday'
+    };
+
+    const response = await request(server)
+      .post('/api/v1/users-and-events/events')
+      .send(eventPayload);
+
+    expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
+    expect(response.body.message).toBe('Not Authenticated');
+    expect(response.body.success).toBeFalsy();
 
   })
 

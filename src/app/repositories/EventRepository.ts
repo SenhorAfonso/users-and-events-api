@@ -13,7 +13,7 @@ class EventRepository {
 
   async create(payload: ICreateEventPayload) {
     const status: number = StatusCodes.OK;
-    const msg: string = 'Successful operation';
+    const message: string = 'Successful operation';
     const success: boolean = true;
 
     let result: mongoose.Document | undefined;
@@ -21,7 +21,7 @@ class EventRepository {
     try {
       result = await eventSchema.create(payload);
 
-      return { success, status, msg, result };
+      return { success, status, message, result };
     } catch (error) {
       throw new InternalServerError();
     }
@@ -30,7 +30,7 @@ class EventRepository {
 
   async getAll(queryObject: IQueryByObject) {
     const status: number = StatusCodes.OK;
-    const msg: string = 'Successful operation';
+    const message: string = 'Successful operation';
     const success: boolean = true;
 
     let { limit, page, sort, skip, ...query } = queryObject;
@@ -54,7 +54,7 @@ class EventRepository {
       throw new NotFoundError();
     }
 
-    return { success, status, msg, result };
+    return { success, status, message, result };
   }
 
   async getSingle(queryObject: IQueryById) {

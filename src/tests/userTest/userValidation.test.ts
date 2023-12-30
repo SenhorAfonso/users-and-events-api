@@ -349,7 +349,31 @@ describe('Validation payload for users sign-up route', () => {
     });
   })
 
-
+  describe('Validate when all fields are right', () => {
+    it('Should return the userPayload', () => {
+      const userPayload = {
+        "firstName": "Pedro",
+        "lastName": "Afonso",
+        "birthDate": "2023-12-27",
+        "city": "Maringá",
+        "country": "Brasil",
+        "email": "pedroafonso@gmail.com",
+        "password": "password123",
+        "confirmPassword": "password123"
+      }
+  
+      const value = testValidateObject(ValidateUser.createUser(), userPayload).value;
+      
+      expect(value).toHaveProperty('firstName', 'Pedro');
+      expect(value).toHaveProperty('lastName', 'Afonso');
+      expect(value).toHaveProperty('birthDate', new Date('2023-12-27T03:00:00.000Z'));
+      expect(value).toHaveProperty('city', 'Maringá');
+      expect(value).toHaveProperty('country', 'Brasil');
+      expect(value).toHaveProperty('email', 'pedroafonso@gmail.com');
+      expect(value).toHaveProperty('password', 'password123');
+      expect(value).toHaveProperty('confirmPassword', 'password123');
+    });
+  })
 })
 
 describe('Validation payload for users sign-in route', () => {

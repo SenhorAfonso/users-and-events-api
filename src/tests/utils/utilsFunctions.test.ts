@@ -196,4 +196,24 @@ describe('Validate if a target is empty/null', () => {
 
   })
 
+  describe('If target is an any type', () => {
+
+    it('Should return true if target is undefined', () => {
+      let target: any;
+
+      const isValid = resultIsEmpty(target);
+
+      expect(isValid).toBeTruthy();
+    })
+
+    it('Should return false if target is defined', () => {
+      const target: any = 'value';
+
+      const isValid = resultIsEmpty(target);
+
+      expect(isValid).toBeFalsy();
+    })
+
+  })
+
 })

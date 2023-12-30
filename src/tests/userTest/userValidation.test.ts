@@ -194,4 +194,41 @@ describe('Validation payload for users sign-up route', () => {
     expect(error.path).toStrictEqual(["country"]);
   })
 
+  it('Should return a "email must be a valid email" error', () => {
+    const userPayload = {
+      "firstName": "Pedro",
+      "lastName": "Afonso",
+      "birthDate": "2023-12-27",
+      "city": "Maringá",
+      "country": "Brasil",
+      "email": "pedroafonsogmail.com",
+      "password": "password123",
+      "confirmPassword": "password123"
+    }
+
+    const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+
+    expect(error.message).toMatch('\"email\" must be a valid email');
+    expect(error.path).toStrictEqual(["email"]);
+
+  });
+
+  it('Should return a "email is required" error', () => {
+    const userPayload = {
+      "firstName": "Pedro",
+      "lastName": "Afonso",
+      "birthDate": "2023-12-27",
+      "city": "Maringá",
+      "country": "Brasil",
+      "emaila": "pedroafonso@gmail.com",
+      "password": "password123",
+      "confirmPassword": "password123"
+    }
+
+    const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+
+    expect(error.message).toMatch('\"email\" is required');
+    expect(error.path).toStrictEqual(["email"]);
+  })
+
 })

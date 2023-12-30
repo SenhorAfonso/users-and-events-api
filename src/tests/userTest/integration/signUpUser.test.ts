@@ -64,7 +64,7 @@ describe("Check user's sign-up route http responses", () => {
 
   })
 
-  it('Should return 400 when the email sent is already in use', async () => {
+  it('Should return 400 when the payload is invalid', async () => {
     const userPayload = {
       "firstName": "invalid",
       "lastName": "invalid",

@@ -1,12 +1,6 @@
 import Joi from "joi";
 import ValidateUser from "../../app/validations/User/ValidateUser";
-
-const testValidateObject = (
-  validationSchema: Joi.ObjectSchema,
-  target: object
-) => {
-  return validationSchema.validate(target, { abortEarly: false })
-}
+import testValidateObject from "../../app/utils/testUtils/testValidateObject";
 
 describe('Validation payload for users sign-up route', () => {
 

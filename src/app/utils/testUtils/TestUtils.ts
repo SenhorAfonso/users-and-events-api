@@ -29,10 +29,15 @@ class TestUtils {
   }
 
   static async createEvent(payload: object, token: string) {
-    await request(server)
+    const reponse = await request(server)
       .post('/api/v1/users-and-events/events')
       .send(payload)
       .auth(token, { type: 'bearer' }); 
+
+    const eventId = reponse.body.data._id;
+
+    return eventId;
+
   }
 
   static validateObject(

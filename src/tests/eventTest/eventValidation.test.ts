@@ -56,7 +56,7 @@ describe('Validation payload for create event route', () => {
       const error = testValidateObject(ValidateEvent.createEvent(), eventPayload).error?.details[0]!;
 
       expect(error.message).toMatch('\"invalid\" is not allowed');
-      expect(error.path).toStrictEqual(['description']);
+      expect(error.path).toStrictEqual(['invalid']);
 
   })
   })

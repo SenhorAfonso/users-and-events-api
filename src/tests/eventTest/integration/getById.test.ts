@@ -5,6 +5,7 @@ import serverConfig from "../../../config/config";
 import request from "supertest";
 import TestUtils from "../../../app/utils/testUtils/TestUtils";
 import server from "../../../server";
+import StatusCodes from "http-status-codes";
 
 describe("Check for getAll event's route http response", () => {
 
@@ -46,7 +47,35 @@ describe("Check for getAll event's route http response", () => {
       expect(response.body.success).toBeTruthy();
       expect(response.body.message).toBe('Successful operation');
       expect(response.body.data.description).toBe('event 1');
+      expect(response.status).toBe(StatusCodes.OK)
     })
+
+    it('Should return 401 when the id is provid and the user is not logged', async () => {
+      const userSignUp = {
+        "firstName": "Pedro",
+        "lastName": "Afonso",
+        "birthDate": "2023-12-27",
+        "city": "Maringá",
+        "country": "Brasil",
+        "email": "pedroafonso@gmail.com",
+        "password": "password123",
+        "confirmPassword": "password123"
+      };
+  
+      const { email, password } = await TestUtils.signUpUser(userSignUp);
+      const token = await TestUtils.loginUser({ email, password });
+      const eventId = await TestUtils.createEvent({ dayOfWeek: "sunday", description: 'event 1' }, token);
+    
+      const response = await request(server)
+        .get(`/api/v1/users-and-events/event/${eventId}`);
+
+        expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
+        expect(response.body.error).toBe('Unauthorized');
+        expect(response.body.message).toBe('Not Authenticated');
+      
+    })
+
+
   })
 
 })

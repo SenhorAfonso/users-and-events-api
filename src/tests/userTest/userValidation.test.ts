@@ -385,4 +385,32 @@ describe('Validation payload for users sign-in route', () => {
       expect(error.path).toStrictEqual(["email"]);
     })
   })
+
+  describe('Validade password field and value', () => {
+    it('Should return an "invalid pattern" error to password less than 6 characters', () => {
+      const userPayload = {
+        "email": "pedroafonso@gmail.com",
+        "password": "p123",
+      }
+  
+      const error = testValidateObject(ValidateUser.loginUser(), userPayload).error?.details[0]!;
+  
+      expect(error.message).toMatch('\"password\" with value \"p123\" fails to match the required pattern: /^[a-zA-Z0-9]{6,30}$/');
+      expect(error.path).toStrictEqual(["password"]);
+  
+    });
+  
+    it('Should return a "password is required" error', () => {
+      const userPayload = {
+        "email": "pedroafonso@gmail.com",
+        "passworda": "password123"
+      }
+  
+      const error = testValidateObject(ValidateUser.loginUser(), userPayload).error?.details[0]!;
+  
+      expect(error.message).toMatch('\"password\" is required');
+      expect(error.path).toStrictEqual(["password"]);
+    })
+  })
+
 })

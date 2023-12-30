@@ -1,5 +1,5 @@
 import ValidateEvent from "../../app/validations/Event/ValidateEvent";
-import testValidateObject from "../../app/utils/testUtils/testValidateObject";
+import TestUtils from "../../app/utils/testUtils/TestUtils";
 
 describe('Validation payload for create event route', () => {
 
@@ -11,7 +11,7 @@ describe('Validation payload for create event route', () => {
         "description": "Evento 1"
       }
 
-      const error = testValidateObject(ValidateEvent.createEvent(), eventPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateEvent.createEvent(), eventPayload).error?.details[0]!;
 
       expect(error.message).toMatch('\"dayOfWeek\" must be one of [sunday, monday, tuesday, wednesday, thursday, friday, saturday]');
       expect(error.path).toStrictEqual(['dayOfWeek']);
@@ -24,7 +24,7 @@ describe('Validation payload for create event route', () => {
         "description": "Evento 1"
       }
 
-      const error = testValidateObject(ValidateEvent.createEvent(), eventPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateEvent.createEvent(), eventPayload).error?.details[0]!;
 
       expect(error.message).toMatch('\"dayOfWeek\" is required');
       expect(error.path).toStrictEqual(['dayOfWeek']);
@@ -40,7 +40,7 @@ describe('Validation payload for create event route', () => {
         "description": ""
       }
 
-      const error = testValidateObject(ValidateEvent.createEvent(), eventPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateEvent.createEvent(), eventPayload).error?.details[0]!;
 
       expect(error.message).toMatch('\"description\" is not allowed to be empty');
       expect(error.path).toStrictEqual(['description']);
@@ -53,7 +53,7 @@ describe('Validation payload for create event route', () => {
         "invalid": "Evento 1"
       }
 
-      const error = testValidateObject(ValidateEvent.createEvent(), eventPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateEvent.createEvent(), eventPayload).error?.details[0]!;
 
       expect(error.message).toMatch('\"invalid\" is not allowed');
       expect(error.path).toStrictEqual(['invalid']);

@@ -1,6 +1,6 @@
 import Joi from "joi";
 import ValidateUser from "../../../app/validations/User/ValidateUser";
-import testValidateObject from "../../../app/utils/testUtils/testValidateObject";
+import TestUtils from "../../../app/utils/testUtils/TestUtils";
 
 describe('Validation payload for users sign-up route', () => {
 
@@ -17,7 +17,7 @@ describe('Validation payload for users sign-up route', () => {
         "confirmPassword": "password123"
       }
   
-      const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"firstName\" length must be at least 5 characters long');
       expect(error.path).toStrictEqual(["firstName"]);
@@ -36,7 +36,7 @@ describe('Validation payload for users sign-up route', () => {
         "confirmPassword": "password123"
       }
   
-      const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"firstName\" is required');
       expect(error.path).toStrictEqual(["firstName"]);
@@ -56,7 +56,7 @@ describe('Validation payload for users sign-up route', () => {
         "confirmPassword": "password123"
       }
   
-      const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"lastName\" length must be at least 5 characters long');
       expect(error.path).toStrictEqual(["lastName"]);
@@ -75,7 +75,7 @@ describe('Validation payload for users sign-up route', () => {
         "confirmPassword": "password123"
       }
   
-      const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"lastName\" is required');
       expect(error.path).toStrictEqual(["lastName"]);
@@ -96,7 +96,7 @@ describe('Validation payload for users sign-up route', () => {
         "confirmPassword": "password123"
       }
   
-      const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"birthDate\" must be in YYYY-MM-DD format');
       expect(error.path).toStrictEqual(["birthDate"]);
@@ -115,7 +115,7 @@ describe('Validation payload for users sign-up route', () => {
         "confirmPassword": "password123"
       }
   
-      const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"birthDate\" is required');
       expect(error.path).toStrictEqual(["birthDate"]);
@@ -135,7 +135,7 @@ describe('Validation payload for users sign-up route', () => {
         "confirmPassword": "password123"
       }
   
-      const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"city\" is not allowed to be empty');
       expect(error.path).toStrictEqual(["city"]);
@@ -154,7 +154,7 @@ describe('Validation payload for users sign-up route', () => {
         "confirmPassword": "password123"
       }
   
-      const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"city\" is required');
       expect(error.path).toStrictEqual(["city"]);
@@ -174,7 +174,7 @@ describe('Validation payload for users sign-up route', () => {
         "confirmPassword": "password123"
       }
   
-      const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"country\" is not allowed to be empty');
       expect(error.path).toStrictEqual(["country"]);
@@ -193,7 +193,7 @@ describe('Validation payload for users sign-up route', () => {
         "confirmPassword": "password123"
       }
   
-      const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"country\" is required');
       expect(error.path).toStrictEqual(["country"]);
@@ -213,7 +213,7 @@ describe('Validation payload for users sign-up route', () => {
         "confirmPassword": "password123"
       }
   
-      const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"email\" must be a valid email');
       expect(error.path).toStrictEqual(["email"]);
@@ -232,7 +232,7 @@ describe('Validation payload for users sign-up route', () => {
         "confirmPassword": "password123"
       }
   
-      const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"email\" is required');
       expect(error.path).toStrictEqual(["email"]);
@@ -252,7 +252,7 @@ describe('Validation payload for users sign-up route', () => {
         "confirmPassword": "password123"
       }
   
-      const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"password\" with value \"p123\" fails to match the required pattern: /^[a-zA-Z0-9]{6,30}$/');
       expect(error.path).toStrictEqual(["password"]);
@@ -271,7 +271,7 @@ describe('Validation payload for users sign-up route', () => {
         "confirmPassword": "password123"
       }
   
-      const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"password\" is required');
       expect(error.path).toStrictEqual(["password"]);
@@ -291,7 +291,7 @@ describe('Validation payload for users sign-up route', () => {
         "confirmPassword": "p123"
       }
   
-      const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"confirmPassword\" with value \"p123\" fails to match the required pattern: /^[a-zA-Z0-9]{6,30}$/');
       expect(error.path).toStrictEqual(["confirmPassword"]);
@@ -310,7 +310,7 @@ describe('Validation payload for users sign-up route', () => {
         "confirmaPassworda": "password123"
       }
   
-      const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"confirmPassword\" is required');
       expect(error.path).toStrictEqual(["confirmPassword"]);
@@ -331,7 +331,7 @@ describe('Validation payload for users sign-up route', () => {
         "extra": "extra"
       }
   
-      const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"extra\" is not allowed');
       expect(error.path).toStrictEqual(["extra"]);
@@ -343,7 +343,7 @@ describe('Validation payload for users sign-up route', () => {
     it('Should return an array of errors if none of the fields was sent', () => {
       const userPayload = {}
   
-      const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details!;
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details!;
   
       expect(error.length).toBe(8);
     });
@@ -362,7 +362,7 @@ describe('Validation payload for users sign-up route', () => {
         "confirmPassword": "password123"
       }
   
-      const value = testValidateObject(ValidateUser.createUser(), userPayload).value;
+      const value = TestUtils.validateObject(ValidateUser.createUser(), userPayload).value;
       
       expect(value).toHaveProperty('firstName', 'Pedro');
       expect(value).toHaveProperty('lastName', 'Afonso');
@@ -384,7 +384,7 @@ describe('Validation payload for users sign-in route', () => {
         "password": "password123"
       }
   
-      const error = testValidateObject(ValidateUser.loginUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.loginUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"email\" must be a valid email');
       expect(error.path).toStrictEqual(["email"]);
@@ -397,7 +397,7 @@ describe('Validation payload for users sign-in route', () => {
         "password": "password123"
       }
   
-      const error = testValidateObject(ValidateUser.loginUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.loginUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"email\" is required');
       expect(error.path).toStrictEqual(["email"]);
@@ -411,7 +411,7 @@ describe('Validation payload for users sign-in route', () => {
         "password": "p123",
       }
   
-      const error = testValidateObject(ValidateUser.loginUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.loginUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"password\" with value \"p123\" fails to match the required pattern: /^[a-zA-Z0-9]{6,30}$/');
       expect(error.path).toStrictEqual(["password"]);
@@ -424,7 +424,7 @@ describe('Validation payload for users sign-in route', () => {
         "passworda": "password123"
       }
   
-      const error = testValidateObject(ValidateUser.loginUser(), userPayload).error?.details[0]!;
+      const error = TestUtils.validateObject(ValidateUser.loginUser(), userPayload).error?.details[0]!;
   
       expect(error.message).toMatch('\"password\" is required');
       expect(error.path).toStrictEqual(["password"]);

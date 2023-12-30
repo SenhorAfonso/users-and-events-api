@@ -47,4 +47,35 @@ describe("Check user's sign-in route http responses", () => {
 
   })
 
+  it('Should return 404 status code when the payload is not associated to a user', async () => {
+    const userSignUpPayload = {
+      "firstName": "Pedro",
+      "lastName": "Afonso",
+      "birthDate": "2023-12-27",
+      "city": "Maringá",
+      "country": "Brasil",
+      "email": "pedroafonso@gmail.com",
+      "password": "password123",
+      "confirmPassword": "password123"
+    };
+
+    await request(server)
+      .post('/api/v1/users-and-events/users/sign-up')
+      .send(userSignUpPayload)
+
+    const userSignInPayload = {
+      "email": "maria@gmail.com",
+      "password": "password123",
+    };
+
+    const response = await request(server)
+      .post('/api/v1/users-and-events/users/sign-in')
+      .send(userSignInPayload);
+
+    expect(response.status).toBe(StatusCodes.NOT_FOUND);
+    expect(response.body.message).toBe('Not Found');
+    expect(response.body.success).toBeFalsy();
+
+  })
+
 })

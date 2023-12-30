@@ -64,4 +64,26 @@ describe("Check user's sign-up route http responses", () => {
 
   })
 
+  it('Should return 400 when the email sent is already in use', async () => {
+    const userPayload = {
+      "firstName": "invalid",
+      "lastName": "invalid",
+      "birthDate": "invalid",
+      "city": "invalid",
+      "country": "invalid",
+      "email": "invalid",
+      "password": "invalid",
+      "confirmPassword": "invalid"
+    };
+
+    const response = await request(server)
+      .post('/api/v1/users-and-events/users/sign-up')
+      .send(userPayload);
+
+    expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+    expect(response.body.type).toBe('ValidationError')
+    expect(response.body.success).toBeFalsy();
+
+  })
+
   })

@@ -5,7 +5,7 @@ const testValidateObject = (
   validationSchema: Joi.ObjectSchema,
   target: object
 ) => {
-  return validationSchema.validate(target)
+  return validationSchema.validate(target, { abortEarly: false })
 }
 
 describe('Validation payload for users sign-up route', () => {
@@ -323,6 +323,14 @@ describe('Validation payload for users sign-up route', () => {
     expect(error.message).toMatch('\"extra\" is not allowed');
     expect(error.path).toStrictEqual(["extra"]);
 
+  });
+
+  it('Should return an array of errors if none of the fields was sent', () => {
+    const userPayload = {}
+
+    const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details!;
+
+    expect(error.length).toBe(8);
   });
 
 })

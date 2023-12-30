@@ -1,5 +1,7 @@
 import createQueryById from "../../app/utils/createQueryById"
+import createQueryByObject from "../../app/utils/createQueryByObject";
 import IQueryByIdParams from "../../interfaces/Events/IQueryByIdParams"
+import IQueryByObjectParams from "../../interfaces/Events/IQueryByObjectParams";
 
 describe('Create query by id function', () => {
 
@@ -19,6 +21,34 @@ describe('Create query by id function', () => {
     const queryObject = createQueryById(queryObjectParams);
 
     expect(queryObject).toEqual({ _id: id });
+  })
+
+})
+
+describe('Create query by object', () => {
+
+  describe('the "description" property', () => {
+
+    it('Should be in the query object if it was in the input object', () => {
+      const queryObjectParams: IQueryByObjectParams = {
+        description: 'evento 1'  
+      }
+
+      const queryObject = createQueryByObject(queryObjectParams);
+
+      expect(queryObject).toHaveProperty('description', 'evento 1');
+
+    })
+
+    it('Should not be in the query object if it was not in the input object', () => {
+      const queryObjectParams: IQueryByObjectParams = {}
+
+      const queryObject = createQueryByObject(queryObjectParams);
+
+      expect(queryObject).toEqual({});
+
+    })
+
   })
 
 })

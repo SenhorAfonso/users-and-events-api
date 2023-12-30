@@ -176,7 +176,7 @@ describe('Create query by object', () => {
 
 describe('Validate if a target is empty/null', () => {
 
-  describe('If target is and array type', () => {
+  describe('If target is an array type', () => {
 
     it('Should return true if target is empty', () => {
       const target: any[] = [];

@@ -51,4 +51,28 @@ describe('Create query by object', () => {
 
   })
 
+  describe('the "dayOfWeek" property', () => {
+
+    it('Should be in the query object if it was in the input object', () => {
+      const queryObjectParams: IQueryByObjectParams = {
+        dayOfWeek: 'monday'  
+      }
+
+      const queryObject = createQueryByObject(queryObjectParams);
+
+      expect(queryObject).toHaveProperty('dayOfWeek', 'monday');
+
+    })
+
+    it('Should not be in the query object if it was not in the input object', () => {
+      const queryObjectParams: IQueryByObjectParams = {}
+
+      const queryObject = createQueryByObject(queryObjectParams);
+
+      expect(queryObject).toEqual({});
+
+    })
+
+  })
+
 })

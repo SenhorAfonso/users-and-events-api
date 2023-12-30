@@ -305,4 +305,24 @@ describe('Validation payload for users sign-up route', () => {
     expect(error.path).toStrictEqual(["confirmPassword"]);
   })
 
+  it('Should return an "extra is not allowed" error to a "extra" field added in payload', () => {
+    const userPayload = {
+      "firstName": "Pedro",
+      "lastName": "Afonso",
+      "birthDate": "2023-12-27",
+      "city": "Maringá",
+      "country": "Brasil",
+      "email": "pedroafonso@gmail.com",
+      "password": "password123",
+      "confirmPassword": "password123",
+      "extra": "extra"
+    }
+
+    const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+
+    expect(error.message).toMatch('\"extra\" is not allowed');
+    expect(error.path).toStrictEqual(["extra"]);
+
+  });
+
 })

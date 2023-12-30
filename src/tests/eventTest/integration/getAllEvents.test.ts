@@ -69,5 +69,53 @@ describe("Check for getAll event's route http response", () => {
     expect(response.body.data).toHaveLength(1);
 
   })
+  
+  it('Should return 401 status code if payload is valid and user is not logged', async () => {
+
+    const userSignUp = {
+      "firstName": "Pedro",
+      "lastName": "Afonso",
+      "birthDate": "2023-12-27",
+      "city": "Maringá",
+      "country": "Brasil",
+      "email": "pedroafonso@gmail.com",
+      "password": "password123",
+      "confirmPassword": "password123"
+    };
+
+    await request(server)
+      .post('/api/v1/users-and-events/users/sign-up')
+      .send(userSignUp);
+
+    const { email, password } = userSignUp;
+
+    const loggedUser = await request(server)
+      .post('/api/v1/users-and-events/users/sign-in')
+      .send({ email, password });
+
+    const jwtToken = loggedUser.body.data.token!;
+
+    const eventPayload = {
+      description: 'event teste',
+      dayOfWeek: 'monday'
+    };
+
+    await request(server)
+      .post('/api/v1/users-and-events/events')
+      .send(eventPayload)
+      .auth(jwtToken, { type: 'bearer' });
+
+    const queryObjectParams: IQueryByObject = {};
+    const queryObject = createQueryByObject(queryObjectParams);
+
+    const response = await request(server)
+      .get('/api/v1/users-and-events/events')
+      .query(queryObject);
+
+    expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
+    expect(response.body.error).toBe('Unauthorized');
+    expect(response.body.message).toBe('Not Authenticated');
+
+  })
 
 });

@@ -2,6 +2,7 @@ import createQueryById from "../../app/utils/createQueryById"
 import createQueryByObject from "../../app/utils/createQueryByObject";
 import IQueryByIdParams from "../../interfaces/Events/IQueryByIdParams"
 import IQueryByObjectParams from "../../interfaces/Events/IQueryByObjectParams";
+import resultIsEmpty from "../../app/utils/resultIsEmpty";
 
 describe('Create query by id function', () => {
 
@@ -167,6 +168,30 @@ describe('Create query by object', () => {
 
       expect(queryObject).toEqual({});
 
+    })
+
+  })
+
+})
+
+describe('Validate if a target is empty/null', () => {
+
+  describe('If target is and array type', () => {
+
+    it('Should return true if target is empty', () => {
+      const target: any[] = [];
+
+      const isValid = resultIsEmpty(target);
+
+      expect(isValid).toBeTruthy();
+    })
+
+    it('Should return false if target is not empty', () => {
+      const target: any[] = ['value'];
+
+      const isValid = resultIsEmpty(target);
+
+      expect(isValid).toBeFalsy();
     })
 
   })

@@ -4,13 +4,14 @@ import userService from "../services/UserService";
 class UserController {
 
   async userSignUp(req: Request, res: Response) {
-    const { result } = await userService.userSignUp(req.body);
-    res.send({ data: result });
+    const { success, status, message, result } = await userService.userSignUp(req.body);
+
+    res.status(status).json({ success, message, data: result });
   }
 
   async userSignIn(req: Request, res: Response) {
-    const { result, token } = await userService.userSignIn(req.body);
-    res.send({ data: result, token })
+    const { success, status, message, result } = await userService.userSignIn(req.body);
+    res.status(status).json({ success, message, data: result })
   }
 
 }

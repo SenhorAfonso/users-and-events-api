@@ -36,6 +36,18 @@ class ValidateEvent {
     return getAllQueryObjectValidator;
   }
 
+  static deleteMany() {
+    const deleteManyQueryObjectValidator = Joi.object({
+      description: Joi.string()
+      .min(MIN_DESCRIPTION_LENGHT),
+
+      dayOfWeek: Joi.string()
+        .valid('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday')
+    })
+
+    return deleteManyQueryObjectValidator;
+  }
+
 }
 
 export default ValidateEvent

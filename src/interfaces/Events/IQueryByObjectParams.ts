@@ -1,5 +1,4 @@
-export default interface IEventQueryParams {
-  _id?: string;
+export default interface IQueryByObjectParams {
   description?: string;
   dayOfWeek?: 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday';
   limit?: number;

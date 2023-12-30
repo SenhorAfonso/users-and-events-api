@@ -78,4 +78,35 @@ describe("Check user's sign-in route http responses", () => {
 
   })
 
+  it('Should return 400 status code when the payload is invalid', async () => {
+    const userSignUpPayload = {
+      "firstName": "Pedro",
+      "lastName": "Afonso",
+      "birthDate": "2023-12-27",
+      "city": "Maringá",
+      "country": "Brasil",
+      "email": "pedroafonso@gmail.com",
+      "password": "password123",
+      "confirmPassword": "password123"
+    };
+
+    await request(server)
+      .post('/api/v1/users-and-events/users/sign-up')
+      .send(userSignUpPayload)
+
+    const userSignInPayload = {
+      "email": "invalid",
+      "password": "invalid",
+    };
+
+    const response = await request(server)
+      .post('/api/v1/users-and-events/users/sign-in')
+      .send(userSignInPayload);
+
+    expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+    expect(response.body.type).toBe('ValidationError')
+    expect(response.body.success).toBeFalsy();
+
+  })
+
 })

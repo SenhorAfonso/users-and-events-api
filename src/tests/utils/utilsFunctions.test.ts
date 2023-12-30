@@ -172,6 +172,28 @@ describe('Create query by object', () => {
 
   })
 
+  describe('if all properties was in the input object', () => {
+
+    it('should return an object with all properties passed', () => {
+      const queryObjectParams: IQueryByObjectParams = {
+        description: 'event 1',
+        dayOfWeek: 'friday',
+        limit: 1,
+        sort: 'asc',
+        page: 1,
+        skip: 1  
+      }
+
+      const queryObject = createQueryByObject(queryObjectParams);
+
+      expect(queryObject).toHaveProperty('description', 'event 1');
+      expect(queryObject).toHaveProperty('dayOfWeek', 'friday');
+      expect(queryObject).toHaveProperty('limit', 1);
+      expect(queryObject).toHaveProperty('sort', 'asc');
+      expect(queryObject).toHaveProperty('page', 1);
+      expect(queryObject).toHaveProperty('skip', 1);
+    })
+  })
 })
 
 describe('Validate if a target is empty/null', () => {

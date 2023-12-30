@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon dist/app.js"
+    "dev": "nodemon dist/app.js",
+    "test": "npx jest src/tests/ --coverage"
   },
   "author": "",
   "license": "ISC",

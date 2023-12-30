@@ -40,6 +40,32 @@ describe("Check user's routes http responses", () => {
 
     })
 
+    it('Should return 400 when the email sent is already in use', async () => {
+      const userPayload = {
+        "firstName": "Pedro",
+        "lastName": "Afonso",
+        "birthDate": "2023-12-27",
+        "city": "Maringá",
+        "country": "Brasil",
+        "email": "pedroafonso@gmail.com",
+        "password": "password123",
+        "confirmPassword": "password123"
+      };
+
+      await request(server)
+        .post('/api/v1/users-and-events/users/sign-up')
+        .send(userPayload);
+
+      const response = await request(server)
+        .post('/api/v1/users-and-events/users/sign-up')
+        .send(userPayload);
+
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+      expect(response.body.success).toBeFalsy();
+      expect(response.body.message).toBe('Email already exists');
+
+    })
+
   })
 
 })

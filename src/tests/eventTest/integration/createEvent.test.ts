@@ -74,4 +74,44 @@ describe("Check for create event's route http response", () => {
 
   })
 
+  it('Should return 400 status code when the payload is invalid and user is logged', async () => {
+    const userSignUp = {
+      "firstName": "Pedro",
+      "lastName": "Afonso",
+      "birthDate": "2023-12-27",
+      "city": "Maringá",
+      "country": "Brasil",
+      "email": "pedroafonso@gmail.com",
+      "password": "password123",
+      "confirmPassword": "password123"
+    };
+
+    await request(server)
+      .post('/api/v1/users-and-events/users/sign-up')
+      .send(userSignUp);
+
+    const { email, password } = userSignUp;
+
+    const loggedUser = await request(server)
+      .post('/api/v1/users-and-events/users/sign-in')
+      .send({ email, password });
+
+    const jwtToken = loggedUser.body.data.token!;
+
+    const eventPayload = {
+      description: 'invalid',
+      dayOfWeek: 'invalid'
+    };
+
+    const response = await request(server)
+      .post('/api/v1/users-and-events/events')
+      .send(eventPayload)
+      .auth(jwtToken, { type: 'bearer' });
+
+    expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+    expect(response.body.type).toBe('ValidationError');
+    expect(response.body.errors).toBeDefined();
+
+  })
+
 })

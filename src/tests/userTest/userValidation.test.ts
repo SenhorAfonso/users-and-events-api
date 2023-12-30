@@ -120,4 +120,41 @@ describe('Validation payload for users sign-up route', () => {
     expect(error.path).toStrictEqual(["birthDate"]);
   })
 
+  it('Should return a "city is not allowed to be empty" error', () => {
+    const userPayload = {
+      "firstName": "Pedro",
+      "lastName": "Afonso",
+      "birthDate": "2023-12-27",
+      "city": "",
+      "country": "Brasil",
+      "email": "pedroafonso@gmail.com",
+      "password": "password123",
+      "confirmPassword": "password123"
+    }
+
+    const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+
+    expect(error.message).toMatch('\"city\" is not allowed to be empty');
+    expect(error.path).toStrictEqual(["city"]);
+
+  });
+
+  it('Should return a "city is required" error', () => {
+    const userPayload = {
+      "firstName": "Pedro",
+      "lastName": "Afonso",
+      "birthDate": "2023-12-27",
+      "citya": "Maringá",
+      "country": "Brasil",
+      "email": "pedroafonso@gmail.com",
+      "password": "password123",
+      "confirmPassword": "password123"
+    }
+
+    const error = testValidateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
+
+    expect(error.message).toMatch('\"city\" is required');
+    expect(error.path).toStrictEqual(["city"]);
+  })
+
 })

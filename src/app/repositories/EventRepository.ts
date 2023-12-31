@@ -8,6 +8,7 @@ import InternalServerError from "../errors/InternalServerError";
 import IQueryById from "../../interfaces/Events/IQueryById";
 import IQueryByObject from "../../interfaces/Events/IQueryByObject";
 import resultIsEmpty from "../utils/resultIsEmpty";
+import BadRequestError from "../errors/BadRequestError";
 
 class EventRepository {
 
@@ -67,6 +68,9 @@ class EventRepository {
     try {
       result = await eventSchema.findOne(queryObject);
     } catch (error) {
+      if (error instanceof mongoose.Error.CastError) {
+        throw new BadRequestError();
+      }
       throw new InternalServerError();
     }
 
@@ -115,6 +119,9 @@ class EventRepository {
       
       return { success, status, message, result };
     } catch (error) {
+      if (error instanceof mongoose.Error.CastError) {
+        throw new BadRequestError();
+      }
       throw new InternalServerError();
     }
   }

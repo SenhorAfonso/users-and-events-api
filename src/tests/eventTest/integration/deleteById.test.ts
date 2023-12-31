@@ -48,6 +48,33 @@ describe("Check for getAll event's route http response", () => {
       expect(response.body).toEqual({});
     })
 
+    it('Should return 400 when the id provide is invalid and the user is logged', async () => {
+      const userSignUp = {
+        "firstName": "Pedro",
+        "lastName": "Afonso",
+        "birthDate": "2023-12-27",
+        "city": "Maringá",
+        "country": "Brasil",
+        "email": "pedroafonso@gmail.com",
+        "password": "password123",
+        "confirmPassword": "password123"
+      };
+  
+      const { email, password } = await TestUtils.signUpUser(userSignUp);
+      const token = await TestUtils.loginUser({ email, password });
+      await TestUtils.createEvent({ dayOfWeek: "sunday", description: 'event 1' }, token);
+      const eventId = 'invalid'
+    
+      const response = await request(server)
+        .delete(`/api/v1/users-and-events/events/${eventId}`)
+        .auth(token, { type: 'bearer' });
+
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+      expect(response.body.error).toBe('Bad Request');
+      expect(response.body.message).toBe('Invalid Input');
+      
+    })
+
   })
 
 })

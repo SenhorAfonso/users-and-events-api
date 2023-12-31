@@ -111,19 +111,19 @@ class EventRepository {
     let result: mongoose.ModifyResult<Document> | null;
 
     try {
-      result = await eventSchema.findByIdAndDelete(queryObject);
-
-      if (!result) {
-        throw new NotFoundError();
-      }
-      
-      return { success, status, message, result };
+      result = await eventSchema.findByIdAndDelete(queryObject);      
     } catch (error) {
       if (error instanceof mongoose.Error.CastError) {
         throw new BadRequestError();
       }
       throw new InternalServerError();
     }
+
+    if (!result) {
+      throw new NotFoundError();
+    }
+
+    return { success, status, message, result };
   }
 
 }

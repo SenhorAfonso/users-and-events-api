@@ -88,8 +88,6 @@ describe("Check for deleteMany event's route http response", () => {
       .delete('/api/v1/users-and-events/events/')
       .query(queryObject)
       .auth(token, { type: 'bearer' });
-
-    console.log(response)
     
     expect(response.status).toBe(StatusCodes.BAD_REQUEST);
     expect(response.body.type).toBe('ValidationError');

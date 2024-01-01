@@ -54,7 +54,7 @@ describe("Check for getAll event's route http response", () => {
       expect(response.status).toBe(StatusCodes.OK)
     })
 
-    it('Should return 401 when the id is provid and the user is not logged', async () => {
+    it('Should return 401 when the id is provid but the user is not logged', async () => {
       const userSignUp = {
         "firstName": "Pedro",
         "lastName": "Afonso",
@@ -72,6 +72,33 @@ describe("Check for getAll event's route http response", () => {
     
       const response = await request(server)
         .get(`/api/v1/users-and-events/event/${eventId}`);
+
+        expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
+        expect(response.body.error).toBe('Unauthorized');
+        expect(response.body.message).toBe('Not Authenticated');
+      
+    })
+
+    it('Should return 401 when the id is provid but the token format is invalid', async () => {
+      const userSignUp = {
+        "firstName": "Pedro",
+        "lastName": "Afonso",
+        "birthDate": "2023-12-27",
+        "city": "Maringá",
+        "country": "Brasil",
+        "email": "pedroafonso@gmail.com",
+        "password": "password123",
+        "confirmPassword": "password123"
+      };
+  
+      const { email, password } = await TestUtils.signUpUser(userSignUp);
+      let token = await TestUtils.loginUser({ email, password });
+      const eventId = await TestUtils.createEvent({ dayOfWeek: "sunday", description: 'event 1' }, token);
+    
+      token = 'Bearer invalid token'
+      const response = await request(server)
+        .get(`/api/v1/users-and-events/event/${eventId}`)
+        .auth(token, { type: 'bearer' });
 
         expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
         expect(response.body.error).toBe('Unauthorized');

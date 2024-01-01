@@ -106,7 +106,7 @@ describe("Check for getAll event's route http response", () => {
       
     })
 
-    it('Should return 500 status code if id is invalid and user is logged', async () => {
+    it('Should return 400 status code if id is invalid and user is logged', async () => {
       const userSignUp = {
         "firstName": "Pedro",
         "lastName": "Afonso",
@@ -127,9 +127,9 @@ describe("Check for getAll event's route http response", () => {
         .get(`/api/v1/users-and-events/event/${eventId}`)
         .auth(token, { type: 'bearer' });
 
-      expect(response.status).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
-      expect(response.body.error).toBe('Internal Server Error');
-      expect(response.body.message).toBe('Something went wrong');
+      expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+      expect(response.body.error).toBe('Bad Request');
+      expect(response.body.message).toBe('Invalid Input');
       
     })
 

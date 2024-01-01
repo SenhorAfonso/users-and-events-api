@@ -13,17 +13,17 @@ class EventController {
   ) {
     const userId = req.user!.userId ?? '';
     const { description, dayOfWeek } = req.body
-    const { success, status, msg, result } = await eventService.createEvent({ userId, description, dayOfWeek });
+    const { success, status, message, result } = await eventService.createEvent({ userId, description, dayOfWeek });
     
-    res.status(status).json({ success, msg, data: result });
+    res.status(status).json({ success, message, data: result });
   }
 
   async getEvents(
     req: Request,
     res: Response
   ) {
-    const { success, status, msg, result } = await eventService.getEvents(req.query);
-    res.status(status).json({ success, msg, data: result });
+    const { success, status, message, result } = await eventService.getEvents(req.query);
+    res.status(status).json({ success, message, data: result });
   }
 
   async getSingleEvents(

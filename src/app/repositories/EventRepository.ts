@@ -8,12 +8,13 @@ import InternalServerError from "../errors/InternalServerError";
 import IQueryById from "../../interfaces/Events/IQueryById";
 import IQueryByObject from "../../interfaces/Events/IQueryByObject";
 import resultIsEmpty from "../utils/resultIsEmpty";
+import BadRequestError from "../errors/BadRequestError";
 
 class EventRepository {
 
   async create(payload: ICreateEventPayload) {
     const status: number = StatusCodes.OK;
-    const msg: string = 'Successful operation';
+    const message: string = 'Successful operation';
     const success: boolean = true;
 
     let result: mongoose.Document | undefined;
@@ -21,7 +22,7 @@ class EventRepository {
     try {
       result = await eventSchema.create(payload);
 
-      return { success, status, msg, result };
+      return { success, status, message, result };
     } catch (error) {
       throw new InternalServerError();
     }
@@ -30,7 +31,7 @@ class EventRepository {
 
   async getAll(queryObject: IQueryByObject) {
     const status: number = StatusCodes.OK;
-    const msg: string = 'Successful operation';
+    const message: string = 'Successful operation';
     const success: boolean = true;
 
     let { limit, page, sort, skip, ...query } = queryObject;
@@ -54,7 +55,7 @@ class EventRepository {
       throw new NotFoundError();
     }
 
-    return { success, status, msg, result };
+    return { success, status, message, result };
   }
 
   async getSingle(queryObject: IQueryById) {
@@ -67,6 +68,9 @@ class EventRepository {
     try {
       result = await eventSchema.findOne(queryObject);
     } catch (error) {
+      if (error instanceof mongoose.Error.CastError) {
+        throw new BadRequestError();
+      }
       throw new InternalServerError();
     }
 
@@ -84,18 +88,18 @@ class EventRepository {
 
     let deletedEvents: mongoose.Document[] = [];
 
+    deletedEvents = await eventSchema.find(queryObject);
+
+    if (resultIsEmpty(deletedEvents)) {
+      throw new NotFoundError();
+    }
+    
     try {
-      deletedEvents = await eventSchema.find(queryObject);
-
-      if (resultIsEmpty(deletedEvents)) {
-        throw new NotFoundError();
-      }
-
       await eventSchema.deleteMany(queryObject);
     } catch (error) {
       new InternalServerError();
     }
-
+    
     return { success, status, message, result: deletedEvents };
   }
 
@@ -107,16 +111,19 @@ class EventRepository {
     let result: mongoose.ModifyResult<Document> | null;
 
     try {
-      result = await eventSchema.findByIdAndDelete(queryObject);
-
-      if (!result) {
-        throw new NotFoundError();
-      }
-      
-      return { success, status, message, result };
+      result = await eventSchema.findByIdAndDelete(queryObject);      
     } catch (error) {
+      if (error instanceof mongoose.Error.CastError) {
+        throw new BadRequestError();
+      }
       throw new InternalServerError();
     }
+
+    if (!result) {
+      throw new NotFoundError();
+    }
+
+    return { success, status, message, result };
   }
 
 }

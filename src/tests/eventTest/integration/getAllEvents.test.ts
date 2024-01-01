@@ -1,3 +1,4 @@
+import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
 import eventSchema from "../../../app/schemas/eventSchema";
 import userSchema from "../../../app/schemas/userSchema";
@@ -10,10 +11,15 @@ import createQueryByObject from "../../../app/utils/createQueryByObject";
 import TestUtils from "../../../app/utils/testUtils/TestUtils";
 import IQueryByObjectParams from "../../../interfaces/Events/IQueryByObjectParams";
 
+let mongoServer: MongoMemoryServer;
+
 describe("Check for getAll event's route http response", () => {
 
   beforeAll(async () => {
-    await mongoose.connect(serverConfig.TEST_MONGO_URI!);
+    mongoServer = await MongoMemoryServer.create();
+    const mongoURI = await mongoServer.getUri();
+
+    await mongoose.connect(mongoURI);
   })
 
   afterEach(async () => {
@@ -22,7 +28,8 @@ describe("Check for getAll event's route http response", () => {
   })
 
   afterAll(async () => {
-    await mongoose.connection.close();
+    await mongoServer.stop();
+    await mongoose.disconnect();
   })
 
   it('Should return 200 status code if payload is valid and user is logged', async () => {

@@ -15,7 +15,7 @@ class AuthenticationMiddleware {
     const authHeader = req.headers.authorization;
 
     if (AuthenticationMiddleware.authHeaderIsNotValid(authHeader)) {
-      throw new AuthenticationError('Not Authenticated');
+      throw new AuthenticationError();
     }
     
     const token = authHeader!.split(' ')[1];
@@ -25,7 +25,7 @@ class AuthenticationMiddleware {
       req.user = { userId };
       next();
     } catch (error) {
-      throw new AuthenticationError('Not Authenticated');
+      throw new AuthenticationError();
     }
     
   }

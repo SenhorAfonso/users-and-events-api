@@ -88,18 +88,18 @@ class EventRepository {
 
     let deletedEvents: mongoose.Document[] = [];
 
+    deletedEvents = await eventSchema.find(queryObject);
+
+    if (resultIsEmpty(deletedEvents)) {
+      throw new NotFoundError();
+    }
+    
     try {
-      deletedEvents = await eventSchema.find(queryObject);
-
-      if (resultIsEmpty(deletedEvents)) {
-        throw new NotFoundError();
-      }
-
       await eventSchema.deleteMany(queryObject);
     } catch (error) {
       new InternalServerError();
     }
-
+    
     return { success, status, message, result: deletedEvents };
   }
 

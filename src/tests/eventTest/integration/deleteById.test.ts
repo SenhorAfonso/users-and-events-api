@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import { MongoMemoryServer } from "mongodb-memory-server";
+import mongoose, { mongo } from "mongoose";
 import eventSchema from "../../../app/schemas/eventSchema";
 import userSchema from "../../../app/schemas/userSchema";
 import serverConfig from "../../../config/config";
@@ -7,19 +8,22 @@ import TestUtils from "../../../app/utils/testUtils/TestUtils";
 import server from "../../../server";
 import request from "supertest";
 
+let mongoServer: MongoMemoryServer;
+
 describe("Check for getAll event's route http response", () => {
 
   beforeAll(async () => {
-    await mongoose.connect(serverConfig.TEST_MONGO_URI!);
-  })
+    mongoServer = await MongoMemoryServer.create();
+    const mongoURI = mongoServer.getUri();
 
-  afterEach(async () => {
-    await userSchema.collection.drop();
-    await eventSchema.collection.drop();
+    await mongoose.connect(mongoURI);
   })
 
   afterAll(async () => {
-    await mongoose.connection.close();
+    await userSchema.collection.drop();
+    await eventSchema.collection.drop();
+    await mongoServer.stop();
+    await mongoose.disconnect();
   })
 
   describe("check for deleteById's route http response ", () => {

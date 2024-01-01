@@ -127,4 +127,36 @@ describe("Check for deleteMany event's route http response", () => {
     expect(response.body.message).toBe('Not Authenticated');
   })
 
+  it('Should return 404 status code when no element is found', async () => {
+    const userSignUp = {
+      "firstName": "Pedro",
+      "lastName": "Afonso",
+      "birthDate": "2023-12-27",
+      "city": "Maringá",
+      "country": "Brasil",
+      "email": "pedroafonso@gmail.com",
+      "password": "password123",
+      "confirmPassword": "password123"
+    };
+
+    const { email, password } = await TestUtils.signUpUser(userSignUp);
+    const token = await TestUtils.loginUser({ email, password });
+    await TestUtils.createEvent({ dayOfWeek: "sunday", description: 'event 1' }, token);
+
+    const queryObjectParams: IQueryByObjectParams = {
+      dayOfWeek: 'monday'
+    }
+
+    const queryObject = createQueryByObject(queryObjectParams);
+  
+    const response = await request(server)
+      .delete('/api/v1/users-and-events/events/')
+      .query(queryObject)
+      .auth(token, { type: 'bearer' });
+
+    expect(response.status).toBe(StatusCodes.NOT_FOUND);
+    expect(response.body.error).toBe('Not Found');
+    expect(response.body.message).toBe('Not Found');
+  })
+
 })

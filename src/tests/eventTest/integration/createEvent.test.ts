@@ -1,3 +1,4 @@
+import { MongoMemoryServer } from 'mongodb-memory-server'
 import mongoose from "mongoose"
 import serverConfig from "../../../config/config"
 import eventSchema from "../../../app/schemas/eventSchema";
@@ -6,16 +7,22 @@ import userSchema from "../../../app/schemas/userSchema";
 import server from "../../../server";
 import StatusCodes from "http-status-codes";
 
+let mongoServer: MongoMemoryServer;
+
 describe("Check for create event's route http response", () => {
 
   beforeAll(async () => {
-    await mongoose.connect(serverConfig.TEST_MONGO_URI!);
-  })
+    mongoServer = await MongoMemoryServer.create();
+    const mongoURI = await mongoServer.getUri();
 
+    await mongoose.connect(mongoURI);
+  })
+  
   afterAll(async () => {
     await userSchema.collection.drop();
     await eventSchema.collection.drop();
-    await mongoose.connection.close();
+    await mongoServer.stop();
+    await mongoose.disconnect();
   })
 
   it('Should return 200 status code when the payload is valid and user is logged', async () => {

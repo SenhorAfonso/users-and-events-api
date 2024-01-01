@@ -1,3 +1,4 @@
+import { MongoMemoryServer } from "mongodb-memory-server"
 import request from "supertest"
 import server from "../../../server"
 import StatusCodes from "http-status-codes"
@@ -5,14 +6,20 @@ import mongoose from "mongoose"
 import serverConfig from "../../../config/config"
 import userSchema from "../../../app/schemas/userSchema"
 
+let mongoServer: MongoMemoryServer;
+
 describe("Check user's sign-up route http responses", () => {
 
   beforeAll(async () => {
-    await mongoose.connect(serverConfig.TEST_MONGO_URI!);
+    mongoServer = await MongoMemoryServer.create();
+    const mongoURI = await mongoServer.getUri();
+
+    await mongoose.connect(mongoURI);
   })
   
   afterAll(async () => {
     await userSchema.collection.drop();
+    await mongoServer.stop();
     await mongoose.connection.close();
   })
 

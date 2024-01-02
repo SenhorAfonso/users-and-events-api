@@ -7,6 +7,10 @@
         "airbnb",
         "airbnb/hooks",
         "prettier",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "plugin:import/typescript",
+        "eslint:all",
         "plugin:@typescript-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
@@ -18,7 +22,21 @@
         "@typescript-eslint"
     ],
     "rules": {
-      "prettier/prettier": "error",
+      "no-trailing-spaces":"error",
+      "padding-line-between-statements":"error",
+      "no-multiple-empty-lines":"error",
+      "space-in-parens": "warn",
+      "sort-keys": "off",
+      "import/extensions": [
+        "error",
+        "ignorePackages",
+        {
+          "js": "never",
+          "jsx": "never",
+          "ts": "never",
+          "tsx": "never"
+        }
+      ],
         "indent": [
             "error",
             2,

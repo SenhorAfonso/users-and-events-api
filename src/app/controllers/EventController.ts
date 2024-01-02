@@ -19,7 +19,7 @@ class EventController {
     req: Request,
     res: Response
   ) {
-    const {success, status, message, result } = await eventService.getEvents(req.query);
+    const { success, status, message, result } = await eventService.getEvents(req.query);
 
     res.status(status).json({ success, message, data: result });
   }

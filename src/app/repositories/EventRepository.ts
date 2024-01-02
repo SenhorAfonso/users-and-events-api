@@ -111,7 +111,7 @@ class EventRepository {
     const message: string = 'Event deleted';
     const success: boolean = true;
 
-    let result: mongoose.ModifyResult<Document> | null = null;
+    let result: mongoose.ModifyResult<Document> | null;
 
     try {
       result = await eventSchema.findByIdAndDelete(queryObject);

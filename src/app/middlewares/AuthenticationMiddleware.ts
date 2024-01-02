@@ -1,4 +1,4 @@
-import { NextFunction } from 'express';
+import { NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import AuthenticationError from '../errors/AuthenticationError';
 import IJwtPayload from '../../interfaces/AuthMiddleware/IJwtPayload';
@@ -9,6 +9,7 @@ class AuthenticationMiddleware {
 
   static AuthenticateToken(
     req: AuthenticatedRequest,
+    res: Response,
     next: NextFunction
   ) {
     const authHeader = req.headers.authorization;

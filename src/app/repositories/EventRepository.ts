@@ -16,16 +16,9 @@ class EventRepository {
     const message: string = 'Successful operation';
     const success: boolean = true;
 
-    let result: mongoose.Document | undefined;
+    const result = await eventSchema.create(payload);
 
-    try {
-      result = await eventSchema.create(payload);
-
-      return { success, status, message, result };
-    } catch (error) {
-      throw new InternalServerError();
-    }
-
+    return { success, status, message, result };
   }
 
   async getAll(queryObject: IQueryByObject) {

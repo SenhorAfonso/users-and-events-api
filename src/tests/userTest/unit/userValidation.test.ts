@@ -320,34 +320,34 @@ describe('Validation payload for users sign-up route', () => {
   describe('Validade when an extra field is sent', () => {
     it('Should return an "extra is not allowed" error to a "extra" field added in payload', () => {
       const userPayload = {
-        "firstName": "Pedro",
-        "lastName": "Afonso",
-        "birthDate": "2023-12-27",
-        "city": "Maringá",
-        "country": "Brasil",
-        "email": "pedroafonso@gmail.com",
-        "password": "password123",
-        "confirmPassword": "password123",
-        "extra": "extra"
-      }
-  
-      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
-  
-      expect(error.message).toMatch('\"extra\" is not allowed');
-      expect(error.path).toStrictEqual(["extra"]);
-  
+        'firstName': 'Pedro',
+        'lastName': 'Afonso',
+        'birthDate': '2023-12-27',
+        'city': 'Maringá',
+        'country': 'Brasil',
+        'email': 'pedroafonso@gmail.com',
+        'password': 'password123',
+        'confirmPassword': 'password123',
+        'extra': 'extra'
+      };
+
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error!.details[0]!;
+
+      expect(error.message).toMatch('"extra" is not allowed');
+      expect(error.path).toStrictEqual(['extra']);
+
     });
-  })
+  });
 
   describe('Validate when none of the fields are sent', () => {
     it('Should return an array of errors if none of the fields was sent', () => {
-      const userPayload = {}
-  
-      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details!;
-  
+      const userPayload = {};
+
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error!.details!;
+
       expect(error.length).toBe(8);
     });
-  })
+  });
 
   describe('Validate when all fields are right', () => {
     it('Should return the userPayload', () => {

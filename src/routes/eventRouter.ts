@@ -6,21 +6,23 @@ import AuthMiddleware from '../app/middlewares/AuthenticationMiddleware';
 
 const eventRouter = Router();
 
-eventRouter.post('/events', AuthMiddleware.AuthenticateToken, ValidationMiddleware.validatePayload(ValidateEvent.createEvent(), 'body'), EventController.createEvent)
+eventRouter.post('/events', [
+  AuthMiddleware.AuthenticateToken,
+  ValidationMiddleware.validatePayload(ValidateEvent.createEvent(), 'body')
+], EventController.createEvent);
 
 eventRouter.get('/events', [
   AuthMiddleware.AuthenticateToken,
   ValidationMiddleware.validatePayload(ValidateEvent.getAll(), 'query')
-], EventController.getEvents)
+], EventController.getEvents);
 
-eventRouter.get('/event/:id', AuthMiddleware.AuthenticateToken, EventController.getSingleEvents)
+eventRouter.get('/event/:id', AuthMiddleware.AuthenticateToken, EventController.getSingleEvents);
 
 eventRouter.delete('/events', [
   AuthMiddleware.AuthenticateToken,
   ValidationMiddleware.validatePayload(ValidateEvent.deleteMany(), 'query')
-], EventController.deleteMany)
+], EventController.deleteMany);
 
-eventRouter.delete('/events/:id', AuthMiddleware.AuthenticateToken, EventController.deleteSingleEvent)
-
+eventRouter.delete('/events/:id', AuthMiddleware.AuthenticateToken, EventController.deleteSingleEvent);
 
 export default eventRouter;

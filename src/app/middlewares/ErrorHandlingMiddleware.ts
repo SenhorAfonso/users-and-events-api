@@ -24,12 +24,6 @@ class ErrorHandlingMiddleware {
 
       return res.status(statusCode).json({ statusCode, error, message });
     }
-
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
-      error: 'Internal Server Error',
-      message: 'Something Went Wrgon'
-    });
   }
 
   static createCustomErrorResponse(error: ApiErrors) {

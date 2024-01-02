@@ -8,7 +8,7 @@ class EventController {
     req: AuthenticatedRequest,
     res: Response
   ) {
-    const userId = req.user!.userId ?? '';
+    const userId = req.user!.userId!;
     const { description, dayOfWeek } = req.body;
     const { success, status, message, result } = await eventService.createEvent({ userId, description, dayOfWeek });
 

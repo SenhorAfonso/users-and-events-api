@@ -20,7 +20,7 @@ class UserService {
     const { email, password } = payload;
     const { success, status, message, result: user } = await this.repository.login({ email, password });
 
-    const userId = user?._id;
+    const userId = user!._id;
     const token = jwt.sign({ userId }, serverConfig.JWT_SECRETE_KEY!);
 
     return { success, status, message, result: { user, token } };

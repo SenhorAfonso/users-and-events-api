@@ -12,10 +12,9 @@ class App {
 
   private start() {
     server.listen(this.port, () => {
-      console.log(`Server is listening at ${this.port} port.`);
+      console.info(`Server is listening at ${this.port} port.`);
     });
   }
-
 }
 
 new App();

@@ -1,6 +1,6 @@
-import mongoose from "mongoose"
-import IORM from "../../../interfaces/IORM";
-import serverConfig from "../../../config/config";
+import mongoose from 'mongoose';
+import IORM from '../../../interfaces/IORM';
+import serverConfig from '../../../config/config';
 
 class DataBase {
   private ORM: IORM;
@@ -14,13 +14,12 @@ class DataBase {
   connect() {
     this.ORM.connect(this.URL)
       .then(() => {
-        console.log('Database connected!')
+        console.log('Database connected!');
       })
       .catch((error) => {
         throw new Error(`Error (${error}) during database connection!`);
-      })
+      });
   }
-
 }
 
 const db = new DataBase(mongoose, serverConfig.MONGO_URI!);

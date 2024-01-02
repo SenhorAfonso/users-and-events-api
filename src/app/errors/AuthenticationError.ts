@@ -1,6 +1,6 @@
-import StatusCodes from "http-status-codes";
-import ErrorMessage from "./enum/ErrorMessageEnum";
-import ApiErrors from "./ApiErrors";
+import StatusCodes from 'http-status-codes';
+import ErrorMessage from './enum/ErrorMessageEnum';
+import ApiErrors from './ApiErrors';
 
 class AuthenticationError extends ApiErrors {
   public status: number;

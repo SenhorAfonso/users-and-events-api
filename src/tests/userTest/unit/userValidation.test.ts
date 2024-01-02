@@ -352,18 +352,18 @@ describe('Validation payload for users sign-up route', () => {
   describe('Validate when all fields are right', () => {
     it('Should return the userPayload', () => {
       const userPayload = {
-        "firstName": "Pedro",
-        "lastName": "Afonso",
-        "birthDate": "2023-12-27",
-        "city": "Maringá",
-        "country": "Brasil",
-        "email": "pedroafonso@gmail.com",
-        "password": "password123",
-        "confirmPassword": "password123"
-      }
-  
-      const value = TestUtils.validateObject(ValidateUser.createUser(), userPayload).value;
-      
+        'firstName': 'Pedro',
+        'lastName': 'Afonso',
+        'birthDate': '2023-12-27',
+        'city': 'Maringá',
+        'country': 'Brasil',
+        'email': 'pedroafonso@gmail.com',
+        'password': 'password123',
+        'confirmPassword': 'password123'
+      };
+
+      const { value } = TestUtils.validateObject(ValidateUser.createUser(), userPayload);
+
       expect(value).toHaveProperty('firstName', 'Pedro');
       expect(value).toHaveProperty('lastName', 'Afonso');
       expect(value).toHaveProperty('birthDate', new Date('2023-12-27T03:00:00.000Z'));
@@ -373,8 +373,8 @@ describe('Validation payload for users sign-up route', () => {
       expect(value).toHaveProperty('password', 'password123');
       expect(value).toHaveProperty('confirmPassword', 'password123');
     });
-  })
-})
+  });
+});
 
 describe('Validation payload for users sign-in route', () => {
   describe('Validate email field and value', () => {

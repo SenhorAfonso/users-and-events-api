@@ -3,7 +3,6 @@ import StatusCodes from 'http-status-codes';
 import ICreateEventPayload from '../../interfaces/Events/ICreateEventPayload';
 import eventSchema from '../schemas/eventSchema';
 import NotFoundError from '../errors/NotFoundError';
-import InternalServerError from '../errors/InternalServerError';
 import IQueryById from '../../interfaces/Events/IQueryById';
 import IQueryByObject from '../../interfaces/Events/IQueryByObject';
 import APIUtils from '../utils/ApiUtils';

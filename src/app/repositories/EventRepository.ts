@@ -96,13 +96,13 @@ class EventRepository {
     if (resultIsEmpty(deletedEvents)) {
       throw new NotFoundError();
     }
-    
+
     try {
       await eventSchema.deleteMany(queryObject);
     } catch (error) {
-      new InternalServerError();
+      throw new InternalServerError();
     }
-    
+
     return { success, status, message, result: deletedEvents };
   }
 
@@ -111,10 +111,10 @@ class EventRepository {
     const message: string = 'Event deleted';
     const success: boolean = true;
 
-    let result: mongoose.ModifyResult<Document> | null;
+    let result: mongoose.ModifyResult<Document> | null = null;
 
     try {
-      result = await eventSchema.findByIdAndDelete(queryObject);      
+      result = await eventSchema.findByIdAndDelete(queryObject);
     } catch (error) {
       if (error instanceof mongoose.Error.CastError) {
         throw new BadRequestError();

@@ -242,41 +242,41 @@ describe('Validation payload for users sign-up route', () => {
   describe('Validade password field and value', () => {
     it('Should return an "invalid pattern" error to password less than 6 characters', () => {
       const userPayload = {
-        "firstName": "Pedro",
-        "lastName": "Afonso",
-        "birthDate": "2023-12-27",
-        "city": "Maringá",
-        "country": "Brasil",
-        "email": "pedroafonso@gmail.com",
-        "password": "p123",
-        "confirmPassword": "password123"
-      }
-  
-      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
-  
-      expect(error.message).toMatch('\"password\" with value \"p123\" fails to match the required pattern: /^[a-zA-Z0-9]{6,30}$/');
-      expect(error.path).toStrictEqual(["password"]);
-  
+        'firstName': 'Pedro',
+        'lastName': 'Afonso',
+        'birthDate': '2023-12-27',
+        'city': 'Maringá',
+        'country': 'Brasil',
+        'email': 'pedroafonso@gmail.com',
+        'password': 'p123',
+        'confirmPassword': 'password123'
+      };
+
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error!.details[0]!;
+
+      expect(error.message).toMatch('"password" with value "p123" fails to match the required pattern: /^[a-zA-Z0-9]{6,30}$/');
+      expect(error.path).toStrictEqual(['password']);
+
     });
-  
+
     it('Should return a "password is required" error', () => {
       const userPayload = {
-        "firstName": "Pedro",
-        "lastName": "Afonso",
-        "birthDate": "2023-12-27",
-        "city": "Maringá",
-        "country": "Brasil",
-        "email": "pedroafonso@gmail.com",
-        "passworda": "password123",
-        "confirmPassword": "password123"
-      }
-  
-      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
-  
-      expect(error.message).toMatch('\"password\" is required');
-      expect(error.path).toStrictEqual(["password"]);
-    })
-  })
+        'firstName': 'Pedro',
+        'lastName': 'Afonso',
+        'birthDate': '2023-12-27',
+        'city': 'Maringá',
+        'country': 'Brasil',
+        'email': 'pedroafonso@gmail.com',
+        'passworda': 'password123',
+        'confirmPassword': 'password123'
+      };
+
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error!.details[0]!;
+
+      expect(error.message).toMatch('"password" is required');
+      expect(error.path).toStrictEqual(['password']);
+    });
+  });
 
   describe('Validade confirmPassword field and value', () => {
     it('Should return an "invalid pattern" error to confirmPassword less than 6 characters', () => {

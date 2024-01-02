@@ -40,14 +40,10 @@ class EventRepository {
 
     query = APIUtils.createQueryByObject(query);
 
-    try {
-      result = await eventSchema.find(query)
-        .sort({ description: sort })
-        .skip(skip)
-        .limit(limit);
-    } catch (error) {
-      throw new InternalServerError();
-    }
+    result = await eventSchema.find(query)
+      .sort({ description: sort })
+      .skip(skip)
+      .limit(limit);
 
     if (APIUtils.resultIsEmpty(result)) {
       throw new NotFoundError();

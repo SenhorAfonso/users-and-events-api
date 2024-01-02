@@ -1,12 +1,12 @@
-import userSchema from "../schemas/userSchema";
-import ICreateUserPayload from "../../interfaces/ICreateUserPayload";
-import ILoginUserPayload from "../../interfaces/ILoginUserPayload";
-import StatusCodes from "http-status-codes";
-import InternalServerError from "../errors/InternalServerError";
-import resultIsEmpty from "../utils/resultIsEmpty";
-import NotFoundError from "../errors/NotFoundError";
-import mongoose from "mongoose";
-import DuplicatedValueError from "../errors/DuplicatedValueError";
+import mongoose from 'mongoose';
+import StatusCodes from 'http-status-codes';
+import userSchema from '../schemas/userSchema';
+import ICreateUserPayload from '../../interfaces/ICreateUserPayload';
+import ILoginUserPayload from '../../interfaces/ILoginUserPayload';
+import InternalServerError from '../errors/InternalServerError';
+import resultIsEmpty from '../utils/resultIsEmpty';
+import NotFoundError from '../errors/NotFoundError';
+import DuplicatedValueError from '../errors/DuplicatedValueError';
 
 class UserRepository {
 

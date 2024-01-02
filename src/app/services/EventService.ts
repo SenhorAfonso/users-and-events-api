@@ -1,12 +1,9 @@
-import ICreateEventPayload from "../../interfaces/Events/ICreateEventPayload";
-import EventRepository from "../repositories/EventRepository";
-import IEventQueryParams from "../../interfaces/Events/IQueryByObjectParams";
-import NotFoundError from "../errors/NotFoundError";
-import { StatusCodes } from "http-status-codes";
-import IQueryByIdParams from "../../interfaces/Events/IQueryByIdParams";
-import IQueryByObjectParams from "../../interfaces/Events/IQueryByObjectParams";
-import createQueryById from "../utils/createQueryById";
-import createQueryByObject from "../utils/createQueryByObject";
+import ICreateEventPayload from '../../interfaces/Events/ICreateEventPayload';
+import EventRepository from '../repositories/EventRepository';
+import IQueryByObjectParams from '../../interfaces/Events/IQueryByObjectParams';
+import IQueryByIdParams from '../../interfaces/Events/IQueryByIdParams';
+import createQueryById from '../utils/createQueryById';
+import createQueryByObject from '../utils/createQueryByObject';
 
 class EventService {
   private repository: EventRepository;
@@ -21,10 +18,10 @@ class EventService {
     return result;
   }
 
-  async getEvents(payload: IEventQueryParams) {
+  async getEvents(payload: IQueryByObjectParams) {
     const queryObject = createQueryByObject(payload);
     const result = await this.repository.getAll(queryObject);
-    
+
     return result;
   }
 

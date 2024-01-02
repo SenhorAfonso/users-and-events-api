@@ -4,7 +4,7 @@ import userSchema from '../schemas/userSchema';
 import ICreateUserPayload from '../../interfaces/ICreateUserPayload';
 import ILoginUserPayload from '../../interfaces/ILoginUserPayload';
 import InternalServerError from '../errors/InternalServerError';
-import resultIsEmpty from '../utils/resultIsEmpty';
+import APIUtils from '../utils/ApiUtils';
 import NotFoundError from '../errors/NotFoundError';
 import DuplicatedValueError from '../errors/DuplicatedValueError';
 
@@ -45,7 +45,7 @@ class UserRepository {
       throw new InternalServerError();
     }
 
-    if (resultIsEmpty(user)) {
+    if (APIUtils.resultIsEmpty(user)) {
       throw new NotFoundError();
     }
 

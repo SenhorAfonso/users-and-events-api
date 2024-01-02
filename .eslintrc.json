@@ -27,6 +27,17 @@
       "no-multiple-empty-lines":"error",
       "space-in-parens": "warn",
       "sort-keys": "off",
+      "object-curly-spacing": "error",
+      "no-shadow":"off",
+      "sort-imports": "off",
+      "init-declarations":"off",
+      "lines-between-class-members":"off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "max-lines-per-function": "off",
+      "max-statements": [
+        "error",
+        20
+      ],
       "import/extensions": [
         "error",
         "ignorePackages",
@@ -43,8 +54,8 @@
             { "SwitchCase": 1 }
         ],
         "linebreak-style": [
-            "error",
-            "windows"
+            "off",
+            "unix"
         ],
         "quotes": [
             "error",
@@ -54,5 +65,72 @@
             "error",
             "always"
         ]
-    }
+    },
+    "overrides": [
+      {
+        "files": ["EventRepository.ts", "UserRepository.ts"],
+        "rules": {
+          "class-methods-use-this":"off"
+        }
+      },
+      {
+        "files": [
+          "AuthenticatedRequest.ts",
+          "IJwtPayload.ts",
+          "ICreateEventPayload.ts",
+          "IQueryById.ts",
+          "IQueryByObject.ts",
+          "IQueryByObjectParams.ts",
+          "IQueryByIdParams.ts",
+          "ICreateUserPayload.ts",
+          "ILoginUserPayload.ts",
+          "IORM.ts"
+        ],
+        "rules": {
+          "semi":"off"
+        }
+      },
+      {
+        "files": ["userValidation.test.ts", "ValidateUser.ts"],
+        "rules": {
+          "max-lines": "off",
+          "require-unicode-regexp": "off"
+        }
+      },
+      {
+        "files": ["ErrorHandlingMiddleware.ts"],
+        "rules": {
+          "max-params": "off",
+          "@typescript-eslint/no-unused-vars": "off"
+        }
+      },
+      {
+        "files": ["userSchema.ts"],
+        "rules": {
+          "require-unicode-regexp": "off",
+          "prefer-named-capture-group": "off"
+        }
+      },
+      {
+        "files": ["UserService.ts", "TestUtils.ts", "ApiUtils.ts"],
+        "rules": {
+          "no-underscore-dangle":"off",
+          "no-magic-numbers": "off",
+          "no-undefined":"off"
+        }
+      },
+      {
+        "files": ["connectDB.ts", "app.ts"],
+        "rules": {
+          "no-console": "off",
+          "no-new": "off"
+        }
+      },
+      {
+        "files": ["utilsFunctions.test.ts", "userValidation.test.ts", "getAllEvents.test.ts", "deleteMany.test.ts"],
+        "rules": {
+          "no-magic-numbers":"off"
+        }
+      }
+    ]
 }

@@ -239,7 +239,7 @@ describe('Validation payload for users sign-up route', () => {
     });
   });
 
-  describe('Validade password field and value', () => {
+  describe('Validate password field and value', () => {
     it('Should return an "invalid pattern" error to password less than 6 characters', () => {
       const userPayload = {
         'firstName': 'Pedro',
@@ -278,44 +278,44 @@ describe('Validation payload for users sign-up route', () => {
     });
   });
 
-  describe('Validade confirmPassword field and value', () => {
+  describe('Validate confirmPassword field and value', () => {
     it('Should return an "invalid pattern" error to confirmPassword less than 6 characters', () => {
       const userPayload = {
-        "firstName": "Pedro",
-        "lastName": "Afonso",
-        "birthDate": "2023-12-27",
-        "city": "Maringá",
-        "country": "Brasil",
-        "email": "pedroafonso@gmail.com",
-        "password": "password123",
-        "confirmPassword": "p123"
-      }
-  
-      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
-  
-      expect(error.message).toMatch('\"confirmPassword\" with value \"p123\" fails to match the required pattern: /^[a-zA-Z0-9]{6,30}$/');
-      expect(error.path).toStrictEqual(["confirmPassword"]);
-  
+        'firstName': 'Pedro',
+        'lastName': 'Afonso',
+        'birthDate': '2023-12-27',
+        'city': 'Maringá',
+        'country': 'Brasil',
+        'email': 'pedroafonso@gmail.com',
+        'password': 'password123',
+        'confirmPassword': 'p123'
+      };
+
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error!.details[0]!;
+
+      expect(error.message).toMatch('"confirmPassword" with value "p123" fails to match the required pattern: /^[a-zA-Z0-9]{6,30}$/');
+      expect(error.path).toStrictEqual(['confirmPassword']);
+
     });
-  
+
     it('Should return a "confirmPassword is required" error', () => {
       const userPayload = {
-        "firstName": "Pedro",
-        "lastName": "Afonso",
-        "birthDate": "2023-12-27",
-        "city": "Maringá",
-        "country": "Brasil",
-        "email": "pedroafonso@gmail.com",
-        "password": "password123",
-        "confirmaPassworda": "password123"
-      }
-  
-      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
-  
-      expect(error.message).toMatch('\"confirmPassword\" is required');
-      expect(error.path).toStrictEqual(["confirmPassword"]);
-    })
-  })
+        'firstName': 'Pedro',
+        'lastName': 'Afonso',
+        'birthDate': '2023-12-27',
+        'city': 'Maringá',
+        'country': 'Brasil',
+        'email': 'pedroafonso@gmail.com',
+        'password': 'password123',
+        'confirmaPassworda': 'password123'
+      };
+
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error!.details[0]!;
+
+      expect(error.message).toMatch('"confirmPassword" is required');
+      expect(error.path).toStrictEqual(['confirmPassword']);
+    });
+  });
 
   describe('Validade when an extra field is sent', () => {
     it('Should return an "extra is not allowed" error to a "extra" field added in payload', () => {

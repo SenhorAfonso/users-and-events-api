@@ -18,11 +18,11 @@ class UserRepository {
     let result: mongoose.Document | null;
 
     result = await userSchema.findOne({ email: payload.email });
-    
+
     if (result) {
       throw new DuplicatedValueError('Email already exists');
     }
-    
+
     try {
       result = await userSchema.create(payload);
       return { success, status, message, result };
@@ -44,12 +44,12 @@ class UserRepository {
     } catch (error) {
       throw new InternalServerError();
     }
-    
+
     if (resultIsEmpty(user)) {
       throw new NotFoundError();
     }
-    
-    return { success, status, message, result: user }; 
+
+    return { success, status, message, result: user };
   }
 
 }

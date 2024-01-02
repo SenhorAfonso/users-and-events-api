@@ -1,6 +1,5 @@
-import Joi from "joi";
-import ValidateUser from "../../../app/validations/User/ValidateUser";
-import TestUtils from "../../../app/utils/testUtils/TestUtils";
+import ValidateUser from '../../../app/validations/User/ValidateUser';
+import TestUtils from '../../../app/utils/testUtils/TestUtils';
 
 describe('Validation payload for users sign-up route', () => {
 
@@ -407,27 +406,27 @@ describe('Validation payload for users sign-in route', () => {
   describe('Validade password field and value', () => {
     it('Should return an "invalid pattern" error to password less than 6 characters', () => {
       const userPayload = {
-        "email": "pedroafonso@gmail.com",
-        "password": "p123",
-      }
-  
-      const error = TestUtils.validateObject(ValidateUser.loginUser(), userPayload).error?.details[0]!;
-  
-      expect(error.message).toMatch('\"password\" with value \"p123\" fails to match the required pattern: /^[a-zA-Z0-9]{6,30}$/');
-      expect(error.path).toStrictEqual(["password"]);
-  
+        'email': 'pedroafonso@gmail.com',
+        'password': 'p123',
+      };
+
+      const error = TestUtils.validateObject(ValidateUser.loginUser(), userPayload).error!.details[0]!;
+
+      expect(error.message).toMatch('"password" with value "p123" fails to match the required pattern: /^[a-zA-Z0-9]{6,30}$/');
+      expect(error.path).toStrictEqual(['password']);
+
     });
-  
+
     it('Should return a "password is required" error', () => {
       const userPayload = {
-        "email": "pedroafonso@gmail.com",
-        "passworda": "password123"
-      }
-  
-      const error = TestUtils.validateObject(ValidateUser.loginUser(), userPayload).error?.details[0]!;
-  
-      expect(error.message).toMatch('\"password\" is required');
-      expect(error.path).toStrictEqual(["password"]);
-    })
-  })
-})
+        'email': 'pedroafonso@gmail.com',
+        'passworda': 'password123'
+      };
+
+      const error = TestUtils.validateObject(ValidateUser.loginUser(), userPayload).error!.details[0]!;
+
+      expect(error.message).toMatch('"password" is required');
+      expect(error.path).toStrictEqual(['password']);
+    });
+  });
+});

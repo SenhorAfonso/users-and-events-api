@@ -380,29 +380,29 @@ describe('Validation payload for users sign-in route', () => {
   describe('Validate email field and value', () => {
     it('Should return a "email must be a valid email" error', () => {
       const userPayload = {
-        "email": "pedroafonsogmail.com",
-        "password": "password123"
-      }
-  
-      const error = TestUtils.validateObject(ValidateUser.loginUser(), userPayload).error?.details[0]!;
-  
-      expect(error.message).toMatch('\"email\" must be a valid email');
-      expect(error.path).toStrictEqual(["email"]);
-  
+        'email': 'pedroafonsogmail.com',
+        'password': 'password123'
+      };
+
+      const error = TestUtils.validateObject(ValidateUser.loginUser(), userPayload).error!.details[0]!;
+
+      expect(error.message).toMatch('"email" must be a valid email');
+      expect(error.path).toStrictEqual(['email']);
+
     });
-  
+
     it('Should return a "email is required" error', () => {
       const userPayload = {
-        "emaila": "pedroafonso@gmail.com",
-        "password": "password123"
-      }
-  
-      const error = TestUtils.validateObject(ValidateUser.loginUser(), userPayload).error?.details[0]!;
-  
-      expect(error.message).toMatch('\"email\" is required');
-      expect(error.path).toStrictEqual(["email"]);
-    })
-  })
+        'invalid': 'pedroafonso@gmail.com',
+        'password': 'password123'
+      };
+
+      const error = TestUtils.validateObject(ValidateUser.loginUser(), userPayload).error!.details[0]!;
+
+      expect(error.message).toMatch('"email" is required');
+      expect(error.path).toStrictEqual(['email']);
+    });
+  });
 
   describe('Validade password field and value', () => {
     it('Should return an "invalid pattern" error to password less than 6 characters', () => {

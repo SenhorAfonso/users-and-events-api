@@ -45,6 +45,8 @@ class EventRepository {
     sort ??= 'asc';
     skip = (page - defaultPage) * limit || skip || defaultSkip;
 
+    query = APIUtils.createQueryByObject(query);
+
     try {
       result = await eventSchema.find(query)
         .sort({ description: sort })

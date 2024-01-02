@@ -1,6 +1,5 @@
-import { NextFunction, Request, Response } from "express";
-import ValidateUser from "../validations/User/ValidateUser";
-import Joi from "joi";
+import { NextFunction, Request, Response } from 'express';
+import Joi from 'joi';
 
 class ValidationMiddleware {
 
@@ -14,18 +13,18 @@ class ValidationMiddleware {
       res: Response,
       next: NextFunction
     ) => {
-    
+
       const { error } = joiValidationObject.validate(req[target], {
         abortEarly: false
-      })
-  
+      });
+
       if (error) {
-        throw error
+        throw error;
       }
-  
-      return next()
-    }
-   
+
+      return next();
+    };
+
   }
 
 }

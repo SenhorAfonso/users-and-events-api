@@ -2,8 +2,7 @@ import ICreateEventPayload from '../../interfaces/Events/ICreateEventPayload';
 import EventRepository from '../repositories/EventRepository';
 import IQueryByObjectParams from '../../interfaces/Events/IQueryByObjectParams';
 import IQueryByIdParams from '../../interfaces/Events/IQueryByIdParams';
-import createQueryById from '../utils/createQueryById';
-import createQueryByObject from '../utils/createQueryByObject';
+import APIUtils from '../utils/ApiUtils';
 
 class EventService {
   private repository: EventRepository;
@@ -19,28 +18,28 @@ class EventService {
   }
 
   async getEvents(payload: IQueryByObjectParams) {
-    const queryObject = createQueryByObject(payload);
+    const queryObject = APIUtils.createQueryByObject(payload);
     const result = await this.repository.getAll(queryObject);
 
     return result;
   }
 
   async getSingleEvents(payload: IQueryByIdParams) {
-    const queryObject = createQueryById(payload);
+    const queryObject = APIUtils.createQueryById(payload);
     const result = await this.repository.getSingle(queryObject);
 
     return result;
   }
 
   async deleteManyEvents(payload: IQueryByObjectParams) {
-    const queryObject = createQueryByObject(payload);
+    const queryObject = APIUtils.createQueryByObject(payload);
     const result = await this.repository.deleteMany(queryObject);
 
     return result;
   }
 
   async deleteSingleEvent(payload: IQueryByIdParams) {
-    const queryObject = createQueryById(payload);
+    const queryObject = APIUtils.createQueryById(payload);
     const result = await this.repository.deleteSingle(queryObject);
 
     return result;

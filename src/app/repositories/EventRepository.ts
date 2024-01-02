@@ -1,14 +1,13 @@
-import mongoose from "mongoose";
-import ICreateEventPayload from "../../interfaces/Events/ICreateEventPayload";
-import eventSchema from "../schemas/eventSchema";
-import StatusCodes from "http-status-codes";
-import IEventQueryParams from "../../interfaces/Events/IQueryByObjectParams";
-import NotFoundError from "../errors/NotFoundError";
-import InternalServerError from "../errors/InternalServerError";
-import IQueryById from "../../interfaces/Events/IQueryById";
-import IQueryByObject from "../../interfaces/Events/IQueryByObject";
-import resultIsEmpty from "../utils/resultIsEmpty";
-import BadRequestError from "../errors/BadRequestError";
+import mongoose from 'mongoose';
+import StatusCodes from 'http-status-codes';
+import ICreateEventPayload from '../../interfaces/Events/ICreateEventPayload';
+import eventSchema from '../schemas/eventSchema';
+import NotFoundError from '../errors/NotFoundError';
+import InternalServerError from '../errors/InternalServerError';
+import IQueryById from '../../interfaces/Events/IQueryById';
+import IQueryByObject from '../../interfaces/Events/IQueryByObject';
+import resultIsEmpty from '../utils/resultIsEmpty';
+import BadRequestError from '../errors/BadRequestError';
 
 class EventRepository {
 

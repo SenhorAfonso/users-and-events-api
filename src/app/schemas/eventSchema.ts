@@ -6,7 +6,7 @@ const eventSchema = new mongoose.Schema({
 
   description: {
     type: String,
-    minLenght: [MIN_LENGHT_EVENT_DESCRIPTION, 'Event description must be more than 5 characters']
+    minLenght: [MIN_LENGHT_EVENT_DESCRIPTION, `Event description must be more than ${MIN_LENGHT_EVENT_DESCRIPTION} characters`]
   },
   dayOfWeek: {
     type: String,

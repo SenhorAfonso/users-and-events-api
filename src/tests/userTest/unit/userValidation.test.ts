@@ -164,41 +164,41 @@ describe('Validation payload for users sign-up route', () => {
   describe('Validate county field and value', () => {
     it('Should return a "country is not allowed to be empty" error', () => {
       const userPayload = {
-        "firstName": "Pedro",
-        "lastName": "Afonso",
-        "birthDate": "2023-12-27",
-        "city": "Maringá",
-        "country": "",
-        "email": "pedroafonso@gmail.com",
-        "password": "password123",
-        "confirmPassword": "password123"
-      }
-  
-      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
-  
-      expect(error.message).toMatch('\"country\" is not allowed to be empty');
-      expect(error.path).toStrictEqual(["country"]);
-  
+        'firstName': 'Pedro',
+        'lastName': 'Afonso',
+        'birthDate': '2023-12-27',
+        'city': 'Maringá',
+        'country': '',
+        'email': 'pedroafonso@gmail.com',
+        'password': 'password123',
+        'confirmPassword': 'password123'
+      };
+
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error!.details[0]!;
+
+      expect(error.message).toMatch('"country" is not allowed to be empty');
+      expect(error.path).toStrictEqual(['country']);
+
     });
-  
+
     it('Should return a "country is required" error', () => {
       const userPayload = {
-        "firstName": "Pedro",
-        "lastName": "Afonso",
-        "birthDate": "2023-12-27",
-        "city": "Maringá",
-        "countrya": "Brasil",
-        "email": "pedroafonso@gmail.com",
-        "password": "password123",
-        "confirmPassword": "password123"
-      }
-  
-      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error?.details[0]!;
-  
-      expect(error.message).toMatch('\"country\" is required');
-      expect(error.path).toStrictEqual(["country"]);
-    })
-  })
+        'firstName': 'Pedro',
+        'lastName': 'Afonso',
+        'birthDate': '2023-12-27',
+        'city': 'Maringá',
+        'countrya': 'Brasil',
+        'email': 'pedroafonso@gmail.com',
+        'password': 'password123',
+        'confirmPassword': 'password123'
+      };
+
+      const error = TestUtils.validateObject(ValidateUser.createUser(), userPayload).error!.details[0]!;
+
+      expect(error.message).toMatch('"country" is required');
+      expect(error.path).toStrictEqual(['country']);
+    });
+  });
 
   describe('Validate email field and value', () => {
     it('Should return a "email must be a valid email" error', () => {

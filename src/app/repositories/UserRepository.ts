@@ -3,7 +3,6 @@ import StatusCodes from 'http-status-codes';
 import userSchema from '../schemas/userSchema';
 import ICreateUserPayload from '../../interfaces/ICreateUserPayload';
 import ILoginUserPayload from '../../interfaces/ILoginUserPayload';
-import InternalServerError from '../errors/InternalServerError';
 import APIUtils from '../utils/ApiUtils';
 import NotFoundError from '../errors/NotFoundError';
 import DuplicatedValueError from '../errors/DuplicatedValueError';
@@ -23,12 +22,9 @@ class UserRepository {
       throw new DuplicatedValueError('Email already exists');
     }
 
-    try {
-      result = await userSchema.create(payload);
-      return { success, status, message, result };
-    } catch (error) {
-      throw new InternalServerError();
-    }
+    result = await userSchema.create(payload);
+    return { success, status, message, result };
+
   }
 
   async login(payload: ILoginUserPayload) {
@@ -37,13 +33,7 @@ class UserRepository {
     const success: boolean = true;
     const message: string = 'User logged in successfully';
 
-    let user: mongoose.Document | null;
-
-    try {
-      user = await userSchema.findOne({ email, password });
-    } catch (error) {
-      throw new InternalServerError();
-    }
+    const user = await userSchema.findOne({ email, password });
 
     if (APIUtils.resultIsEmpty(user)) {
       throw new NotFoundError();

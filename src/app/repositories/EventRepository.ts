@@ -100,10 +100,7 @@ class EventRepository {
     try {
       result = await eventSchema.findByIdAndDelete(queryObject);
     } catch (error) {
-      if (error instanceof mongoose.Error.CastError) {
-        throw new BadRequestError();
-      }
-      throw new InternalServerError();
+      throw new BadRequestError();
     }
 
     if (!result) {

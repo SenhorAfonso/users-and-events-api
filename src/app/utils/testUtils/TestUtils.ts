@@ -9,7 +9,7 @@ class TestUtils {
   static async signUpUser(payload: ICreateUserPayload){
     const { email, password } = payload;
 
-    const response = await request(server)
+    await request(server)
       .post('/api/v1/users-and-events/users/sign-up')
       .send(payload);
 
@@ -41,7 +41,8 @@ class TestUtils {
     validationSchema: Joi.ObjectSchema,
     target: object
   ) {
-    return validationSchema.validate(target, { abortEarly: false });
+    const res = validationSchema.validate(target, { abortEarly: false });
+    return res;
   }
 
 }

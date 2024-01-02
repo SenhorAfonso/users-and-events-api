@@ -1,10 +1,12 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+
+const MIN_LENGHT_EVENT_DESCRIPTION: number = 5;
 
 const eventSchema = new mongoose.Schema({
 
   description: {
     type: String,
-    minLenght: [5, 'Event description must be more than 5 characters']
+    minLenght: [MIN_LENGHT_EVENT_DESCRIPTION, 'Event description must be more than 5 characters']
   },
   dayOfWeek: {
     type: String,
@@ -15,7 +17,7 @@ const eventSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     require: [true, 'You need to provide a owner for your event.']
   }
-  
-})
+
+});
 
 export default mongoose.model('eventSchema', eventSchema);

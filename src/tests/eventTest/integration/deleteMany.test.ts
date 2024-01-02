@@ -7,7 +7,7 @@ import userSchema from '../../../app/schemas/userSchema';
 import TestUtils from '../../../app/utils/testUtils/TestUtils';
 import server from '../../../server';
 import IQueryByObjectParams from '../../../interfaces/Events/IQueryByObjectParams';
-import createQueryByObject from '../../../app/utils/createQueryByObject';
+import APIUtils from '../../../app/utils/ApiUtils';
 
 let mongoServer: MongoMemoryServer;
 
@@ -51,7 +51,7 @@ describe('Check for deleteMany event\'s route http response', () => {
       dayOfWeek: 'sunday'
     };
 
-    const queryObject = createQueryByObject(queryObjectParams);
+    const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
       .delete('/api/v1/users-and-events/events/')
@@ -114,7 +114,7 @@ describe('Check for deleteMany event\'s route http response', () => {
       dayOfWeek: 'sunday'
     };
 
-    const queryObject = createQueryByObject(queryObjectParams);
+    const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
       .delete('/api/v1/users-and-events/events/')
@@ -145,7 +145,7 @@ describe('Check for deleteMany event\'s route http response', () => {
       dayOfWeek: 'monday'
     };
 
-    const queryObject = createQueryByObject(queryObjectParams);
+    const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
       .delete('/api/v1/users-and-events/events/')

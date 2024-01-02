@@ -6,7 +6,7 @@ import eventSchema from '../../../app/schemas/eventSchema';
 import userSchema from '../../../app/schemas/userSchema';
 import server from '../../../server';
 import IQueryByObject from '../../../interfaces/Events/IQueryByObject';
-import createQueryByObject from '../../../app/utils/createQueryByObject';
+import APIUtils from '../../../app/utils/ApiUtils';
 import TestUtils from '../../../app/utils/testUtils/TestUtils';
 import IQueryByObjectParams from '../../../interfaces/Events/IQueryByObjectParams';
 
@@ -67,7 +67,7 @@ describe('Check for getAll event\'s route http response', () => {
       .auth(jwtToken, { type: 'bearer' });
 
     const queryObjectParams: IQueryByObject = {};
-    const queryObject = createQueryByObject(queryObjectParams);
+    const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
       .get('/api/v1/users-and-events/events')
@@ -117,7 +117,7 @@ describe('Check for getAll event\'s route http response', () => {
       .auth(jwtToken, { type: 'bearer' });
 
     const queryObjectParams: IQueryByObject = {};
-    const queryObject = createQueryByObject(queryObjectParams);
+    const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
       .get('/api/v1/users-and-events/events')
@@ -168,7 +168,7 @@ describe('Check for getAll event\'s route http response', () => {
       description: 'event 2',
       dayOfWeek: 'sunday'
     };
-    const queryObject = createQueryByObject(queryObjectParams);
+    const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
       .get('/api/v1/users-and-events/events')
@@ -206,7 +206,7 @@ describe('Check for getAll event\'s route http response', () => {
       dayOfWeek: 'monday'
     };
 
-    const queryObject = createQueryByObject(queryObjectParams);
+    const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
       .get('/api/v1/users-and-events/events')
@@ -243,7 +243,7 @@ describe('Check for getAll event\'s route http response', () => {
       description: 'event 1'
     };
 
-    const queryObject = createQueryByObject(queryObjectParams);
+    const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
       .get('/api/v1/users-and-events/events')
@@ -281,7 +281,7 @@ describe('Check for getAll event\'s route http response', () => {
       limit: 1
     };
 
-    const queryObject = createQueryByObject(queryObjectParams);
+    const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
       .get('/api/v1/users-and-events/events')
@@ -319,7 +319,7 @@ describe('Check for getAll event\'s route http response', () => {
       limit: 1
     };
 
-    const queryObject = createQueryByObject(queryObjectParams);
+    const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
       .get('/api/v1/users-and-events/events')
@@ -357,7 +357,7 @@ describe('Check for getAll event\'s route http response', () => {
       page: 2
     };
 
-    const queryObject = createQueryByObject(queryObjectParams);
+    const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
       .get('/api/v1/users-and-events/events')

@@ -1,15 +1,13 @@
-import createQueryById from '../../app/utils/createQueryById';
-import createQueryByObject from '../../app/utils/createQueryByObject';
+import APIUtils from '../../app/utils/ApiUtils';
 import IQueryByIdParams from '../../interfaces/Events/IQueryByIdParams';
 import IQueryByObjectParams from '../../interfaces/Events/IQueryByObjectParams';
-import resultIsEmpty from '../../app/utils/resultIsEmpty';
 
 describe('Create query by id function', () => {
 
   it('Should return a empty object if input object has no id member', () => {
     const queryObjectParams: IQueryByIdParams = {};
 
-    const queryObject = createQueryById(queryObjectParams);
+    const queryObject = APIUtils.createQueryById(queryObjectParams);
 
     expect(queryObject).toEqual({});
 
@@ -19,7 +17,7 @@ describe('Create query by id function', () => {
     const id: string = 'testId';
     const queryObjectParams: IQueryByIdParams = { id };
 
-    const queryObject = createQueryById(queryObjectParams);
+    const queryObject = APIUtils.createQueryById(queryObjectParams);
 
     expect(queryObject).toEqual({ _id: id });
   });
@@ -35,7 +33,7 @@ describe('Create query by object', () => {
         description: 'evento 1'
       };
 
-      const queryObject = createQueryByObject(queryObjectParams);
+      const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
       expect(queryObject).toHaveProperty('description', 'evento 1');
 
@@ -44,7 +42,7 @@ describe('Create query by object', () => {
     it('Should not be in the query object if it was not in the input object', () => {
       const queryObjectParams: IQueryByObjectParams = {};
 
-      const queryObject = createQueryByObject(queryObjectParams);
+      const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
       expect(queryObject).toEqual({});
 
@@ -59,7 +57,7 @@ describe('Create query by object', () => {
         dayOfWeek: 'monday'
       };
 
-      const queryObject = createQueryByObject(queryObjectParams);
+      const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
       expect(queryObject).toHaveProperty('dayOfWeek', 'monday');
 
@@ -68,7 +66,7 @@ describe('Create query by object', () => {
     it('Should not be in the query object if it was not in the input object', () => {
       const queryObjectParams: IQueryByObjectParams = {};
 
-      const queryObject = createQueryByObject(queryObjectParams);
+      const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
       expect(queryObject).toEqual({});
 
@@ -83,7 +81,7 @@ describe('Create query by object', () => {
         limit: 1
       };
 
-      const queryObject = createQueryByObject(queryObjectParams);
+      const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
       expect(queryObject).toHaveProperty('limit', 1);
 
@@ -92,7 +90,7 @@ describe('Create query by object', () => {
     it('Should not be in the query object if it was not in the input object', () => {
       const queryObjectParams: IQueryByObjectParams = {};
 
-      const queryObject = createQueryByObject(queryObjectParams);
+      const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
       expect(queryObject).toEqual({});
 
@@ -107,7 +105,7 @@ describe('Create query by object', () => {
         sort: 'asc'
       };
 
-      const queryObject = createQueryByObject(queryObjectParams);
+      const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
       expect(queryObject).toHaveProperty('sort', 'asc');
 
@@ -116,7 +114,7 @@ describe('Create query by object', () => {
     it('Should not be in the query object if it was not in the input object', () => {
       const queryObjectParams: IQueryByObjectParams = {};
 
-      const queryObject = createQueryByObject(queryObjectParams);
+      const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
       expect(queryObject).toEqual({});
 
@@ -131,7 +129,7 @@ describe('Create query by object', () => {
         page: 1
       };
 
-      const queryObject = createQueryByObject(queryObjectParams);
+      const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
       expect(queryObject).toHaveProperty('page', 1);
 
@@ -140,7 +138,7 @@ describe('Create query by object', () => {
     it('Should not be in the query object if it was not in the input object', () => {
       const queryObjectParams: IQueryByObjectParams = {};
 
-      const queryObject = createQueryByObject(queryObjectParams);
+      const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
       expect(queryObject).toEqual({});
 
@@ -155,7 +153,7 @@ describe('Create query by object', () => {
         skip: 1
       };
 
-      const queryObject = createQueryByObject(queryObjectParams);
+      const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
       expect(queryObject).toHaveProperty('skip', 1);
 
@@ -164,7 +162,7 @@ describe('Create query by object', () => {
     it('Should not be in the query object if it was not in the input object', () => {
       const queryObjectParams: IQueryByObjectParams = {};
 
-      const queryObject = createQueryByObject(queryObjectParams);
+      const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
       expect(queryObject).toEqual({});
 
@@ -184,7 +182,7 @@ describe('Create query by object', () => {
         skip: 1
       };
 
-      const queryObject = createQueryByObject(queryObjectParams);
+      const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
       expect(queryObject).toHaveProperty('description', 'event 1');
       expect(queryObject).toHaveProperty('dayOfWeek', 'friday');
@@ -203,7 +201,7 @@ describe('Validate if a target is empty/null', () => {
     it('Should return true if target is empty', () => {
       const target: any[] = [];
 
-      const isValid = resultIsEmpty(target);
+      const isValid = APIUtils.resultIsEmpty(target);
 
       expect(isValid).toBeTruthy();
     });
@@ -211,7 +209,7 @@ describe('Validate if a target is empty/null', () => {
     it('Should return false if target is not empty', () => {
       const target: any[] = ['value'];
 
-      const isValid = resultIsEmpty(target);
+      const isValid = APIUtils.resultIsEmpty(target);
 
       expect(isValid).toBeFalsy();
     });
@@ -223,7 +221,7 @@ describe('Validate if a target is empty/null', () => {
     it('Should return true if target is undefined', () => {
       let target: any;
 
-      const isValid = resultIsEmpty(target);
+      const isValid = APIUtils.resultIsEmpty(target);
 
       expect(isValid).toBeTruthy();
     });
@@ -231,7 +229,7 @@ describe('Validate if a target is empty/null', () => {
     it('Should return false if target is defined', () => {
       const target: any = 'value';
 
-      const isValid = resultIsEmpty(target);
+      const isValid = APIUtils.resultIsEmpty(target);
 
       expect(isValid).toBeFalsy();
     });

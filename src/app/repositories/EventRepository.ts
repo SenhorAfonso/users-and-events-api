@@ -33,13 +33,17 @@ class EventRepository {
     const message: string = 'Successful operation';
     const success: boolean = true;
 
-    let { limit, page, sort, skip, ...query } = queryObject;
-    let result: mongoose.Document[];
+    const defaultLimit: number = 3;
+    const defaultPage: number = 1;
+    const defaultSkip: number = 0;
 
-    limit = limit ?? 3;
-    page = page ?? 1;
-    sort = sort ?? 'asc';
-    skip = (page - 1) * limit || skip || 0;
+    let { limit, page, sort, skip, ...query } = queryObject;
+    let result: mongoose.Document[] = [];
+
+    limit ??= defaultLimit;
+    page ??= defaultPage;
+    sort ??= 'asc';
+    skip = (page - defaultPage) * limit || skip || defaultSkip;
 
     try {
       result = await eventSchema.find(query)

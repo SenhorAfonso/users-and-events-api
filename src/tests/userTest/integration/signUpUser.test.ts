@@ -93,4 +93,4 @@ describe("Check user's sign-up route http responses", () => {
 
   })
 
-  })
+})

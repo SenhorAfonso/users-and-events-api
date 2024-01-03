@@ -430,5 +430,4 @@ describe('Validation payload for users sign-in route', () => {
       expect(error.path).toStrictEqual(["password"]);
     })
   })
-
 })

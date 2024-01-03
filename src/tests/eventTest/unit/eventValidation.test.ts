@@ -1,5 +1,5 @@
-import ValidateEvent from "../../app/validations/Event/ValidateEvent";
-import TestUtils from "../../app/utils/testUtils/TestUtils";
+import ValidateEvent from "../../../app/validations/Event/ValidateEvent";
+import TestUtils from "../../../app/utils/testUtils/TestUtils";
 
 describe('Validation payload for create event route', () => {
 

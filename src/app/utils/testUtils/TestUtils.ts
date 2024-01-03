@@ -1,8 +1,8 @@
 import Joi from 'joi';
 import request from 'supertest';
-import ICreateUserPayload from '../../../interfaces/ICreateUserPayload';
+import ICreateUserPayload from '../../../interfaces/User/ICreateUserPayload';
 import server from '../../../server';
-import ILoginUserPayload from '../../../interfaces/ILoginUserPayload';
+import ILoginUserPayload from '../../../interfaces/User/ILoginUserPayload';
 
 class TestUtils {
 

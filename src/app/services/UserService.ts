@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import UserRepository from '../repositories/UserRepository';
-import ICreateUserPayload from '../../interfaces/ICreateUserPayload';
-import ILoginUserPayload from '../../interfaces/ILoginUserPayload';
+import ICreateUserPayload from '../../interfaces/User/ICreateUserPayload';
+import ILoginUserPayload from '../../interfaces/User/ILoginUserPayload';
 import serverConfig from '../../config/config';
 
 class UserService {

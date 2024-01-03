@@ -1,14 +1,12 @@
-import mongoose from "mongoose";
-import ICreateEventPayload from "../../interfaces/Events/ICreateEventPayload";
-import eventSchema from "../schemas/eventSchema";
-import StatusCodes from "http-status-codes";
-import IEventQueryParams from "../../interfaces/Events/IQueryByObjectParams";
-import NotFoundError from "../errors/NotFoundError";
-import InternalServerError from "../errors/InternalServerError";
-import IQueryById from "../../interfaces/Events/IQueryById";
-import IQueryByObject from "../../interfaces/Events/IQueryByObject";
-import resultIsEmpty from "../utils/resultIsEmpty";
-import BadRequestError from "../errors/BadRequestError";
+import mongoose from 'mongoose';
+import StatusCodes from 'http-status-codes';
+import ICreateEventPayload from '../../interfaces/Events/ICreateEventPayload';
+import eventSchema from '../schemas/eventSchema';
+import NotFoundError from '../errors/NotFoundError';
+import IQueryById from '../../interfaces/Events/IQueryById';
+import IQueryByObject from '../../interfaces/Events/IQueryByObject';
+import APIUtils from '../utils/ApiUtils';
+import BadRequestError from '../errors/BadRequestError';
 
 class EventRepository {
 
@@ -17,16 +15,9 @@ class EventRepository {
     const message: string = 'Successful operation';
     const success: boolean = true;
 
-    let result: mongoose.Document | undefined;
+    const result = await eventSchema.create(payload);
 
-    try {
-      result = await eventSchema.create(payload);
-
-      return { success, status, message, result };
-    } catch (error) {
-      throw new InternalServerError();
-    }
-
+    return { success, status, message, result };
   }
 
   async getAll(queryObject: IQueryByObject) {
@@ -34,24 +25,26 @@ class EventRepository {
     const message: string = 'Successful operation';
     const success: boolean = true;
 
+    const defaultLimit: number = 3;
+    const defaultPage: number = 1;
+    const defaultSkip: number = 0;
+
     let { limit, page, sort, skip, ...query } = queryObject;
-    let result: mongoose.Document[];
+    let result: mongoose.Document[] = [];
 
-    limit = limit ?? 3;
-    page = page ?? 1;
-    sort = sort ?? 'asc';
-    skip = (page - 1) * limit || skip || 0;
+    limit ??= defaultLimit;
+    page ??= defaultPage;
+    sort ??= 'asc';
+    skip = (page - defaultPage) * limit || skip || defaultSkip;
 
-    try {
-      result = await eventSchema.find(query)
-        .sort({ description: sort })
-        .skip(skip)
-        .limit(limit);
-    } catch (error) {
-      throw new InternalServerError();
-    }
+    query = APIUtils.createQueryByObject(query);
 
-    if (resultIsEmpty(result)) {
+    result = await eventSchema.find(query)
+      .sort({ description: sort })
+      .skip(skip)
+      .limit(limit);
+
+    if (APIUtils.resultIsEmpty(result)) {
       throw new NotFoundError();
     }
 
@@ -68,10 +61,7 @@ class EventRepository {
     try {
       result = await eventSchema.findOne(queryObject);
     } catch (error) {
-      if (error instanceof mongoose.Error.CastError) {
-        throw new BadRequestError();
-      }
-      throw new InternalServerError();
+      throw new BadRequestError();
     }
 
     if (!result) {
@@ -90,16 +80,12 @@ class EventRepository {
 
     deletedEvents = await eventSchema.find(queryObject);
 
-    if (resultIsEmpty(deletedEvents)) {
+    if (APIUtils.resultIsEmpty(deletedEvents)) {
       throw new NotFoundError();
     }
-    
-    try {
-      await eventSchema.deleteMany(queryObject);
-    } catch (error) {
-      new InternalServerError();
-    }
-    
+
+    await eventSchema.deleteMany(queryObject);
+
     return { success, status, message, result: deletedEvents };
   }
 
@@ -111,12 +97,9 @@ class EventRepository {
     let result: mongoose.ModifyResult<Document> | null;
 
     try {
-      result = await eventSchema.findByIdAndDelete(queryObject);      
+      result = await eventSchema.findByIdAndDelete(queryObject);
     } catch (error) {
-      if (error instanceof mongoose.Error.CastError) {
-        throw new BadRequestError();
-      }
-      throw new InternalServerError();
+      throw new BadRequestError();
     }
 
     if (!result) {

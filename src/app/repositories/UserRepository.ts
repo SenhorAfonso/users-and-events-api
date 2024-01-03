@@ -1,12 +1,11 @@
-import userSchema from "../schemas/userSchema";
-import ICreateUserPayload from "../../interfaces/ICreateUserPayload";
-import ILoginUserPayload from "../../interfaces/ILoginUserPayload";
-import StatusCodes from "http-status-codes";
-import InternalServerError from "../errors/InternalServerError";
-import resultIsEmpty from "../utils/resultIsEmpty";
-import NotFoundError from "../errors/NotFoundError";
-import mongoose from "mongoose";
-import DuplicatedValueError from "../errors/DuplicatedValueError";
+import mongoose from 'mongoose';
+import StatusCodes from 'http-status-codes';
+import userSchema from '../schemas/userSchema';
+import ICreateUserPayload from '../../interfaces/User/ICreateUserPayload';
+import ILoginUserPayload from '../../interfaces/User/ILoginUserPayload';
+import APIUtils from '../utils/ApiUtils';
+import NotFoundError from '../errors/NotFoundError';
+import DuplicatedValueError from '../errors/DuplicatedValueError';
 
 class UserRepository {
 
@@ -18,17 +17,14 @@ class UserRepository {
     let result: mongoose.Document | null;
 
     result = await userSchema.findOne({ email: payload.email });
-    
+
     if (result) {
       throw new DuplicatedValueError('Email already exists');
     }
-    
-    try {
-      result = await userSchema.create(payload);
-      return { success, status, message, result };
-    } catch (error) {
-      throw new InternalServerError();
-    }
+
+    result = await userSchema.create(payload);
+    return { success, status, message, result };
+
   }
 
   async login(payload: ILoginUserPayload) {
@@ -37,19 +33,13 @@ class UserRepository {
     const success: boolean = true;
     const message: string = 'User logged in successfully';
 
-    let user: mongoose.Document | null;
+    const user = await userSchema.findOne({ email, password });
 
-    try {
-      user = await userSchema.findOne({ email, password });
-    } catch (error) {
-      throw new InternalServerError();
-    }
-    
-    if (resultIsEmpty(user)) {
+    if (APIUtils.resultIsEmpty(user)) {
       throw new NotFoundError();
     }
-    
-    return { success, status, message, result: user }; 
+
+    return { success, status, message, result: user };
   }
 
 }

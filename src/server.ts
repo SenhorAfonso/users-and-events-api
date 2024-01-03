@@ -1,4 +1,4 @@
-import 'express-async-errors'
+import 'express-async-errors';
 import express from 'express';
 import userRouter from './routes/userRouter';
 import eventRouter from './routes/eventRouter';
@@ -16,8 +16,8 @@ class Server {
     this.server.use(express.json());
     this.server.use('/api/v1/users-and-events/', userRouter);
     this.server.use('/api/v1/users-and-events/', eventRouter);
-    this.server.use(ErrorHandlingMiddleware.errorHandler)
+    this.server.use(ErrorHandlingMiddleware.errorHandler);
   }
 }
 
-export default new Server().server
+export default new Server().server;

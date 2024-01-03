@@ -1,15 +1,17 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+
+const MIN_NAME_LENGHT: number = 5;
 
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
-    minLenght: [5, 'User first name need to be more than 5 characteres.'],
+    minLenght: [MIN_NAME_LENGHT, `User first name need to be more than ${MIN_NAME_LENGHT} characteres.`],
     require: [true, 'User first name is required.'],
     trim: true
   },
   lastName: {
     type: String,
-    minLenght: [5, 'User last name need to be more than 5 characteres.'],
+    minLenght: [MIN_NAME_LENGHT, `User last name need to be more than ${MIN_NAME_LENGHT} characteres.`],
     require: [true, 'User last name is required.'],
     trim: true
   },
@@ -42,6 +44,6 @@ const userSchema = new mongoose.Schema({
     trim: true
   },
 
-})
+});
 
 export default mongoose.model('userSchema', userSchema);

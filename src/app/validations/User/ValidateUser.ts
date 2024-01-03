@@ -10,51 +10,51 @@ class ValidateUser {
   static createUser() {
     const createUserValidator = Joi.object({
 
-      firstName: 
+      firstName:
         Joi.string()
-        .min(MIN_NAME_LENGHT)
-        .required()
-        .trim(),
+          .min(MIN_NAME_LENGHT)
+          .required()
+          .trim(),
 
-      lastName: 
+      lastName:
         Joi.string()
-        .min(MIN_NAME_LENGHT)
-        .required()
-        .trim(),
+          .min(MIN_NAME_LENGHT)
+          .required()
+          .trim(),
 
       birthDate:
         Joi.date()
-        .format('YYYY-MM-DD')
-        .required(),
+          .format('YYYY-MM-DD')
+          .required(),
 
       city:
         Joi.string()
-        .required()
-        .trim(),
+          .required()
+          .trim(),
 
       country:
         Joi.string()
-        .required()
-        .trim(),
+          .required()
+          .trim(),
 
       email:
         Joi.string()
-        .email({
-          minDomainSegments: 2, tlds: { allow: ['com', 'net'] }
-        })
-        .required(),
+          .email({
+            minDomainSegments: 2, tlds: { allow: ['com', 'net'] }
+          })
+          .required(),
 
       password:
         Joi.string()
-        .regex(/^[a-zA-Z0-9]{6,30}$/)
-        .required(),
+          .regex(/^[a-zA-Z0-9]{6,30}$/)
+          .required(),
 
       confirmPassword:
         Joi.string()
-        .regex(/^[a-zA-Z0-9]{6,30}$/)
-        .required()
+          .regex(/^[a-zA-Z0-9]{6,30}$/)
+          .required()
 
-    })
+    });
 
     return createUserValidator;
   }
@@ -63,16 +63,16 @@ class ValidateUser {
     const loginUserInValidator = Joi.object({
       email:
         Joi.string()
-        .email({
-          minDomainSegments: 2, tlds: { allow: ['com', 'net'] }
-        })
-        .required(),
+          .email({
+            minDomainSegments: 2, tlds: { allow: ['com', 'net'] }
+          })
+          .required(),
 
       password:
         Joi.string()
-        .regex(/^[a-zA-Z0-9]{6,30}$/)
-        .required()
-    })
+          .regex(/^[a-zA-Z0-9]{6,30}$/)
+          .required()
+    });
 
     return loginUserInValidator;
   }

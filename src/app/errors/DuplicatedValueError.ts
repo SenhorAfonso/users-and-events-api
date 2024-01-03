@@ -1,6 +1,6 @@
-import StatusCodes from "http-status-codes";
-import ApiErrors from "./ApiErrors";
-import ErrorMessage from "./enum/ErrorMessageEnum";
+import StatusCodes from 'http-status-codes';
+import ApiErrors from './ApiErrors';
+import ErrorMessage from './enum/ErrorMessageEnum';
 
 class DuplicatedValueError extends ApiErrors {
   constructor(message: string = ErrorMessage.DuplicatedValueError) {

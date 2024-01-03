@@ -1,10 +1,7 @@
-import { NextFunction, Request, Response } from "express";
-import Joi from "joi";
-import AuthenticationError from "../errors/AuthenticationError";
-import StatusCodes from "http-status-codes";
-import ApiErrors from "../errors/ApiErrors";
-import NotFoundError from "../errors/NotFoundError";
-import InternalServerError from "../errors/InternalServerError";
+import { NextFunction, Request, Response } from 'express';
+import Joi from 'joi';
+import StatusCodes from 'http-status-codes';
+import ApiErrors from '../errors/ApiErrors';
 
 class ErrorHandlingMiddleware {
 
@@ -17,15 +14,15 @@ class ErrorHandlingMiddleware {
     if (reqError instanceof Joi.ValidationError) {
       const { type, errors } = ErrorHandlingMiddleware.formatJoiValidationErrors(reqError);
 
-      return res.status(StatusCodes.BAD_REQUEST).json({ type, errors })
-    } else if (reqError instanceof ApiErrors) {
+      return res.status(StatusCodes.BAD_REQUEST).json({ type, errors });
+    } if (reqError instanceof ApiErrors) {
       const {
         statusCode,
         error,
         message
       } = ErrorHandlingMiddleware.createCustomErrorResponse(reqError);
 
-      return res.status(statusCode).json({ statusCode, error, message })
+      return res.status(statusCode).json({ statusCode, error, message });
     }
   }
 
@@ -34,11 +31,11 @@ class ErrorHandlingMiddleware {
       statusCode: error.status,
       error: error.name,
       message: error.message
-    }
+    };
   }
 
   static formatJoiValidationErrors(error: Joi.ValidationError) {
-    let type = error.name;
+    const type = error.name;
     let errors: Array<{
       resource: string,
       message: string

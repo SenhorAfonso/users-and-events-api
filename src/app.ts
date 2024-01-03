@@ -1,12 +1,13 @@
+import mongoose from 'mongoose';
 import serverConfig from './config/config';
 import server from './server';
-
-require('./infra/database/mongo/connectDB');
+import DataBase from './infra/database/mongo/connectDB';
 
 class App {
   private port: number = Number(serverConfig.PORT!);
 
   constructor() {
+    new DataBase(mongoose, serverConfig.MONGO_URI!).connect();
     this.start();
   }
 

@@ -127,9 +127,15 @@
         }
       },
       {
-        "files": ["utilsFunctions.test.ts", "userValidation.test.ts", "getAllEvents.test.ts", "deleteMany.test.ts"],
+        "files": ["utilsFunctions.test.ts", "userValidation.test.ts", "getAllEvents.test.ts", "deleteMany.test.ts", "databaseConnection.test.ts"],
         "rules": {
           "no-magic-numbers":"off"
+        }
+      },
+      {
+        "files": ["ErrorHandlingMiddleware.ts"],
+        "rules": {
+          "consistent-return":"off"
         }
       }
     ]

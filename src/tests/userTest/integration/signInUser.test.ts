@@ -35,7 +35,7 @@ describe('Check user\'s sign-in route http responses', () => {
     };
 
     await request(server)
-      .post('/api/v1/users-and-events/users/sign-up')
+      .post('/api/v1/users/sign-up')
       .send(userSignUpPayload);
 
     const userSignInPayload = {
@@ -44,7 +44,7 @@ describe('Check user\'s sign-in route http responses', () => {
     };
 
     const response = await request(server)
-      .post('/api/v1/users-and-events/users/sign-in')
+      .post('/api/v1/users/sign-in')
       .send(userSignInPayload);
 
     expect(response.status).toBe(StatusCodes.OK);
@@ -66,7 +66,7 @@ describe('Check user\'s sign-in route http responses', () => {
     };
 
     await request(server)
-      .post('/api/v1/users-and-events/users/sign-up')
+      .post('/api/v1/users/sign-up')
       .send(userSignUpPayload);
 
     const userSignInPayload = {
@@ -75,7 +75,7 @@ describe('Check user\'s sign-in route http responses', () => {
     };
 
     const response = await request(server)
-      .post('/api/v1/users-and-events/users/sign-in')
+      .post('/api/v1/users/sign-in')
       .send(userSignInPayload);
 
     expect(response.status).toBe(StatusCodes.NOT_FOUND);
@@ -97,20 +97,20 @@ describe('Check user\'s sign-in route http responses', () => {
     };
 
     await request(server)
-      .post('/api/v1/users-and-events/users/sign-up')
+      .post('/api/v1/users/sign-up')
       .send(userSignUpPayload);
 
     const userSignInPayload = {
-      'email': 'invalid',
+      'email': 'pedroafonso@gmail.com',
       'password': 'invalid',
     };
 
     const response = await request(server)
-      .post('/api/v1/users-and-events/users/sign-in')
+      .post('/api/v1/users/sign-in')
       .send(userSignInPayload);
 
     expect(response.status).toBe(StatusCodes.BAD_REQUEST);
-    expect(response.body.type).toBe('ValidationError');
+    expect(response.body.error).toBe('Bad Request');
     expect(response.body.success).toBeFalsy();
 
   });

@@ -1,9 +1,8 @@
-import ApiErrors from "../../app/errors/ApiErrors";
-import AuthenticationError from "../../app/errors/AuthenticationError"
-import BadRequestError from "../../app/errors/BadRequestError";
-import DuplicatedValueError from "../../app/errors/DuplicatedValueError";
-import InternalServerError from "../../app/errors/InternalServerError";
-import NotFoundError from "../../app/errors/NotFoundError";
+import AuthenticationError from '../../app/errors/AuthenticationError';
+import BadRequestError from '../../app/errors/BadRequestError';
+import DuplicatedValueError from '../../app/errors/DuplicatedValueError';
+import InternalServerError from '../../app/errors/InternalServerError';
+import NotFoundError from '../../app/errors/NotFoundError';
 
 describe('Check if errors status code, name and message are correct', () => {
 
@@ -18,11 +17,11 @@ describe('Check if errors status code, name and message are correct', () => {
         expect(error.name).toBe('Unauthorized');
         expect(error.message).toBe('Not Authenticated');
       }
-  
-    })
-  
+
+    });
+
     it('AuthenticationError should have a different message if it is passed in constructor', () => {
-  
+
       try {
         throw new AuthenticationError('Different message');
       } catch (error: any) {
@@ -30,10 +29,10 @@ describe('Check if errors status code, name and message are correct', () => {
         expect(error.name).toBe('Unauthorized');
         expect(error.message).toBe('Different message');
       }
-  
-    })
 
-  })
+    });
+
+  });
 
   describe('BadRequestError should', () => {
 
@@ -46,11 +45,11 @@ describe('Check if errors status code, name and message are correct', () => {
         expect(error.name).toBe('Bad Request');
         expect(error.message).toBe('Invalid Input');
       }
-  
-    })
-  
+
+    });
+
     it('BadRequestError should have a different message if it is passed in constructor', () => {
-  
+
       try {
         throw new BadRequestError('Different message');
       } catch (error: any) {
@@ -58,10 +57,10 @@ describe('Check if errors status code, name and message are correct', () => {
         expect(error.name).toBe('Bad Request');
         expect(error.message).toBe('Different message');
       }
-  
-    })
 
-  })
+    });
+
+  });
 
   describe('DuplicatedValueError should', () => {
 
@@ -74,11 +73,11 @@ describe('Check if errors status code, name and message are correct', () => {
         expect(error.name).toBe('Duplicated Value');
         expect(error.message).toBe('Input value already exists');
       }
-  
-    })
-  
+
+    });
+
     it('have a different message if it is passed in constructor', () => {
-  
+
       try {
         throw new DuplicatedValueError('Different message');
       } catch (error: any) {
@@ -86,10 +85,10 @@ describe('Check if errors status code, name and message are correct', () => {
         expect(error.name).toBe('Duplicated Value');
         expect(error.message).toBe('Different message');
       }
-  
-    })
 
-  })
+    });
+
+  });
 
   describe('InternalServerError should', () => {
 
@@ -103,7 +102,7 @@ describe('Check if errors status code, name and message are correct', () => {
         expect(error.message).toBe('Something went wrong');
       }
 
-    })
+    });
 
     it('have a different message if it is passed in constructor', () => {
 
@@ -115,8 +114,8 @@ describe('Check if errors status code, name and message are correct', () => {
         expect(error.message).toBe('Different message');
       }
 
-    })
-  })
+    });
+  });
 
   describe('NotFoundError should', () => {
 
@@ -130,7 +129,7 @@ describe('Check if errors status code, name and message are correct', () => {
         expect(error.message).toBe('Not Found');
       }
 
-    })
+    });
 
     it('have a different message if it is passed in constructor', () => {
 
@@ -142,6 +141,6 @@ describe('Check if errors status code, name and message are correct', () => {
         expect(error.message).toBe('Different message');
       }
 
-    })
-  })
-})
+    });
+  });
+});

@@ -1,55 +1,56 @@
-import { Request, Response } from "express";
-import eventService from "../services/EventService";
-import AuthenticatedRequest from "../../interfaces/AuthMiddleware/AuthenticatedRequest";
-import NotFoundError from "../errors/NotFoundError";
-import IEventQueryParams from "../../interfaces/Events/IQueryByObjectParams";
-import InternalServerError from "../errors/InternalServerError";
+import { Request, Response } from 'express';
+import AuthenticatedRequest from '../../interfaces/AuthMiddleware/AuthenticatedRequest';
+import eventService from '../services/EventService';
 
 class EventController {
 
-  async createEvent(
+  static async createEvent(
     req: AuthenticatedRequest,
     res: Response
   ) {
-    const userId = req.user!.userId ?? '';
-    const { description, dayOfWeek } = req.body
+    const userId = req.user!.userId!;
+    const { description, dayOfWeek } = req.body;
     const { success, status, message, result } = await eventService.createEvent({ userId, description, dayOfWeek });
-    
+
     res.status(status).json({ success, message, data: result });
   }
 
-  async getEvents(
+  static async getEvents(
     req: Request,
     res: Response
   ) {
     const { success, status, message, result } = await eventService.getEvents(req.query);
+
     res.status(status).json({ success, message, data: result });
   }
 
-  async getSingleEvents(
+  static async getSingleEvents(
     req: Request,
     res: Response
   ) {
     const { success, status, message, result } = await eventService.getSingleEvents(req.params);
+
     res.status(status).json({ success, message, data: result });
   }
 
-  async deleteMany(
+  static async deleteMany(
     req: Request,
     res: Response
   ) {
     const { success, status, message, result } = await eventService.deleteManyEvents(req.query);
+
     res.status(status).json({ success, message, data: result });
   }
 
-  async deleteSingleEvent(
+  static async deleteSingleEvent(
     req: Request,
     res: Response
   ) {
     const { success, status, message, result } = await eventService.deleteSingleEvent(req.params);
-    res.status(status).json({ success, message, data: result })
+
+    res.status(status).json({ success, message, data: result });
   }
 
 }
 
-export default new EventController();
+export default EventController;

@@ -1,40 +1,39 @@
-import { MongoMemoryServer } from 'mongodb-memory-server'
-import mongoose from "mongoose"
-import serverConfig from "../../../config/config"
-import eventSchema from "../../../app/schemas/eventSchema";
-import request from "supertest";
-import userSchema from "../../../app/schemas/userSchema";
-import server from "../../../server";
-import StatusCodes from "http-status-codes";
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import mongoose from 'mongoose';
+import request from 'supertest';
+import StatusCodes from 'http-status-codes';
+import eventSchema from '../../../app/schemas/eventSchema';
+import userSchema from '../../../app/schemas/userSchema';
+import server from '../../../server';
 
 let mongoServer: MongoMemoryServer;
 
-describe("Check for create event's route http response", () => {
+describe('Check for create event\'s route http response', () => {
 
   beforeAll(async () => {
     mongoServer = await MongoMemoryServer.create();
     const mongoURI = await mongoServer.getUri();
 
     await mongoose.connect(mongoURI);
-  })
-  
+  });
+
   afterAll(async () => {
     await userSchema.collection.drop();
     await eventSchema.collection.drop();
     await mongoServer.stop();
     await mongoose.disconnect();
-  })
+  });
 
   it('Should return 200 status code when the payload is valid and user is logged', async () => {
     const userSignUp = {
-      "firstName": "Pedro",
-      "lastName": "Afonso",
-      "birthDate": "2023-12-27",
-      "city": "Maringá",
-      "country": "Brasil",
-      "email": "pedroafonso@gmail.com",
-      "password": "password123",
-      "confirmPassword": "password123"
+      'firstName': 'Pedro',
+      'lastName': 'Afonso',
+      'birthDate': '2023-12-27',
+      'city': 'Maringá',
+      'country': 'Brasil',
+      'email': 'pedroafonso@gmail.com',
+      'password': 'password123',
+      'confirmPassword': 'password123'
     };
 
     await request(server)
@@ -63,7 +62,7 @@ describe("Check for create event's route http response", () => {
     expect(response.body.message).toBe('Successful operation');
     expect(response.body.success).toBeTruthy();
 
-  })
+  });
 
   it('Should return 401 status code when the payload is valid and user is not logged', async () => {
     const eventPayload = {
@@ -79,18 +78,18 @@ describe("Check for create event's route http response", () => {
     expect(response.body.message).toBe('Not Authenticated');
     expect(response.body.success).toBeFalsy();
 
-  })
+  });
 
   it('Should return 400 status code when the payload is invalid and user is logged', async () => {
     const userSignUp = {
-      "firstName": "Pedro",
-      "lastName": "Afonso",
-      "birthDate": "2023-12-27",
-      "city": "Maringá",
-      "country": "Brasil",
-      "email": "pedroafonso@gmail.com",
-      "password": "password123",
-      "confirmPassword": "password123"
+      'firstName': 'Pedro',
+      'lastName': 'Afonso',
+      'birthDate': '2023-12-27',
+      'city': 'Maringá',
+      'country': 'Brasil',
+      'email': 'pedroafonso@gmail.com',
+      'password': 'password123',
+      'confirmPassword': 'password123'
     };
 
     await request(server)
@@ -119,6 +118,6 @@ describe("Check for create event's route http response", () => {
     expect(response.body.type).toBe('ValidationError');
     expect(response.body.errors).toBeDefined();
 
-  })
+  });
 
-})
+});

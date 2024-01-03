@@ -1,4 +1,4 @@
-import Joi from "joi";
+import Joi from 'joi';
 
 const MIN_DESCRIPTION_LENGHT: number = 5;
 
@@ -12,7 +12,7 @@ class ValidateEvent {
       dayOfWeek: Joi.string()
         .valid('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday')
         .required()
-    })
+    });
 
     return createEventValidator;
   }
@@ -28,10 +28,10 @@ class ValidateEvent {
       page: Joi.string(),
 
       limit: Joi.string(),
-      
+
       sort: Joi.string()
         .valid('asc', 'desc')
-    })
+    });
 
     return getAllQueryObjectValidator;
   }
@@ -39,15 +39,15 @@ class ValidateEvent {
   static deleteMany() {
     const deleteManyQueryObjectValidator = Joi.object({
       description: Joi.string()
-      .min(MIN_DESCRIPTION_LENGHT),
+        .min(MIN_DESCRIPTION_LENGHT),
 
       dayOfWeek: Joi.string()
         .valid('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday')
-    })
+    });
 
     return deleteManyQueryObjectValidator;
   }
 
 }
 
-export default ValidateEvent
+export default ValidateEvent;

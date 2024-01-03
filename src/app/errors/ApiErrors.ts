@@ -1,4 +1,4 @@
-import StatusCodes from "http-status-codes";
+import StatusCodes from 'http-status-codes';
 
 class ApiErrors extends Error {
   public status: number;

@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import IQueryById from '../../interfaces/Events/IQueryById';
 import IQueryByIdParams from '../../interfaces/Events/IQueryByIdParams';
 import IQueryByObject from '../../interfaces/Events/IQueryByObject';
@@ -52,6 +53,13 @@ class APIUtils {
     return target === null || target === undefined;
 
   };
+
+  static checkPassword(password: string, hashPassword: string) {
+    const check = bcrypt.compareSync(password, hashPassword);
+
+    return !check;
+  }
+
 }
 
 export default APIUtils;

@@ -45,13 +45,13 @@ describe('Check for getAll event\'s route http response', () => {
     };
 
     await request(server)
-      .post('/api/v1/users-and-events/users/sign-up')
+      .post('/api/v1/users/sign-up')
       .send(userSignUp);
 
     const { email, password } = userSignUp;
 
     const loggedUser = await request(server)
-      .post('/api/v1/users-and-events/users/sign-in')
+      .post('/api/v1/users/sign-in')
       .send({ email, password });
 
     const jwtToken = loggedUser.body.data.token!;
@@ -62,7 +62,7 @@ describe('Check for getAll event\'s route http response', () => {
     };
 
     await request(server)
-      .post('/api/v1/users-and-events/events')
+      .post('/api/v1/events')
       .send(eventPayload)
       .auth(jwtToken, { type: 'bearer' });
 
@@ -70,7 +70,7 @@ describe('Check for getAll event\'s route http response', () => {
     const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
-      .get('/api/v1/users-and-events/events')
+      .get('/api/v1/events')
       .query(queryObject)
       .auth(jwtToken, { type: 'bearer' });
 
@@ -95,13 +95,13 @@ describe('Check for getAll event\'s route http response', () => {
     };
 
     await request(server)
-      .post('/api/v1/users-and-events/users/sign-up')
+      .post('/api/v1/users/sign-up')
       .send(userSignUp);
 
     const { email, password } = userSignUp;
 
     const loggedUser = await request(server)
-      .post('/api/v1/users-and-events/users/sign-in')
+      .post('/api/v1/users/sign-in')
       .send({ email, password });
 
     const jwtToken = loggedUser.body.data.token!;
@@ -112,7 +112,7 @@ describe('Check for getAll event\'s route http response', () => {
     };
 
     await request(server)
-      .post('/api/v1/users-and-events/events')
+      .post('/api/v1/events')
       .send(eventPayload)
       .auth(jwtToken, { type: 'bearer' });
 
@@ -120,7 +120,7 @@ describe('Check for getAll event\'s route http response', () => {
     const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
-      .get('/api/v1/users-and-events/events')
+      .get('/api/v1/events')
       .query(queryObject);
 
     expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
@@ -143,13 +143,13 @@ describe('Check for getAll event\'s route http response', () => {
     };
 
     await request(server)
-      .post('/api/v1/users-and-events/users/sign-up')
+      .post('/api/v1/users/sign-up')
       .send(userSignUp);
 
     const { email, password } = userSignUp;
 
     const loggedUser = await request(server)
-      .post('/api/v1/users-and-events/users/sign-in')
+      .post('/api/v1/users/sign-in')
       .send({ email, password });
 
     const jwtToken = loggedUser.body.data.token!;
@@ -160,7 +160,7 @@ describe('Check for getAll event\'s route http response', () => {
     };
 
     await request(server)
-      .post('/api/v1/users-and-events/events')
+      .post('/api/v1/events')
       .send(eventPayload)
       .auth(jwtToken, { type: 'bearer' });
 
@@ -171,7 +171,7 @@ describe('Check for getAll event\'s route http response', () => {
     const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
-      .get('/api/v1/users-and-events/events')
+      .get('/api/v1/events')
       .query(queryObject)
       .auth(jwtToken, { type: 'bearer' });
 
@@ -209,7 +209,7 @@ describe('Check for getAll event\'s route http response', () => {
     const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
-      .get('/api/v1/users-and-events/events')
+      .get('/api/v1/events')
       .query(queryObject)
       .auth(token, { type: 'bearer' });
 
@@ -246,7 +246,7 @@ describe('Check for getAll event\'s route http response', () => {
     const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
-      .get('/api/v1/users-and-events/events')
+      .get('/api/v1/events')
       .query(queryObject)
       .auth(token, { type: 'bearer' });
 
@@ -284,7 +284,7 @@ describe('Check for getAll event\'s route http response', () => {
     const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
-      .get('/api/v1/users-and-events/events')
+      .get('/api/v1/events')
       .query(queryObject)
       .auth(token, { type: 'bearer' });
 
@@ -322,7 +322,7 @@ describe('Check for getAll event\'s route http response', () => {
     const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
-      .get('/api/v1/users-and-events/events')
+      .get('/api/v1/events')
       .query(queryObject)
       .auth(token, { type: 'bearer' });
 
@@ -360,7 +360,7 @@ describe('Check for getAll event\'s route http response', () => {
     const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
-      .get('/api/v1/users-and-events/events')
+      .get('/api/v1/events')
       .query(queryObject)
       .auth(token, { type: 'bearer' });
 

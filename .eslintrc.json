@@ -108,7 +108,10 @@
         "files": ["userSchema.ts"],
         "rules": {
           "require-unicode-regexp": "off",
-          "prefer-named-capture-group": "off"
+          "prefer-named-capture-group": "off",
+          "prefer-arrow-callback": "off",
+          "no-invalid-this": "off",
+          "func-names":"off"
         }
       },
       {

@@ -10,7 +10,7 @@ class TestUtils {
     const { email, password } = payload;
 
     await request(server)
-      .post('/api/v1/users-and-events/users/sign-up')
+      .post('/api/v1/users/sign-up')
       .send(payload);
 
     return { email, password };
@@ -18,7 +18,7 @@ class TestUtils {
 
   static async loginUser(payload: ILoginUserPayload) {
     const response = await request(server)
-      .post('/api/v1/users-and-events/users/sign-in')
+      .post('/api/v1/users/sign-in')
       .send(payload);
 
     const jwtToken = response.body.data.token!;
@@ -28,7 +28,7 @@ class TestUtils {
 
   static async createEvent(payload: object, token: string) {
     const reponse = await request(server)
-      .post('/api/v1/users-and-events/events')
+      .post('/api/v1/events')
       .send(payload)
       .auth(token, { type: 'bearer' });
 

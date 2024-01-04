@@ -4,7 +4,7 @@ import server from './server';
 import DataBase from './infra/database/mongo/connectDB';
 
 class App {
-  private port: number = Number(serverConfig.PORT!);
+  private port: number = Number(serverConfig.SERVER_PORT!);
 
   constructor() {
     new DataBase(mongoose, serverConfig.MONGO_URI!).connect();

@@ -42,7 +42,7 @@ describe('check for deleteById\'s route http response ', () => {
     const eventId = await TestUtils.createEvent({ dayOfWeek: 'sunday', description: 'event 1' }, token);
 
     const response = await request(server)
-      .delete(`/api/v1/users-and-events/events/${eventId}`)
+      .delete(`/api/v1/events/${eventId}`)
       .auth(token, { type: 'bearer' });
 
     expect(response.status).toBe(StatusCodes.NO_CONTENT);
@@ -67,7 +67,7 @@ describe('check for deleteById\'s route http response ', () => {
     const eventId = 'invalid';
 
     const response = await request(server)
-      .delete(`/api/v1/users-and-events/events/${eventId}`)
+      .delete(`/api/v1/events/${eventId}`)
       .auth(token, { type: 'bearer' });
 
     expect(response.status).toBe(StatusCodes.BAD_REQUEST);
@@ -94,7 +94,7 @@ describe('check for deleteById\'s route http response ', () => {
     const eventId = 'invalid';
 
     const response = await request(server)
-      .delete(`/api/v1/users-and-events/events/${eventId}`);
+      .delete(`/api/v1/events/${eventId}`);
 
     expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
     expect(response.body.error).toBe('Unauthorized');
@@ -120,7 +120,7 @@ describe('check for deleteById\'s route http response ', () => {
     const eventId = '658f28878a2be8dca4627463';
 
     const response = await request(server)
-      .delete(`/api/v1/users-and-events/events/${eventId}`)
+      .delete(`/api/v1/events/${eventId}`)
       .auth(token, { type: 'bearer' });
 
     expect(response.status).toBe(StatusCodes.NOT_FOUND);

@@ -35,7 +35,7 @@ describe('Check user\'s sign-up route http responses', () => {
     };
 
     const response = await request(server)
-      .post('/api/v1/users-and-events/users/sign-up')
+      .post('/api/v1/users/sign-up')
       .send(userPayload);
 
     expect(response.status).toBe(StatusCodes.CREATED);
@@ -57,11 +57,11 @@ describe('Check user\'s sign-up route http responses', () => {
     };
 
     await request(server)
-      .post('/api/v1/users-and-events/users/sign-up')
+      .post('/api/v1/users/sign-up')
       .send(userPayload);
 
     const response = await request(server)
-      .post('/api/v1/users-and-events/users/sign-up')
+      .post('/api/v1/users/sign-up')
       .send(userPayload);
 
     expect(response.status).toBe(StatusCodes.BAD_REQUEST);
@@ -83,7 +83,7 @@ describe('Check user\'s sign-up route http responses', () => {
     };
 
     const response = await request(server)
-      .post('/api/v1/users-and-events/users/sign-up')
+      .post('/api/v1/users/sign-up')
       .send(userPayload);
 
     expect(response.status).toBe(StatusCodes.BAD_REQUEST);

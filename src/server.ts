@@ -14,8 +14,8 @@ class Server {
 
   middlewares() {
     this.server.use(express.json());
-    this.server.use('/api/v1/users-and-events/', userRouter);
-    this.server.use('/api/v1/users-and-events/', eventRouter);
+    this.server.use('/api/v1/', userRouter);
+    this.server.use('/api/v1/', eventRouter);
     this.server.use(ErrorHandlingMiddleware.errorHandler);
   }
 }

@@ -54,7 +54,7 @@ describe('Check for deleteMany event\'s route http response', () => {
     const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
-      .delete('/api/v1/users-and-events/events/')
+      .delete('/api/v1/events/')
       .query(queryObject)
       .auth(token, { type: 'bearer' });
 
@@ -85,7 +85,7 @@ describe('Check for deleteMany event\'s route http response', () => {
     };
 
     const response = await request(server)
-      .delete('/api/v1/users-and-events/events/')
+      .delete('/api/v1/events/')
       .query(queryObject)
       .auth(token, { type: 'bearer' });
 
@@ -117,7 +117,7 @@ describe('Check for deleteMany event\'s route http response', () => {
     const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
-      .delete('/api/v1/users-and-events/events/')
+      .delete('/api/v1/events/')
       .query(queryObject);
 
     expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
@@ -148,7 +148,7 @@ describe('Check for deleteMany event\'s route http response', () => {
     const queryObject = APIUtils.createQueryByObject(queryObjectParams);
 
     const response = await request(server)
-      .delete('/api/v1/users-and-events/events/')
+      .delete('/api/v1/events/')
       .query(queryObject)
       .auth(token, { type: 'bearer' });
 

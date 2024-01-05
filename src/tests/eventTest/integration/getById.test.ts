@@ -42,7 +42,7 @@ describe('Check for getById events route http responses', () => {
     const eventId = await TestUtils.createEvent({ dayOfWeek: 'sunday', description: 'event 1' }, token);
 
     const response = await request(server)
-      .get(`/api/v1/event/${eventId}`)
+      .get(`/api/v1/events/${eventId}`)
       .auth(token, { type: 'bearer' });
 
     expect(response.body.success).toBeTruthy();
@@ -68,7 +68,7 @@ describe('Check for getById events route http responses', () => {
     const eventId = await TestUtils.createEvent({ dayOfWeek: 'sunday', description: 'event 1' }, token);
 
     const response = await request(server)
-      .get(`/api/v1/event/${eventId}`);
+      .get(`/api/v1/events/${eventId}`);
 
     expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
     expect(response.body.error).toBe('Unauthorized');
@@ -94,7 +94,7 @@ describe('Check for getById events route http responses', () => {
 
     token = 'Bearer invalid token';
     const response = await request(server)
-      .get(`/api/v1/event/${eventId}`)
+      .get(`/api/v1/events/${eventId}`)
       .auth(token, { type: 'bearer' });
 
     expect(response.status).toBe(StatusCodes.UNAUTHORIZED);
@@ -121,7 +121,7 @@ describe('Check for getById events route http responses', () => {
     const eventId = '658f28878a2be8dca4627463';
 
     const response = await request(server)
-      .get(`/api/v1/event/${eventId}`)
+      .get(`/api/v1/events/${eventId}`)
       .auth(token, { type: 'bearer' });
 
     expect(response.status).toBe(StatusCodes.NOT_FOUND);
@@ -148,7 +148,7 @@ describe('Check for getById events route http responses', () => {
     const eventId = 'invalid';
 
     const response = await request(server)
-      .get(`/api/v1/event/${eventId}`)
+      .get(`/api/v1/events/${eventId}`)
       .auth(token, { type: 'bearer' });
 
     expect(response.status).toBe(StatusCodes.BAD_REQUEST);

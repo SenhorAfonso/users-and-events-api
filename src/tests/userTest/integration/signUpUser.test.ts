@@ -70,16 +70,38 @@ describe('Check user\'s sign-up route http responses', () => {
 
   });
 
+  it('Should return 400 when the passwords dont match', async () => {
+    const userPayload = {
+      'firstName': 'Pedro',
+      'lastName': 'Afonso',
+      'birthDate': '2023-12-27',
+      'city': 'Maringá',
+      'country': 'Brasil',
+      'email': 'pedroafonso@gmail.com',
+      'password': 'password',
+      'confirmPassword': 'password123'
+    };
+
+    const response = await request(server)
+      .post('/api/v1/users/sign-up')
+      .send(userPayload);
+
+    expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+    expect(response.body.error).toBe('Bad Request');
+    expect(response.body.message).toBe('The passwords dont match');
+
+  });
+
   it('Should return 400 when the payload is invalid', async () => {
     const userPayload = {
-      'firstName': 'invalid',
-      'lastName': 'invalid',
+      'firstName': 'inv',
+      'lastName': 'inv',
       'birthDate': 'invalid',
-      'city': 'invalid',
-      'country': 'invalid',
+      'city': '',
+      'country': '',
       'email': 'invalid',
-      'password': 'invalid',
-      'confirmPassword': 'invalid'
+      'password': 'inv',
+      'confirmPassword': 'inv'
     };
 
     const response = await request(server)

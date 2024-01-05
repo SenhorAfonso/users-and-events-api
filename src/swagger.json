@@ -1,0 +1,1096 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Users and Events",
+    "description": "User signup and public event creation",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/users/sign-up": {
+      "post": {
+        "summary": "User registration",
+        "description": "This route is responsible for registering users.",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User-sign-up-payload"
+              },
+              "examples": {
+                "Sign up user": {
+                  "value": {
+                    "firstName": "Pedro",
+                    "lastName": "Afonso",
+                    "birthDate": "2023-12-27",
+                    "city": "Maringá",
+                    "country": "Brasil",
+                    "email": "pedroafonso@gmail.com",
+                    "password": "password123",
+                    "confirmPassword": "password123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User-sign-up-response"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "success": true,
+                      "message": "User created",
+                      "data": {
+                        "firstName": "Pedro",
+                        "lastName": "Afonso",
+                        "birthDate": "2023-12-27T00:00:00.000Z",
+                        "city": "Maringá",
+                        "country": "Brasil",
+                        "email": "pedaro@gmail.com",
+                        "password": "$2a$10$EXO/qM/LWImqgAq3A/PPeOZRpHhJa73O/jBd3KRM/XNlzn48VGlCm",
+                        "_id": "6596c25101db8bae95059880",
+                        "__v": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "$ref":"#/components/schemas/API-error"
+                    }
+                  ]
+                },
+                "examples": {
+                  "API-error": {
+                    "value": {
+                      "statusCode": 400,
+                      "error": "Duplicated Value",
+                      "message": "Email already exists"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/sign-in": {
+      "post": {
+        "summary": "User log-in",
+        "description": "This route is responsible for log users in.",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User-sign-in-payload"
+              },
+              "examples": {
+                "Login user": {
+                  "value": {
+                    "email": "pedroafonso@gmail.com",
+                    "password": "password123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User-sign-in-response"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "success": true,
+                      "message": "User logged in successfully",
+                      "data": {
+                        "user": {
+                          "_id": "6595ae1287e001859f5becc0",
+                          "firstName": "Pedro",
+                          "lastName": "Afonso",
+                          "birthDate": "2023-12-27T00:00:00.000Z",
+                          "city": "Maringá",
+                          "country": "Brasil",
+                          "email": "pedro@gmail.com",
+                          "password": "$2a$10$EXO/qM/LWImqgAq3A/PPeOZRpHhJa73O/jBd3KRM/XNlzn48VGlCm",
+                          "__v": 0
+                        },
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTk1YWUxMjg3ZTAwMTg1OWY1YmVjYzAiLCJpYXQiOjE3MDQzMDg0MzR9.fJ6RmVW26Va9dEedJgLcKGQiJTG5aANeHV0FOLXZnqU"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Payload invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "statusCode": 400,
+                      "error": "BadRequest",
+                      "message": "Invalid input"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "statusCode": 404,
+                      "error": "Not Found",
+                      "message": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/api/v1/events/": {
+      "post": {
+        "summary": "Event creation",
+        "description": "This route is responsible for create a new event.",
+        "tags": [
+          "Event"
+        ],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Event-create-payload"
+              },
+              "examples": {
+                "Create a event": {
+                  "value": {
+                    "dayOfWeek": "sunday",
+                    "description": "Evento 7"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Event-create-response"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "success": true,
+                      "message": "Successful operation",
+                      "data": {
+                          "description": "Evento 7",
+                          "dayOfWeek": "sunday",
+                          "userId": "65917cc0556dfaf9fa265387",
+                          "_id": "6596cda743f6e44d352bd30b",
+                          "__v": 0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Payload invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref":"#/components/schemas/API-error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "statusCode": 400,
+                      "error": "Duplicated Value",
+                      "message": "Email already exists"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref":"#/components/schemas/API-error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "statusCode": 401,
+                      "error": "Unauthorized",
+                      "message": "Not Authenticated"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/api/v1/events/{id}": {
+      "get": {
+        "summary": "Retrieve a event by its id",
+        "description": "This route is responsible for retrieve events based in their id.",
+        "tags": [
+          "Event"
+        ],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Id of the event to be retrieved",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Event-get-id-response"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "success": true,
+                      "message": "Successful operation",
+                      "data": {
+                          "_id": "6596cda743f6e44d352bd30b",
+                          "description": "Evento 7",
+                          "dayOfWeek": "sunday",
+                          "userId": "65917cc0556dfaf9fa265387",
+                          "__v": 0
+                      }
+                  }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Payload invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref":"#/components/schemas/API-error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "statusCode": 400,
+                      "error": "Bad Request",
+                      "message": "Invalid Input"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Event Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref":"#/components/schemas/API-error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "statusCode": 404,
+                      "error": "Not Found",
+                      "message": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref":"#/components/schemas/API-error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "statusCode": 401,
+                      "error": "Unauthorized",
+                      "message": "Not Authenticated"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a event by its id",
+        "description": "This route is responsible for delete events based in their id.",
+        "tags": [
+          "Event"
+        ],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Id of the event to be deleted",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "400": {
+            "description": "Payload invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref":"#/components/schemas/API-error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "statusCode": 400,
+                      "error": "Bad Request",
+                      "message": "Invalid Input"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Event Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref":"#/components/schemas/API-error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "statusCode": 404,
+                      "error": "Not Found",
+                      "message": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref":"#/components/schemas/API-error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "statusCode": 401,
+                      "error": "Unauthorized",
+                      "message": "Not Authenticated"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/events": {
+      "get": {
+        "summary": "Retrieve an array of events",
+        "description": "This route is responsible for retrieve an array of events based on a query object.",
+        "tags": [
+          "Event"
+        ],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "description",
+            "in": "query",
+            "description": "Description of the event to be retrieved",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dayOfWeek",
+            "in": "query",
+            "description": "The day of the week of the event to be retrieved",
+            "schema": {
+              "type": "string",
+              "enum": ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit of the event to be retrieved",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort of the event to be retrieved",
+            "schema": {
+              "type": "string",
+              "enum": ["asc", "desc"]
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page of the event to be retrieved",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Skip of the event to be retrieved",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Event-get-many-response"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "success": true,
+                      "message": "Successful operation",
+                      "data": [
+                          {
+                              "_id": "6596d9d9d9617f1d2c84c664",
+                              "dayOfWeek": "sunday",
+                              "userId": "6596bb881328f7b72ba8c2b6",
+                              "__v": 0
+                          },
+                          {
+                              "_id": "6596cda743f6e44d352bd30b",
+                              "description": "Evento 7",
+                              "dayOfWeek": "sunday",
+                              "userId": "65917cc0556dfaf9fa265387",
+                              "__v": 0
+                          },
+                          {
+                              "_id": "6596d9cad9617f1d2c84c662",
+                              "description": "Evento 7",
+                              "dayOfWeek": "sunday",
+                              "userId": "6596bb881328f7b72ba8c2b6",
+                              "__v": 0
+                          }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Payload invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref":"#/components/schemas/API-error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "statusCode": 400,
+                      "error": "Bad Request",
+                      "message": "Invalid Input"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Event Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref":"#/components/schemas/API-error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "statusCode": 404,
+                      "error": "Not Found",
+                      "message": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref":"#/components/schemas/API-error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "statusCode": 401,
+                      "error": "Unauthorized",
+                      "message": "Not Authenticated"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Retrieve an array of events",
+        "description": "This route is responsible for retrieve an array of events based on a query object.\nBe careful, using this route withou provide any query param will delete all events.",
+        "tags": [
+          "Event"
+        ],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "description",
+            "in": "query",
+            "description": "Id of the event to be retrieved",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dayOfWeek",
+            "in": "query",
+            "description": "Id of the event to be retrieved",
+            "schema": {
+              "type": "string",
+              "enum": ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Id of the event to be retrieved",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Id of the event to be retrieved",
+            "schema": {
+              "type": "string",
+              "enum": ["asc", "desc"]
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Id of the event to be retrieved",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Id of the event to be retrieved",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Event-get-many-response"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "success": true,
+                      "message": "Successful operation",
+                      "data": [
+                          {
+                              "_id": "6596d9d9d9617f1d2c84c664",
+                              "dayOfWeek": "sunday",
+                              "userId": "6596bb881328f7b72ba8c2b6",
+                              "__v": 0
+                          },
+                          {
+                              "_id": "6596cda743f6e44d352bd30b",
+                              "description": "Evento 7",
+                              "dayOfWeek": "sunday",
+                              "userId": "65917cc0556dfaf9fa265387",
+                              "__v": 0
+                          },
+                          {
+                              "_id": "6596d9cad9617f1d2c84c662",
+                              "description": "Evento 7",
+                              "dayOfWeek": "sunday",
+                              "userId": "6596bb881328f7b72ba8c2b6",
+                              "__v": 0
+                          }
+                      ]
+                  }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Payload invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref":"#/components/schemas/API-error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "statusCode": 400,
+                      "error": "Bad Request",
+                      "message": "Invalid Input"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Event Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref":"#/components/schemas/API-error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "statusCode": 404,
+                      "error": "Not Found",
+                      "message": "Not Found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref":"#/components/schemas/API-error"
+                },
+                "examples": {
+                  "error": {
+                    "value": {
+                      "statusCode": 401,
+                      "error": "Unauthorized",
+                      "message": "Not Authenticated"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User-sign-up-payload": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "birthDate": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "confirmPassword": {
+            "type": "string"
+          }
+        }
+      },
+      "User-sign-up-response": {
+        "type": "object",
+        "properties": {
+          "sucess": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "birthDate": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "confirmPassword": {
+                "type": "string"
+              }
+            }
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "User-sign-in-payload": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "User-sign-in-response": {
+        "type": "object",
+        "properties": {
+          "sucess": "boolean",
+          "message": "string",
+          "data": {
+            "user": {
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "birthDate": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "confirmPassword": {
+                "type": "string"
+              }
+            },
+            "token": "string"
+          }
+        }
+      },
+
+      "Event-create-payload": {
+        "type":"object",
+        "properties": {
+          "dayOfWeek": {
+            "type":"string"
+          },
+          "description": {
+            "type":"string"
+          }
+        }
+      },
+      "Event-create-response": {
+        "type": "object",
+        "properties": {
+          "sucess": {
+            "type":"boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "dayOfWeek": {
+                "type":"string"
+              },
+              "description": {
+                "type":"string"
+              }
+            }
+          }
+        }
+      },
+
+      "Event-get-id-response": {
+        "sucess": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object",
+          "properties":{
+            "dayOfWeek": {
+              "type":"string"
+            },
+            "description": {
+              "type":"string"
+            }
+          }
+        }
+      },
+      "Event-get-many-response": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type":"boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties":{
+                "dayOfWeek": {
+                  "type":"string"
+                },
+                "description": {
+                  "type":"string"
+                }
+              }
+            }
+          }
+        }
+      },
+
+      "Event-delete-many-payload": {
+        "type":"object",
+        "properties": {
+          "dayOfWeek": {
+            "type":"string"
+          },
+          "description": {
+            "type":"string"
+          }
+        }
+      },
+      "Event-delete-many-response": {
+        "type": "object",
+        "properties": {
+          "sucess": {
+            "type":"boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "dayOfWeek": {
+                "type":"string"
+              },
+              "description": {
+                "type":"string"
+              }
+            }
+          }
+        }
+      },
+
+
+      "API-error": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "number"
+          },
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "validation-error": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "errors": {
+            "type":"array",
+            "items": {
+              "type":"object",
+              "properties": {
+                "resource": {
+                  "type":"string"
+                },
+                "message": {
+                  "type":"string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

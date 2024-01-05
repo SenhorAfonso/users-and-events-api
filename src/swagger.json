@@ -671,39 +671,6 @@
               "type": "string",
               "enum": ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
             }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Id of the event to be retrieved",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "Id of the event to be retrieved",
-            "schema": {
-              "type": "string",
-              "enum": ["asc", "desc"]
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "Id of the event to be retrieved",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "skip",
-            "in": "query",
-            "description": "Id of the event to be retrieved",
-            "schema": {
-              "type": "number"
-            }
           }
         ],
         "responses": {

@@ -16,7 +16,7 @@ eventRouter.get('/events', [
   ValidationMiddleware.validatePayload(ValidateEvent.getAll(), 'query')
 ], EventController.getEvents);
 
-eventRouter.get('/event/:id', AuthMiddleware.AuthenticateToken, EventController.getSingleEvents);
+eventRouter.get('/events/:id', AuthMiddleware.AuthenticateToken, EventController.getSingleEvents);
 
 eventRouter.delete('/events', [
   AuthMiddleware.AuthenticateToken,

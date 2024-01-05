@@ -54,10 +54,18 @@ class APIUtils {
 
   };
 
-  static checkPassword(password: string, hashPassword: string) {
+  static checkHashPassword(password: string, hashPassword: string) {
     const check = bcrypt.compareSync(password, hashPassword);
 
     return !check;
+  }
+
+  static passwordsMatch(password: string, confirmPassword: string) {
+    if (password !== confirmPassword) {
+      return false;
+    }
+
+    return true;
   }
 
 }

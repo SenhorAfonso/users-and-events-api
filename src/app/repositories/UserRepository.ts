@@ -17,6 +17,10 @@ class UserRepository {
 
     let result: mongoose.Document | null = null;
 
+    if (!APIUtils.passwordsMatch(payload.password, payload.confirmPassword)) {
+      throw new BadRequestError('The passwords dont match');
+    }
+
     try {
       result = await userSchema.create(payload);
     } catch (error) {
@@ -39,7 +43,7 @@ class UserRepository {
     }
 
     const signedUpPass = user!.password!;
-    const passwordIsInvalid = APIUtils.checkPassword(password, signedUpPass);
+    const passwordIsInvalid = APIUtils.checkHashPassword(password, signedUpPass);
 
     if (passwordIsInvalid) {
       throw new BadRequestError();
